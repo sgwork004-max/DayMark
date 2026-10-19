@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.0 - Public release candidate
+## 0.6.0 - Public release
 
 - Prepared the Mac app for an MIT-licensed public release.
 - Replaced personal Todoist project defaults with the connected account's projects.

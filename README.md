@@ -6,7 +6,7 @@ For a packaged Mac build, see [INSTALL.md](INSTALL.md). The first release uses a
 
 ## Status
 
-The Mac app is being prepared for its first public open source release. Mobile, plugins, and the MCP server are experimental source code and are not part of the supported release. Manager AI and Todoist are optional integrations.
+Manager 0.6.0 is available as an [open source Mac release](https://github.com/sgwork004-max/manager/releases/tag/v0.6.0). Mobile, plugins, and the MCP server are experimental source code and are not part of the supported release. Manager AI and Todoist are optional integrations.
 
 ## Development
 
