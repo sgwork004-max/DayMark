@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Manager",
+  "identifier": "co.daymark.desktop",
+  "version": "0.6.0",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "./node_modules/.bin/vite",
+    "beforeBuildCommand": "./node_modules/.bin/vite build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Manager",
+        "width": 1280,
+        "height": 820,
+        "minWidth": 860,
+        "minHeight": 600,
+        "decorations": true,
+        "transparent": false,
+        "center": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://generativelanguage.googleapis.com https://api.todoist.com"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app"],
+    "icon": ["icons/icon.png"],
+    "category": "Productivity",
+    "shortDescription": "A local daily manager for notes, tasks and calendar.",
+    "longDescription": "Manager combines local Markdown notes, native tasks, execution memory and your calendar in one focused daily workspace.",
+    "copyright": "Copyright © 2026",
+    "macOS": {
+      "minimumSystemVersion": "13.0",
+      "entitlements": "entitlements.plist",
+      "signingIdentity": "-",
+      "hardenedRuntime": true
+    }
+  },
+  "plugins": {
+    "fs": {
+      "requireLiteralLeadingDot": false
+    }
+  }
+}

@@ -1,0 +1,188 @@
+import { EditorView } from "@codemirror/view";
+
+export const notePlanTheme = EditorView.theme(
+  {
+    "&": {
+      height: "100%",
+      fontSize: "var(--editor-font-size, 15px)",
+      fontFamily: "var(--editor-font-family, system-ui)",
+      background: "transparent",
+      color: "var(--color-text)",
+    },
+    ".cm-scroller": {
+      overflowY: "auto",
+      overflowX: "hidden",
+      lineHeight: "1.75",
+      padding: "0 0 120px 0",
+    },
+    ".cm-content": {
+      caretColor: "var(--color-accent)",
+      width: "100%",
+      minWidth: "0",
+      maxWidth: "720px",
+      margin: "0 auto",
+      padding: "32px 48px",
+    },
+    ".cm-line": {
+      minWidth: "0",
+      overflowWrap: "anywhere",
+      wordBreak: "break-word",
+    },
+    ".cm-cursor": { borderLeftColor: "var(--color-accent)" },
+    ".cm-activeLine": { background: "var(--color-editor-active)" },
+    ".cm-selectionBackground": { background: "var(--color-selection) !important" },
+    "&.cm-focused .cm-selectionBackground": { background: "var(--color-selection-strong) !important" },
+    ".cm-gutters": { display: "none" },
+
+    // Daily-note hierarchy
+    ".cm-line.cm-note-title": {
+      marginBottom: "12px",
+      padding: "3px 0 5px",
+      fontSize: "28px",
+      fontWeight: "760",
+      lineHeight: "1.25",
+      color: "var(--color-text)",
+      textDecoration: "none !important",
+      borderBottom: "none !important",
+    },
+    ".cm-line.cm-note-title .tok-heading1, .cm-line.cm-note-title *": {
+      fontSize: "inherit",
+      fontWeight: "inherit",
+      textDecoration: "none !important",
+      borderBottom: "none !important",
+    },
+    ".cm-line.cm-agenda-heading": {
+      marginTop: "2px",
+      marginBottom: "0",
+      fontSize: "18px",
+      fontWeight: "700",
+      color: "var(--color-text)",
+      textDecoration: "none !important",
+    },
+    ".cm-line.cm-heading-2": {
+      marginTop: "18px",
+      marginBottom: "5px",
+      fontSize: "1.42em",
+      fontWeight: "720",
+      lineHeight: "1.35",
+      color: "var(--color-text)",
+    },
+    ".cm-line.cm-heading-3": {
+      marginTop: "12px",
+      marginBottom: "3px",
+      fontSize: "1.12em",
+      fontWeight: "650",
+      lineHeight: "1.4",
+      color: "var(--color-text-secondary)",
+    },
+    ".cm-line.cm-agenda-priority": {
+      marginTop: "0",
+      paddingTop: "0",
+      fontSize: "13px",
+      fontWeight: "750",
+      lineHeight: "1.45",
+      textTransform: "uppercase",
+    },
+    ".cm-priority-widget": {
+      display: "inline-flex",
+      alignItems: "center",
+      fontSize: "13px",
+      fontWeight: "750",
+      letterSpacing: "0",
+    },
+    ".cm-priority-label-p1": { color: "#ef6461 !important" },
+    ".cm-priority-label-p2": { color: "#e7a63a !important" },
+    ".cm-priority-label-p3": { color: "#579dff !important" },
+    ".cm-priority-label-misc": { color: "var(--color-text-muted) !important" },
+    ".cm-line.cm-note-title .tok-heading1, .cm-line.cm-agenda-heading .tok-heading2, .cm-line.cm-agenda-priority .tok-heading3": {
+      textDecoration: "none !important",
+    },
+    ".cm-priority-marker": { display: "none" },
+    ".cm-line.cm-note-title.cm-activeLine": { background: "transparent" },
+    ".cm-task-prefix": {
+      display: "inline",
+      color: "var(--color-text-disabled) !important",
+    },
+    ".cm-task-checkbox-token": {
+      display: "inline",
+      marginRight: "7px",
+      color: "#8b83ff !important",
+      fontSize: "inherit",
+      fontWeight: "650",
+      background: "transparent",
+      cursor: "pointer",
+    },
+    ".cm-task-checkbox-token:hover": { color: "var(--color-accent) !important" },
+    ".cm-task-checkbox-token.is-checked": { color: "#35b87f !important" },
+    ".cm-task-checkbox-token.is-scheduled": { color: "var(--color-scheduled) !important" },
+    ".cm-task-checkbox-token.is-cancelled": { color: "var(--color-text-disabled) !important", opacity: "0.65" },
+    "&.cm-todoist-dragover": {
+      boxShadow: "inset 0 0 0 2px color-mix(in srgb, var(--color-accent) 45%, transparent)",
+      background: "color-mix(in srgb, var(--color-accent) 4%, transparent)",
+    },
+
+    // Tasks
+    ".cm-task-open":      { color: "var(--color-text)" },
+    ".cm-task-done":      { color: "var(--color-text-muted)" },
+    ".cm-task-cancelled": { color: "var(--color-text-disabled)", textDecoration: "line-through", opacity: "0.5" },
+    ".cm-task-scheduled": { color: "var(--color-scheduled)" },
+
+    // Checkbox widget
+    ".cm-task-checkbox-wrap": { display: "inline-flex", alignItems: "center", verticalAlign: "middle" },
+    ".cm-task-checkbox": {
+      appearance: "none",
+      width: "15px",
+      height: "15px",
+      border: "1.5px solid var(--color-border)",
+      borderRadius: "3px",
+      cursor: "pointer",
+      background: "transparent",
+      position: "relative",
+      flexShrink: "0",
+      transition: "background 0.1s, border-color 0.1s",
+    },
+    ".cm-task-checkbox:checked": {
+      background: "var(--color-accent)",
+      borderColor: "var(--color-accent)",
+    },
+    ".cm-task-checkbox:checked::after": {
+      content: "'✓'",
+      position: "absolute",
+      fontSize: "11px",
+      color: "white",
+      top: "-1px",
+      left: "1px",
+    },
+
+    // Inline decorations
+    ".cm-wikilink": {
+      color: "var(--color-accent)",
+      textDecoration: "none",
+      background: "rgba(124, 111, 255, 0.08)",
+      borderRadius: "3px",
+      padding: "0 2px",
+      cursor: "pointer",
+    },
+    ".cm-tag":     { color: "var(--color-tag)",     fontWeight: "500" },
+    ".cm-mention": { color: "var(--color-mention)", fontWeight: "500" },
+    ".cm-task-scheduled-token": { color: "var(--color-scheduled)", fontWeight: "600" },
+    ".cm-task-deadline-token":  { color: "var(--color-mention)",   fontWeight: "600" },
+    ".cm-task-remind-token":    { color: "#8b5cf6",                fontWeight: "600" },
+    ".cm-task-done-token":      { color: "#22a06b",                fontWeight: "600" },
+
+    // Markdown headings
+    ".cm-line .tok-heading1": { fontSize: "1.6em", fontWeight: "700", color: "inherit", lineHeight: "1.3", textDecoration: "none" },
+    ".cm-line .tok-heading2": { fontSize: "inherit", fontWeight: "inherit", color: "inherit", textDecoration: "none" },
+    ".cm-line .tok-heading3": { fontSize: "inherit", fontWeight: "inherit", color: "inherit", textDecoration: "none" },
+
+    // Strong / em / code
+    ".tok-strong":         { fontWeight: "700" },
+    ".tok-emphasis":       { fontStyle: "italic" },
+    ".tok-monospace":      { fontFamily: "monospace", background: "var(--color-code-bg)", borderRadius: "3px", padding: "0 3px" },
+    ".tok-strikethrough":  { textDecoration: "line-through", opacity: "0.5" },
+
+    // HR
+    ".tok-contentSeparator": { color: "var(--color-border)" },
+  },
+  { dark: true },
+);

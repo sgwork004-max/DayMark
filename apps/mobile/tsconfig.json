@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-native",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "types": ["react", "react-native"],
+    "paths": {
+      "@daymark/core": ["../../packages/core/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*", "index.ts", "app.json"]
+}

@@ -1,0 +1,273 @@
+.graph-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+}
+
+.graph-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-sidebar);
+  flex-shrink: 0;
+}
+
+.graph-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.graph-count {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.graph-legend {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.graph-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.graph-legend-item span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.graph-close {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.graph-close:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text);
+}
+
+.graph-svg {
+  flex: 1;
+  width: 100%;
+  display: block;
+}
+
+.graph-hint {
+  text-align: center;
+  padding: 8px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  background: var(--color-bg-sidebar);
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+/* TOC panel */
+.toc-panel {
+  width: 240px;
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-sidebar);
+  overflow: hidden;
+}
+
+.toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.toc-header button {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.toc-header button:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text);
+}
+
+.toc-title {
+  padding: 10px 12px 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.toc-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.toc-empty {
+  padding: 20px 12px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.toc-item {
+  display: block;
+  padding: 4px 12px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 4px;
+  margin: 0 4px;
+}
+
+.toc-item:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text);
+}
+
+.toc-level-0 { padding-left: 12px; font-weight: 600; color: var(--color-text); }
+.toc-level-1 { padding-left: 22px; }
+.toc-level-2 { padding-left: 32px; font-size: 12px; }
+.toc-level-3 { padding-left: 42px; font-size: 11px; }
+.toc-level-4 { padding-left: 52px; font-size: 11px; }
+.toc-level-5 { padding-left: 62px; font-size: 11px; }
+
+/* Shortcuts panel */
+.shortcuts-panel {
+  width: 320px;
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-sidebar);
+  overflow: hidden;
+}
+
+.shortcuts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.shortcuts-header button {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.shortcuts-header button:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text);
+}
+
+.shortcuts-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0 16px;
+}
+
+.shortcuts-group {
+  padding: 8px 0;
+}
+
+.shortcuts-group + .shortcuts-group {
+  border-top: 1px solid var(--color-border);
+}
+
+.shortcuts-group-label {
+  padding: 6px 12px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.shortcuts-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 12px;
+}
+
+.shortcuts-keys {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.shortcuts-keys kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  color: var(--color-text-muted);
+}
+
+.shortcuts-plus {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  margin: 0 1px;
+}
+
+.shortcuts-desc {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-left: 12px;
+  text-align: right;
+}

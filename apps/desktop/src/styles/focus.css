@@ -1,0 +1,40 @@
+.focus-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: grid;
+  place-items: center;
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-bg) 94%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.focus-close { position: absolute; top: 24px; right: 24px; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: var(--color-text-muted); }
+.focus-close:hover { color: var(--color-text); background: var(--color-bg-hover); }
+.focus-surface { width: min(430px, calc(100vw - 48px)); display: grid; justify-items: center; gap: 22px; }
+.focus-kicker { display: flex; align-items: center; gap: 7px; color: var(--color-accent); font-size: 11px; font-weight: 750; letter-spacing: 0.08em; text-transform: uppercase; }
+.focus-task-select { width: 100%; height: 38px; padding: 0 12px; border: 1px solid var(--color-border-light); border-radius: 6px; color: var(--color-text); background: var(--color-bg-elevated); font-size: 13px; }
+.focus-clock { position: relative; width: 210px; height: 210px; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(var(--color-accent) var(--focus-progress), var(--color-border) 0); }
+.focus-clock::before { content: ""; position: absolute; width: 196px; height: 196px; border-radius: 50%; background: var(--color-bg); }
+.focus-clock > div { z-index: 1; display: grid; justify-items: center; }
+.focus-clock strong { font-size: 42px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.focus-clock span { margin-top: 9px; color: var(--color-text-disabled); font-size: 11px; }
+.focus-durations { display: flex; gap: 4px; padding: 3px; border-radius: 6px; background: var(--color-bg-elevated); }
+.focus-durations button { height: 27px; padding: 0 11px; border-radius: 4px; color: var(--color-text-muted); font-size: 10px; }
+.focus-durations button.active { color: var(--color-text); background: var(--color-bg-active); }
+.focus-controls { display: flex; align-items: center; gap: 10px; }
+.focus-controls button { height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border-radius: 6px; }
+.focus-reset, .focus-complete { width: 38px; color: var(--color-text-muted); border: 1px solid var(--color-border); }
+.focus-start { min-width: 112px; color: white; background: var(--color-accent); font-size: 12px; font-weight: 700; }
+.focus-controls button:disabled { opacity: 0.4; }
+
+.daily-score { display: inline-flex; align-items: center; gap: 3px; padding: 0 5px; color: #f59e0b; font-size: 10px; font-weight: 700; }
+.carryover-trigger { color: #f59e0b !important; }
+.carryover-popover { position: absolute; right: 48px; bottom: 27px; z-index: 80; width: 310px; padding: 12px; border: 1px solid var(--color-border-light); border-radius: 7px; color: var(--color-text); background: var(--color-bg-elevated); box-shadow: 0 18px 48px rgba(0,0,0,.32); }
+.carryover-popover header { display: flex; align-items: center; gap: 7px; color: #f59e0b; font-size: 12px; }
+.carryover-popover header button { margin-left: auto; color: var(--color-text-muted); }
+.carryover-popover > p { margin: 8px 0 10px; color: var(--color-text-muted); font-size: 10px; line-height: 1.45; }
+.carryover-list { display: grid; gap: 5px; }
+.carryover-list > div { display: flex; gap: 8px; padding: 6px 7px; border-radius: 4px; background: var(--color-bg); font-size: 11px; }
+.carryover-list span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.carryover-list small { color: var(--color-text-disabled); }

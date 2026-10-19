@@ -1,0 +1,22 @@
+node_modules
+dist
+.turbo
+target
+.pnpm-store
+*.local
+.DS_Store
+.env
+.env.*
+!.env.example
+*.p12
+*.cer
+*.provisionprofile
+*.mobileprovision
+*.tsbuildinfo
+.next
+.wrangler
+notarytool-profile.json
+*.app
+*.dmg
+release/
+apps/desktop/src/components/EventComposer 2.tsx

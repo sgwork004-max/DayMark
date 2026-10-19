@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>NSCalendarsUsageDescription</key>
+  <string>Manager shows your calendar events beside daily notes and plans.</string>
+  <key>NSCalendarsFullAccessUsageDescription</key>
+  <string>Manager shows and creates calendar events beside daily notes and plans.</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Manager uses the microphone only while you dictate a note.</string>
+  <key>NSSpeechRecognitionUsageDescription</key>
+  <string>Manager converts your spoken words into text inside the current note.</string>
+</dict>
+</plist>
