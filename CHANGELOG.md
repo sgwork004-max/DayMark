@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.6.1 - Vault access and editor update
+
+- Preserve file watcher events for vaults opened through a symlink.
 
 - Native file commands now only read and write inside the active vault. Paths with `..` and symlinks that leave the vault are refused.
 - A vault folder is chosen with a native folder dialog. The path field in Settings is no longer editable.

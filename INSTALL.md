@@ -1,13 +1,13 @@
 # Install Manager on macOS
 
-Manager 0.6.0 is ad hoc signed and is not Apple notarized. Its installer removes quarantine only from the copied Manager app. It does not change macOS security settings for any other software.
+Manager 0.6.1 is ad hoc signed and is not Apple notarized. Its installer removes quarantine only from the copied Manager app. It does not change macOS security settings for any other software.
 
-## One command for Manager 0.6.0
+## One command for Manager 0.6.1
 
 Paste this into Terminal. It downloads the DMG for your Mac, checks its SHA-256 against the verified release digest, verifies the app signature, backs up an existing Manager app, installs into `/Applications`, and removes quarantine only from Manager:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/sgwork004-max/manager/main/tools/install-release-macos.sh -o /tmp/install-manager-0.6.0.sh && sh /tmp/install-manager-0.6.0.sh
+curl -fsSL https://raw.githubusercontent.com/sgwork004-max/manager/main/tools/install-release-macos.sh -o /tmp/install-manager-0.6.1.sh && sh /tmp/install-manager-0.6.1.sh
 ```
 
 You can [inspect the installer source](tools/install-release-macos.sh) before running it. macOS may ask for your administrator password.

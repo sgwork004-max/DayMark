@@ -1,15 +1,13 @@
 #!/bin/sh
 set -eu
 
-version=0.6.0
+version=0.6.1
 case "$(uname -m)" in
   arm64)
     asset="Manager_${version}_aarch64.dmg"
-    expected_sha256=6d3fe13a7fa40e0e0df86475c78a80e19bf1fd7ca5842896594a217bf8f0a254
     ;;
   x86_64)
     asset="Manager_${version}_x64.dmg"
-    expected_sha256=dd544578eed0bfa9533ceb044d6273cab10a8ef1fd43d5f7fddcbd712f0954ee
     ;;
   *)
     echo "Manager supports Apple Silicon and Intel Macs." >&2
@@ -22,7 +20,14 @@ cleanup() { rm -rf "$work_dir"; }
 trap cleanup EXIT HUP INT TERM
 
 release_url="https://github.com/sgwork004-max/manager/releases/download/v${version}/${asset}"
+checksums_url="https://github.com/sgwork004-max/manager/releases/download/v${version}/SHA256SUMS"
 installer_url="https://raw.githubusercontent.com/sgwork004-max/manager/v${version}/tools/install-macos.sh"
+curl --fail --location --silent --show-error "$checksums_url" -o "$work_dir/SHA256SUMS"
+expected_sha256=$(awk -v asset="$asset" '$2 == asset { print $1 }' "$work_dir/SHA256SUMS")
+if ! printf '%s' "$expected_sha256" | grep -Eq '^[[:xdigit:]]{64}$'; then
+  echo "Manager release has no valid checksum for $asset." >&2
+  exit 1
+fi
 curl --fail --location --silent --show-error "$release_url" -o "$work_dir/$asset"
 actual_sha256=$(shasum -a 256 "$work_dir/$asset" | awk '{ print $1 }')
 if [ "$actual_sha256" != "$expected_sha256" ]; then

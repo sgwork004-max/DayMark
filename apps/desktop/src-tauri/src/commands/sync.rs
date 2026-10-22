@@ -13,6 +13,16 @@ impl FileWatcherState {
     }
 }
 
+fn display_event_path(
+    path: &std::path::Path,
+    resolved_root: &std::path::Path,
+    display_root: &std::path::Path,
+) -> PathBuf {
+    path.strip_prefix(resolved_root)
+        .map(|relative| display_root.join(relative))
+        .unwrap_or_else(|_| path.to_path_buf())
+}
+
 #[tauri::command]
 pub fn icloud_vault_path() -> String {
     let home = std::env::var("HOME").unwrap_or_default();
@@ -33,11 +43,13 @@ pub fn start_file_watcher(
     state: State<'_, FileWatcherState>,
     vault: State<'_, VaultState>,
 ) -> Result<(), String> {
-    let vault_path = vault.resolve(&vault_path)?;
+    let display_root = PathBuf::from(&vault_path);
+    let resolved_root = vault.resolve(&vault_path)?;
     // Drop previous watcher first
     *state.0.lock().unwrap() = None;
 
     let app_clone = app.clone();
+    let watched_root = resolved_root.clone();
 
     let mut watcher = notify::recommended_watcher(move |res: notify::Result<Event>| {
         let Ok(event) = res else { return };
@@ -51,7 +63,10 @@ pub fn start_file_watcher(
 
         for path in &event.paths {
             if path.extension().map_or(false, |e| e == "md") {
-                let path_str = path.to_string_lossy().to_string();
+                // Note IDs use the path shown in Settings. Keep watcher events
+                // in that same form when the selected folder is a symlink.
+                let display_path = display_event_path(path, &watched_root, &display_root);
+                let path_str = display_path.to_string_lossy().to_string();
                 let _ = app_clone.emit(
                     "vault:file-changed",
                     serde_json::json!({ "path": path_str, "kind": kind_str }),
@@ -62,7 +77,7 @@ pub fn start_file_watcher(
     .map_err(|e| e.to_string())?;
 
     watcher
-        .watch(&vault_path, RecursiveMode::Recursive)
+        .watch(&resolved_root, RecursiveMode::Recursive)
         .map_err(|e| e.to_string())?;
 
     *state.0.lock().unwrap() = Some(watcher);
@@ -78,7 +93,11 @@ fn settings_path() -> PathBuf {
     let home = std::env::var("HOME").unwrap_or_default();
     let current = PathBuf::from(&home).join(".daymark").join("settings.json");
     let legacy = PathBuf::from(&home).join(".noteplan").join("settings.json");
-    if current.exists() { current } else { legacy }
+    if current.exists() {
+        current
+    } else {
+        legacy
+    }
 }
 
 /// The vault recorded in saved settings, if any.
@@ -131,4 +150,18 @@ pub fn load_settings() -> Result<String, String> {
 #[tauri::command]
 pub fn read_note_from_disk(path: String, vault: State<'_, VaultState>) -> Result<String, String> {
     std::fs::read_to_string(vault.resolve_readable(&path)?).map_err(|e| e.to_string())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::display_event_path;
+    use std::path::Path;
+
+    #[test]
+    fn watcher_paths_match_note_ids_for_symlinked_vaults() {
+        let event = Path::new("/real/vault/Notes/test.md");
+        let visible =
+            display_event_path(event, Path::new("/real/vault"), Path::new("/linked/vault"));
+        assert_eq!(visible, Path::new("/linked/vault/Notes/test.md"));
+    }
 }

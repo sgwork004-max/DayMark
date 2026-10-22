@@ -262,7 +262,7 @@ export function SettingsModal({ onClose, onImport, onOnboarding }: Props) {
           <section className="settings-section">
             <h3 className="settings-section-title">About</h3>
             <p className="settings-about">
-              <strong>Manager</strong> - version 0.6.0
+              <strong>Manager</strong> - version 0.6.1
             </p>
             <p className="settings-about">
               Vault: <code>{settings.vaultPath || "not set"}</code>

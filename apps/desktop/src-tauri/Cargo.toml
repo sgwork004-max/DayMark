@@ -1,6 +1,6 @@
 [package]
 name = "daymark-desktop"
-version = "0.6.0"
+version = "0.6.1"
 description = "Manager - local notes, tasks, and calendar"
 authors = []
 edition = "2021"

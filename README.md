@@ -6,7 +6,7 @@ For a packaged Mac build, see [INSTALL.md](INSTALL.md). The first release uses a
 
 ## Status
 
-Manager 0.6.0 is available as an [open source Mac release](https://github.com/sgwork004-max/manager/releases/tag/v0.6.0). The mobile app in `apps/mobile` is experimental source code and is not part of the supported release.
+Manager 0.6.1 is available as an [open source Mac release](https://github.com/sgwork004-max/manager/releases/tag/v0.6.1). The mobile app in `apps/mobile` is experimental source code and is not part of the supported release.
 
 ## Development
 

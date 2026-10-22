@@ -45,6 +45,6 @@ jobs:
           tagName: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || 'v__VERSION__' }}
           releaseName: "Manager v__VERSION__"
           releaseBody: "See INSTALL.md for the scoped macOS install command and CHANGELOG.md for release details. This build is ad hoc signed and is not Apple notarized."
-          releaseDraft: false
+          releaseDraft: true
           prerelease: false
           args: --target ${{ matrix.target }} --bundles app,dmg
