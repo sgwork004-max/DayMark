@@ -1,1 +1,1 @@
-{}
+{"default":{"identifier":"default","description":"Permissions for the main Manager window. File access goes through the app's vault-scoped commands.","local":true,"windows":["main"],"permissions":["core:default","dialog:allow-confirm","dialog:allow-message","notification:default"]}}

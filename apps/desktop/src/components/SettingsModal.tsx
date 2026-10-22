@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { X, FolderOpen, Cloud, FileHeart, RotateCcw, KeyRound, CheckCircle2, LogOut } from "lucide-react";
+import React, { useState } from "react";
+import { X, FolderOpen, HardDrive, Cloud, Upload, FileHeart, RotateCcw } from "lucide-react";
 import { invoke } from "@tauri-apps/api/core";
 import { flushPendingNoteWrites, useNotesStore } from "../store/notesStore.js";
 import { today } from "@daymark/core";
-import { bundledAiGatewayUrl, type ManagerAiAccess } from "../managerAi.js";
 
 interface Props {
   onClose: () => void;
@@ -30,61 +29,12 @@ const FONT_FAMILIES = [
 
 export function SettingsModal({ onClose, onImport, onOnboarding }: Props) {
   const { settings, updateSettings } = useNotesStore();
-  const [vaultInput, setVaultInput] = useState(settings.vaultPath);
   const [saving, setSaving] = useState(false);
+  const inICloud = settings.vaultPath.includes("/Library/Mobile Documents/");
   const [diagnosticsPath, setDiagnosticsPath] = useState("");
-  const [todoistInput, setTodoistInput] = useState(settings.todoistApiToken ?? "");
   const [geminiInput, setGeminiInput] = useState(settings.geminiApiKey ?? "");
-  const [gatewayInput, setGatewayInput] = useState(settings.aiGatewayUrl || bundledAiGatewayUrl);
-  const [activationCode, setActivationCode] = useState("");
-  const [aiAccess, setAiAccess] = useState<ManagerAiAccess | null>(null);
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiError, setAiError] = useState("");
   const [integrationError, setIntegrationError] = useState("");
   const [storageError, setStorageError] = useState("");
-
-  useEffect(() => {
-    const gatewayUrl = settings.aiGatewayUrl?.trim();
-    if (!gatewayUrl) return;
-    setAiLoading(true);
-    invoke<ManagerAiAccess>("get_manager_ai_status", { gatewayUrl })
-      .then((status) => {
-        setAiAccess(status);
-        setAiError("");
-      })
-      .catch(() => setAiAccess(null))
-      .finally(() => setAiLoading(false));
-  }, [settings.aiGatewayUrl]);
-
-  async function activateAi() {
-    const gatewayUrl = gatewayInput.trim();
-    if (!gatewayUrl || !activationCode.trim()) {
-      setAiError("Enter the Manager service URL and your activation code.");
-      return;
-    }
-    setAiLoading(true);
-    setAiError("");
-    try {
-      await updateSettings({ aiGatewayUrl: gatewayUrl });
-      const status = await invoke<ManagerAiAccess>("activate_manager_ai", {
-        gatewayUrl,
-        activationCode: activationCode.trim(),
-        deviceId: settings.aiDeviceId || crypto.randomUUID(),
-      });
-      setAiAccess(status);
-      setActivationCode("");
-    } catch (error) {
-      setAiError(String(error));
-    } finally {
-      setAiLoading(false);
-    }
-  }
-
-  async function disconnectAi() {
-    await invoke("disconnect_manager_ai");
-    setAiAccess(null);
-    setAiError("");
-  }
 
   async function saveBeforeVaultChange(): Promise<boolean> {
     const requested: Promise<boolean>[] = [];
@@ -113,7 +63,7 @@ export function SettingsModal({ onClose, onImport, onOnboarding }: Props) {
     }
   }
 
-  async function saveCredential(key: "todoistApiToken" | "geminiApiKey", value: string) {
+  async function saveCredential(key: "geminiApiKey", value: string) {
     if ((settings[key] ?? "") === value) return;
     setSaving(true);
     setIntegrationError("");
@@ -126,25 +76,23 @@ export function SettingsModal({ onClose, onImport, onOnboarding }: Props) {
     }
   }
 
-  async function applyVaultPath() {
-    if (!vaultInput.trim() || vaultInput === settings.vaultPath) return;
-    await changeVault(vaultInput.trim());
+  async function chooseVaultFolder() {
+    const folder = await invoke<string | null>("choose_vault_folder");
+    if (folder && folder !== settings.vaultPath) await changeVault(folder);
   }
 
   async function switchToICloud() {
     const icloudPath = await invoke<string>("icloud_vault_path");
-    setVaultInput(icloudPath);
     await changeVault(icloudPath);
   }
 
   async function switchToLocal() {
     const localPath = await invoke<string>("default_vault_path");
-    setVaultInput(localPath);
     await changeVault(localPath);
   }
 
   async function createDiagnostics() {
-    const path = await invoke<string>("export_diagnostics", { vaultPath: settings.vaultPath });
+    const path = await invoke<string>("export_diagnostics");
     setDiagnosticsPath(path);
   }
 
@@ -166,24 +114,25 @@ export function SettingsModal({ onClose, onImport, onOnboarding }: Props) {
               <div className="settings-vault-row">
                 <input
                   className="settings-input"
-                  value={vaultInput}
-                  onChange={(e) => setVaultInput(e.target.value)}
-                  onBlur={applyVaultPath}
+                  value={settings.vaultPath}
+                  readOnly
                   spellCheck={false}
                 />
               </div>
               <div className="settings-vault-buttons">
-                <button className="btn-settings-secondary" onClick={switchToLocal}>
-                  <FolderOpen size={13} strokeWidth={1.75} style={{verticalAlign:"middle",marginRight:4}} /> Local vault
+                <button className="btn-settings-secondary" onClick={chooseVaultFolder}>
+                  <FolderOpen size={13} strokeWidth={1.75} style={{verticalAlign:"middle",marginRight:4}} /> Choose folder…
                 </button>
-                <button className="btn-settings-secondary btn-icloud" onClick={switchToICloud}>
+                <button className={`btn-settings-secondary ${inICloud ? "" : "active"}`} onClick={switchToLocal}>
+                  <HardDrive size={13} strokeWidth={1.75} style={{verticalAlign:"middle",marginRight:4}} /> Local vault
+                </button>
+                <button className={`btn-settings-secondary ${inICloud ? "active" : ""}`} onClick={switchToICloud}>
                   <Cloud size={13} strokeWidth={1.75} style={{verticalAlign:"middle",marginRight:4}} /> iCloud Drive
                 </button>
               </div>
               <p className="settings-hint">
-                The iCloud option places your vault in{" "}
-                your selected iCloud Drive folder,
-                syncing automatically to iPhone &amp; iPad.
+                Notes are plain Markdown files. The iCloud Drive option keeps them in iCloud Drive so they
+                sync to your other Macs.
               </p>
               {storageError && <p className="settings-error">{storageError}</p>}
             </div>
@@ -268,105 +217,29 @@ export function SettingsModal({ onClose, onImport, onOnboarding }: Props) {
               <strong>System Settings → Privacy → Calendar</strong>.
             </p>
 
-            <div className="settings-row">
-              <label className="settings-label">Todoist API Token</label>
-              <input
-                className="settings-input"
-                type="password"
-                value={todoistInput}
-                onChange={(e) => setTodoistInput(e.target.value)}
-                onBlur={() => void saveCredential("todoistApiToken", todoistInput.trim())}
-                placeholder="Paste your Todoist token"
-                spellCheck={false}
-              />
-              <p className="settings-hint">
-                Used to show your live Todoist Today tasks under daily notes. Find it in Todoist Settings → Integrations → Developer.
-              </p>
-            </div>
           </section>
 
           {/* AI */}
           <section className="settings-section">
             <h3 className="settings-section-title">AI Assistant</h3>
 
-            {aiAccess ? (
-              <div className="settings-ai-access">
-                <div className="settings-ai-access-main">
-                  <CheckCircle2 size={18} />
-                  <div>
-                    <strong>Manager AI is active</strong>
-                    <span>{aiAccess.remainingCredits} of {aiAccess.creditLimit} credits remaining</span>
-                  </div>
-                </div>
-                <div className="settings-ai-meter" aria-label={`${aiAccess.remainingCredits} AI credits remaining`}>
-                  <span style={{ width: `${Math.max(0, Math.min(100, (aiAccess.remainingCredits / aiAccess.creditLimit) * 100))}%` }} />
-                </div>
-                <button className="btn-settings-secondary" onClick={disconnectAi}>
-                  <LogOut size={13} /> Disconnect
-                </button>
-              </div>
-            ) : gatewayInput.trim() ? (
-              <div className="settings-row">
-                <label className="settings-label">Manager activation code</label>
-                <div className="settings-activation-row">
-                  <input
-                    className="settings-input"
-                    value={activationCode}
-                    onChange={(event) => setActivationCode(event.target.value.toUpperCase())}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") void activateAi();
-                    }}
-                    placeholder="MGR-XXXX-XXXX-XXXX"
-                    spellCheck={false}
-                    autoCapitalize="characters"
-                  />
-                  <button className="btn-primary" onClick={activateAi} disabled={aiLoading || !activationCode.trim()}>
-                    <KeyRound size={13} /> Activate
-                  </button>
-                </div>
-                <p className="settings-hint">AI is included with your Manager activation. No Gemini account or API key is required.</p>
-              </div>
-            ) : (
+            <div className="settings-row">
+              <label className="settings-label">Gemini API key</label>
+              <input
+                className="settings-input"
+                type="password"
+                value={geminiInput}
+                onChange={(e) => setGeminiInput(e.target.value)}
+                onBlur={() => void saveCredential("geminiApiKey", geminiInput.trim())}
+                placeholder="Paste your Gemini API key"
+                spellCheck={false}
+              />
               <p className="settings-hint">
-                Hosted AI is not configured in this build. Add your personal Gemini key under Advanced AI settings to use the assistant.
+                Optional. Stored in macOS Keychain. The active note is sent to Google Gemini only when you use the assistant.
+                Get a key from Google AI Studio.
               </p>
-            )}
-
-            {aiLoading && <p className="settings-hint">Checking Manager AI access...</p>}
-            {aiError && <p className="settings-error">{aiError}</p>}
+            </div>
             {integrationError && <p className="settings-error">{integrationError}</p>}
-
-            <details className="settings-advanced">
-              <summary>Advanced AI settings</summary>
-              <div className="settings-row">
-                <label className="settings-label">Manager AI service URL</label>
-                <input
-                  className="settings-input"
-                  value={gatewayInput}
-                  onChange={(event) => setGatewayInput(event.target.value)}
-                  onBlur={() => {
-                    const value = gatewayInput.trim();
-                    if (value !== (settings.aiGatewayUrl ?? "")) void updateSettings({ aiGatewayUrl: value });
-                  }}
-                  placeholder="https://manager-ai-gateway.workers.dev"
-                  spellCheck={false}
-                />
-                <p className="settings-hint">This is preconfigured in customer builds. Note content is sent to this service only when you invoke AI.</p>
-              </div>
-              <div className="settings-row">
-                <label className="settings-label">Personal Gemini key (optional)</label>
-                <input
-                  className="settings-input"
-                  type="password"
-                  value={geminiInput}
-                  onChange={(e) => setGeminiInput(e.target.value)}
-                  onBlur={() => void saveCredential("geminiApiKey", geminiInput.trim())}
-                  placeholder="Optional power-user fallback"
-                  spellCheck={false}
-                />
-                <p className="settings-hint">Used only when Manager AI is not activated. Stored in macOS Keychain.</p>
-              </div>
-            </details>
           </section>
 
           {/* Import */}
@@ -380,7 +253,7 @@ export function SettingsModal({ onClose, onImport, onOnboarding }: Props) {
                 className="btn-settings-secondary"
                 onClick={() => { onClose(); onImport?.(); }}
               >
-                ↑ Import Notes…
+                <Upload size={13} strokeWidth={1.75} style={{verticalAlign:"middle",marginRight:4}} /> Import Notes…
               </button>
             </div>
           </section>

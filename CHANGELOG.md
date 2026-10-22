@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+- Native file commands now only read and write inside the active vault. Paths with `..` and symlinks that leave the vault are refused.
+- A vault folder is chosen with a native folder dialog. The path field in Settings is no longer editable.
+- Added the missing Tauri permissions for note deletion confirmations, notifications and file-change events.
+- Import folders are chosen through a native dialog and are read-only.
+- Removed the Todoist integration and hosted Manager AI. The AI assistant now uses your own Gemini API key.
+- Removed unused file-system, shell, plugin and MCP server code.
+- Added a native menu bar with Settings, New Note, Import, navigation, panels and Help links.
+- Editing a note's first heading now renames the note when you leave it.
+- The editor now uses the font chosen in Settings instead of always showing monospace.
+- Obsidian imports keep YAML frontmatter at the top and no longer duplicate the title.
+- Graph links are visible in dark themes, and the graph header no longer sits under the window buttons.
+- Settings shows which storage location is active and no longer promises iPhone sync.
+- AI quick actions are disabled until a Gemini key is added.
+
 ## 0.6.0 - Public release
 
 - Prepared the Mac app for an MIT-licensed public release.

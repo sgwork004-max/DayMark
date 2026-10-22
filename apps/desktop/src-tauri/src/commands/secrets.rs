@@ -11,21 +11,13 @@ extern "C" {
 
 fn validate_key(key: &str) -> Result<(), String> {
     match key {
-        "gemini_api_key" | "todoist_access_token" | "manager_ai_access_token" => Ok(()),
+        "gemini_api_key" => Ok(()),
         _ => Err("Unsupported secret key".to_string()),
     }
 }
 
-pub(crate) fn set_secret_value(key: &str, value: &str) -> Result<(), String> {
-    set_secret(key.to_string(), value.to_string())
-}
-
 pub(crate) fn get_secret_value(key: &str) -> Result<String, String> {
     get_secret(key.to_string())
-}
-
-pub(crate) fn delete_secret_value(key: &str) -> Result<(), String> {
-    delete_secret(key.to_string())
 }
 
 #[tauri::command]

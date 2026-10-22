@@ -6,7 +6,7 @@ For a packaged Mac build, see [INSTALL.md](INSTALL.md). The first release uses a
 
 ## Status
 
-Manager 0.6.0 is available as an [open source Mac release](https://github.com/sgwork004-max/manager/releases/tag/v0.6.0). Mobile, plugins, and the MCP server are experimental source code and are not part of the supported release. Manager AI and Todoist are optional integrations.
+Manager 0.6.0 is available as an [open source Mac release](https://github.com/sgwork004-max/manager/releases/tag/v0.6.0). The mobile app in `apps/mobile` is experimental source code and is not part of the supported release.
 
 ## Development
 
@@ -21,12 +21,12 @@ cargo test --manifest-path apps/desktop/src-tauri/Cargo.toml
 pnpm --filter @daymark/desktop dev
 ```
 
-The desktop source is in `apps/desktop`, reusable note and task logic is in `packages/core`, and the optional hosted AI service is in `apps/ai-gateway`. Build a macOS app with `pnpm --filter @daymark/desktop build`.
+The desktop source is in `apps/desktop`, reusable note and task logic is in `packages/core`. Build a macOS app with `pnpm --filter @daymark/desktop build`.
 
 ## Data and optional services
 
-Manager stores notes as Markdown files in the selected vault. Apple Calendar access, Todoist, voice dictation, and AI are optional. AI sends the active note context to the configured provider only when you invoke an AI action. See [PRIVACY.md](PRIVACY.md) for details.
+Manager stores notes as Markdown files in the selected vault. Apple Calendar access, voice dictation, and the AI assistant are optional. The assistant uses your own Google Gemini API key and sends the active note only when you invoke it. See [PRIVACY.md](PRIVACY.md) for details.
 
 ## Licence
 
-The source code is available under the [MIT License](LICENSE). Hosted services, provider accounts, and third-party trademarks are separate from that licence. Manager is not affiliated with NotePlan, Todoist, Apple, or Google.
+The source code is available under the [MIT License](LICENSE). Hosted services, provider accounts, and third-party trademarks are separate from that licence. Manager is not affiliated with NotePlan, Apple, or Google.

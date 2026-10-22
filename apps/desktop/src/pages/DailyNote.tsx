@@ -4,13 +4,20 @@ import { NoteEditor } from "@daymark/editor";
 import { useNotesStore } from "../store/notesStore.js";
 import { useAutoSave } from "../hooks/useAutoSave.js";
 import { calculateDailyMetrics, findCarryoverInsights, insertAIResponseUnderNotes, parseTasks, resolveWikiLink, setTaskCompleted } from "@daymark/core";
-import { TodoistTodayPanel } from "../components/TodoistTodayPanel.js";
 import { QuickTaskCapture } from "../components/QuickTaskCapture.js";
 import { PRODUCT_NAME } from "../brand.js";
 import { DailyRitualModal } from "../components/DailyRitualModal.js";
 import { NativeTasksPanel } from "../components/NativeTasksPanel.js";
 import { FocusSprint } from "../components/FocusSprint.js";
 import { CarryoverInsights } from "../components/CarryoverInsights.js";
+
+const FIXED_TITLE_FOLDERS = ["Daily", "Weekly", "Monthly", "Quarterly", "Yearly", "Templates"];
+
+function isRenamableNote(path: string, type: string): boolean {
+  if (type !== "project") return false;
+  const folder = path.split("/").slice(-2, -1)[0] ?? "";
+  return !FIXED_TITLE_FOLDERS.includes(folder);
+}
 
 export function NotePane() {
   const { activeNoteId, notes, settings, openDailyNote, openNote, saveNote, createNote } = useNotesStore();
@@ -19,9 +26,6 @@ export function NotePane() {
   const [localContent, setLocalContent] = useState(note?.content ?? "");
   const [saveLabel, setSaveLabel]       = useState<"" | "Saving…" | "Saved" | "Save failed">("");
   const [ritualMode, setRitualMode] = useState<"review" | null>(null);
-  const [taskSource, setTaskSource] = useState<"native" | "todoist">(
-    () => settings.todoistApiToken ? "todoist" : "native",
-  );
   const [focusOpen, setFocusOpen] = useState(false);
   const [insightsOpen, setInsightsOpen] = useState(false);
   const localContentRef = useRef(localContent);
@@ -32,7 +36,15 @@ export function NotePane() {
   useEffect(() => {
     const prevId = prevNoteIdRef.current;
     if (prevId && prevId !== activeNoteId) {
-      saveNote(prevId, localContentRef.current);
+      const content = localContentRef.current;
+      void saveNote(prevId, content).then((saved) => {
+        // A regular note takes its title from its first heading.
+        const heading = /^# (.+)$/m.exec(content)?.[1]?.trim();
+        const previous = useNotesStore.getState().notes.get(prevId);
+        if (saved && heading && previous && heading !== previous.title && isRenamableNote(prevId, previous.type)) {
+          void useNotesStore.getState().renameNote(prevId, heading);
+        }
+      });
     }
     prevNoteIdRef.current = activeNoteId;
     setLocalContent(note?.content ?? "");
@@ -156,17 +168,11 @@ export function NotePane() {
             onChange={handleChange}
             onSave={(nextContent) => saveNote(note.id, nextContent)}
           />
-          {taskSource === "native" ? (
-            <NativeTasksPanel
-              noteDate={note.date}
-              content={localContent}
-              onChange={handleChange}
-              todoistAvailable={Boolean(settings.todoistApiToken)}
-              onTodoistOpen={() => setTaskSource("todoist")}
-            />
-          ) : (
-            <TodoistTodayPanel onNativeOpen={() => setTaskSource("native")} />
-          )}
+          <NativeTasksPanel
+            noteDate={note.date}
+            content={localContent}
+            onChange={handleChange}
+          />
         </>
       )}
       <div className="note-statusbar">

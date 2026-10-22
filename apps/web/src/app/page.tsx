@@ -65,7 +65,7 @@ const FEATURES = [
   { icon: "✓",  title: "Smart Task Views",   desc: "See overdue, today, and upcoming tasks across all your notes at once." },
   { icon: "🔗", title: "Wiki-Links",         desc: "[[Link]] between notes to build a connected knowledge graph." },
   { icon: "☁",  title: "Your Files",         desc: "Store your Markdown vault locally or in your iCloud Drive folder." },
-  { icon: "✦",  title: "Optional AI",       desc: "Use Manager AI or your own Gemini key when you choose to send a note." },
+  { icon: "✦",  title: "Optional AI",       desc: "Bring your own Gemini key. A note is sent only when you ask." },
   { icon: "◉",  title: "Graph View",         desc: "Visualize your note connections with an interactive force graph." },
   { icon: "🎤", title: "Voice Notes",        desc: "Record voice memos and get instant transcription." },
 ];

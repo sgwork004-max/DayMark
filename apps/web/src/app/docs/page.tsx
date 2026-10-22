@@ -63,7 +63,7 @@ const SECTIONS = [
   {
     title: "AI Assistant",
     content: [
-      "Press ⌘⇧A to open the AI panel. Activate Manager AI or enter a personal Gemini key in Settings first.",
+      "Press ⌘⇧A to open the AI panel. Add your Gemini API key in Settings first.",
       "Use Quick Actions: Summarize, Extract Tasks, Continue Writing, Improve, or Ask Key Questions.",
       "Click '↳ Insert into note' to append the AI response directly to your current note.",
     ],

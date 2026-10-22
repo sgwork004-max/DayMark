@@ -27,7 +27,7 @@ export function convertCraftNote(content: string, title: string): string {
   }
 
   // Add title as H1 if missing
-  if (!out.trimStart().startsWith("#")) {
+  if (!/^# /.test(out.trimStart())) {
     out = `# ${title}\n\n${out}`;
   }
 

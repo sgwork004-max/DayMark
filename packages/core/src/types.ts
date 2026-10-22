@@ -65,9 +65,6 @@ export interface AppSettings {
   calendarEnabled: boolean;
   claudeApiKey?: string;
   geminiApiKey?: string;
-  aiGatewayUrl?: string;
-  aiDeviceId?: string;
-  todoistApiToken?: string;
   pluginsEnabled?: boolean;
 }
 

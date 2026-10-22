@@ -17,6 +17,7 @@ import { useNotesStore } from "./store/notesStore.js";
 import { useFileWatcher } from "./hooks/useFileWatcher.js";
 import { addDays, today, toISODate, fromISODate } from "@daymark/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { listen } from "@tauri-apps/api/event";
 import { flushPendingNoteWrites } from "./store/notesStore.js";
 import { AppNotice } from "./components/AppNotice.js";
 import { showAppNotice } from "./appNotice.js";
@@ -126,28 +127,60 @@ export function App() {
   }, []);
 
   useEffect(() => {
+    // Keyboard shortcuts and the native menu run the same commands. The menu may
+    // also see a shortcut the page already handled, so repeats are ignored briefly.
+    const lastRun = new Map<string, number>();
+    function runCommand(id: string) {
+      const now = Date.now();
+      if (now - (lastRun.get(id) ?? 0) < 300) return;
+      lastRun.set(id, now);
+      const store = useNotesStore.getState();
+      switch (id) {
+        case "palette":    setPaletteOpen(true); break;
+        case "today":      void openDailyNote(today()); break;
+        case "yesterday":  void openDailyNote(toISODate(addDays(fromISODate(today()), -1))); break;
+        case "tomorrow":   void openDailyNote(toISODate(addDays(fromISODate(today()), 1))); break;
+        case "calendar":   setCalendarOpen((v) => !v); break;
+        case "settings":   setSettingsOpen(true); break;
+        case "ai":         setAiOpen((v) => !v); break;
+        case "graph":      setGraphOpen((v) => !v); break;
+        case "toc":        setRightPanel((v) => v === "toc" ? null : "toc"); break;
+        case "shortcuts":  setRightPanel((v) => v === "shortcuts" ? null : "shortcuts"); break;
+        case "save":       document.dispatchEvent(new CustomEvent("daymark:force-save")); break;
+        case "new-note":   void store.createNote("Untitled"); break;
+        case "quick-task": document.dispatchEvent(new CustomEvent("daymark:quick-task")); break;
+        case "review-day": document.dispatchEvent(new CustomEvent("daymark:review-day")); break;
+        case "import":     setImportOpen(true); break;
+      }
+    }
+
+    function shortcutFor(e: KeyboardEvent): string | null {
+      if (!e.metaKey) return null;
+      const key = e.key.toLowerCase();
+      if (e.shiftKey) {
+        if (e.code === "Space") return "quick-task";
+        return ({ t: "tomorrow", c: "calendar", a: "ai", g: "graph", o: "toc", e: "review-day" } as Record<string, string>)[key] ?? null;
+      }
+      return ({ k: "palette", t: "today", y: "yesterday", ",": "settings", s: "save", n: "new-note" } as Record<string, string>)[key] ?? null;
+    }
+
     function onKeyDown(e: KeyboardEvent) {
-      if (e.metaKey && e.key === "k") { e.preventDefault(); setPaletteOpen(true); return; }
-      if (e.metaKey && !e.shiftKey && e.key === "t") { e.preventDefault(); openDailyNote(today()); }
-      if (e.metaKey && !e.shiftKey && e.key === "y") { e.preventDefault(); openDailyNote(toISODate(addDays(fromISODate(today()), -1))); }
-      if (e.metaKey && e.shiftKey && e.key === "T")  { e.preventDefault(); openDailyNote(toISODate(addDays(fromISODate(today()), 1))); }
-      if (e.metaKey && e.shiftKey && e.key === "C") { e.preventDefault(); setCalendarOpen((v) => !v); }
-      if (e.metaKey && e.key === ",")           { e.preventDefault(); setSettingsOpen(true); }
-      if (e.metaKey && e.shiftKey && e.key === "A") { e.preventDefault(); setAiOpen((v) => !v); }
-      if (e.metaKey && e.shiftKey && e.key === "G") { e.preventDefault(); setGraphOpen((v) => !v); }
-      if (e.metaKey && e.shiftKey && e.key === "O") { e.preventDefault(); setRightPanel((v) => v === "toc" ? null : "toc"); }
-      if (e.metaKey && e.key === "s") { e.preventDefault(); document.dispatchEvent(new CustomEvent("daymark:force-save")); }
-      if (e.metaKey && e.key === "n") { e.preventDefault(); useNotesStore.getState().createNote("Untitled"); }
-      if (e.metaKey && e.shiftKey && e.code === "Space") { e.preventDefault(); document.dispatchEvent(new CustomEvent("daymark:quick-task")); }
-      if (e.metaKey && e.shiftKey && e.key.toLowerCase() === "e") { e.preventDefault(); document.dispatchEvent(new CustomEvent("daymark:review-day")); }
+      const command = shortcutFor(e);
+      if (command) { e.preventDefault(); runCommand(command); return; }
       const target = e.target as HTMLElement | null;
       const isEditing = Boolean(target?.closest("input, textarea, [contenteditable='true'], .cm-editor"));
-      if (e.key === "?" && !e.metaKey && !e.ctrlKey && !isEditing) { setRightPanel((v) => v === "shortcuts" ? null : "shortcuts"); }
+      if (e.key === "?" && !e.metaKey && !e.ctrlKey && !isEditing) { runCommand("shortcuts"); }
       // ⌘1-3 for smart views
       if (e.metaKey && e.key === "1") { e.preventDefault(); useNotesStore.getState().openSmartView("today"); }
       if (e.metaKey && e.key === "2") { e.preventDefault(); useNotesStore.getState().openSmartView("overdue"); }
       if (e.metaKey && e.key === "3") { e.preventDefault(); useNotesStore.getState().openSmartView("upcoming"); }
     }
+    let unlistenMenu: (() => void) | undefined;
+    let menuDisposed = false;
+    void listen<string>("menu", (event) => runCommand(event.payload)).then((unlisten) => {
+      if (menuDisposed) unlisten();
+      else unlistenMenu = unlisten;
+    });
     function onOpenGraph()     { setGraphOpen(true); }
     function onOpenShortcuts() { setRightPanel((v) => v === "shortcuts" ? null : "shortcuts"); }
 
@@ -155,6 +188,8 @@ export function App() {
     document.addEventListener("daymark:open-graph",     onOpenGraph);
     document.addEventListener("daymark:open-shortcuts", onOpenShortcuts);
     return () => {
+      menuDisposed = true;
+      unlistenMenu?.();
       window.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("daymark:open-graph",     onOpenGraph);
       document.removeEventListener("daymark:open-shortcuts", onOpenShortcuts);

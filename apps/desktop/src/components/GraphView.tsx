@@ -79,9 +79,10 @@ export function GraphView({ onClose }: { onClose: () => void }) {
       .selectAll("line")
       .data(links)
       .join("line")
-      .attr("stroke", "#2e2e2e")
+      // Theme-aware so links stay visible on dark and light backgrounds.
+      .style("stroke", "var(--color-text-muted)")
       .attr("stroke-width", 1.5)
-      .attr("stroke-opacity", 0.7);
+      .attr("stroke-opacity", 0.45);
 
     // Nodes
     const node = g.append("g")
@@ -113,7 +114,7 @@ export function GraphView({ onClose }: { onClose: () => void }) {
       .join("text")
       .text((d) => d.title.length > 18 ? d.title.slice(0, 18) + "…" : d.title)
       .attr("font-size", 10)
-      .attr("fill", "#888")
+      .style("fill", "var(--color-text-muted)")
       .attr("text-anchor", "middle")
       .attr("dy", (d) => Math.max(6, Math.min(18, 6 + d.taskCount * 1.5)) + 14)
       .style("pointer-events", "none")

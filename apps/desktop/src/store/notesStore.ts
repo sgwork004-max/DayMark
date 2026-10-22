@@ -11,7 +11,6 @@ import { parseTasks, extractTags, extractMentions } from "@daymark/core";
 import { expectFileWrite } from "../persistence.js";
 import { cancelNativeTaskReminder } from "../taskNotifications.js";
 import { showAppNotice } from "../appNotice.js";
-import { bundledAiGatewayUrl } from "../managerAi.js";
 
 export interface PendingConflict {
   noteId: string;
@@ -82,15 +81,11 @@ const DEFAULT_SETTINGS: AppSettings = {
   firstDayOfWeek: 1,
   calendarEnabled: false,
   geminiApiKey: "",
-  aiGatewayUrl: bundledAiGatewayUrl,
-  aiDeviceId: "",
-  todoistApiToken: "",
   pluginsEnabled: false,
 };
 
 const SECRET_KEYS = {
   geminiApiKey: "gemini_api_key",
-  todoistApiToken: "todoist_access_token",
 } as const;
 
 const pendingNoteWrites = new Map<string, Promise<boolean>>();
@@ -193,33 +188,32 @@ export const useNotesStore = create<NotesState>((set, get) => ({
   init: async () => {
     // Load persisted settings
     const settingsJson = await invoke<string>("load_settings");
-    let savedSettings: Partial<AppSettings> = {};
+    // Older versions also stored settings for since-removed integrations.
+    let savedSettings: Partial<AppSettings> & {
+      todoistApiToken?: string;
+      aiGatewayUrl?: string;
+      aiDeviceId?: string;
+    } = {};
     try { savedSettings = JSON.parse(settingsJson); } catch { /* ignore */ }
     if (savedSettings.fontFamily?.startsWith("-apple-system")) {
       savedSettings.fontFamily = "system-ui";
     }
 
     const legacyGeminiKey = savedSettings.geminiApiKey?.trim() ?? "";
-    const legacyTodoistToken = savedSettings.todoistApiToken?.trim() ?? "";
     if (legacyGeminiKey) {
       await invoke("set_secret", { key: SECRET_KEYS.geminiApiKey, value: legacyGeminiKey }).catch(() => {});
     }
-    if (legacyTodoistToken) {
-      await invoke("set_secret", { key: SECRET_KEYS.todoistApiToken, value: legacyTodoistToken }).catch(() => {});
-    }
-    const [geminiApiKey, todoistApiToken] = await Promise.all([
-      loadSecret(SECRET_KEYS.geminiApiKey),
-      loadSecret(SECRET_KEYS.todoistApiToken),
-    ]);
+    const geminiApiKey = await loadSecret(SECRET_KEYS.geminiApiKey);
+    // Settings from removed integrations.
     delete savedSettings.geminiApiKey;
     delete savedSettings.todoistApiToken;
+    delete savedSettings.aiGatewayUrl;
+    delete savedSettings.aiDeviceId;
 
     const vaultPath: string =
       (savedSettings.vaultPath as string | undefined) ||
       (await invoke<string>("default_vault_path"));
 
-    const aiDeviceId = savedSettings.aiDeviceId?.trim() || crypto.randomUUID();
-    const aiGatewayUrl = savedSettings.aiGatewayUrl?.trim() || bundledAiGatewayUrl;
 
     set((s) => ({
       settings: {
@@ -227,9 +221,6 @@ export const useNotesStore = create<NotesState>((set, get) => ({
         ...savedSettings,
         vaultPath,
         geminiApiKey,
-        todoistApiToken,
-        aiDeviceId,
-        aiGatewayUrl,
       },
       initialized: true,
     }));
@@ -249,16 +240,9 @@ export const useNotesStore = create<NotesState>((set, get) => ({
         ...(value ? { value } : {}),
       });
     }
-    if (partial.todoistApiToken !== undefined) {
-      const value = partial.todoistApiToken.trim();
-      await invoke(value ? "set_secret" : "delete_secret", {
-        key: SECRET_KEYS.todoistApiToken,
-        ...(value ? { value } : {}),
-      });
-    }
+    // Persist first: the native side refuses vault folders the user did not choose.
+    await persistSettings({ ...get().settings, ...partial });
     set((s) => ({ settings: { ...s.settings, ...partial } }));
-    const settings = get().settings;
-    await persistSettings(settings);
 
     if (partial.vaultPath) {
       // Restart watcher and refresh note list
@@ -602,7 +586,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
 
   deleteNote: async (id: string) => {
     const { settings } = get();
-    await invoke("delete_note", { path: id, vaultPath: settings.vaultPath });
+    await invoke("delete_note", { path: id });
     set((s) => {
       const next = new Map(s.notes);
       next.delete(id);

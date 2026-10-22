@@ -6,7 +6,6 @@ import {
   ChevronRight,
   Circle,
   Clock3,
-  ExternalLink,
   GripHorizontal,
   ListTodo,
   Plus,
@@ -30,8 +29,6 @@ interface Props {
   noteDate: string;
   content: string;
   onChange: (content: string) => void;
-  todoistAvailable: boolean;
-  onTodoistOpen: () => void;
 }
 
 type TaskMode = "today" | "upcoming" | "all";
@@ -143,7 +140,7 @@ function NativeTaskEditor({ result, onSave, onClose }: {
   );
 }
 
-export function NativeTasksPanel({ noteDate, content, onChange, todoistAvailable, onTodoistOpen }: Props) {
+export function NativeTasksPanel({ noteDate, content, onChange }: Props) {
   const { notes, activeNoteId, saveNote, openNote, openDailyNote, loadAllNotesWithContent } = useNotesStore();
   const [mode, setMode] = useState<TaskMode>("today");
   const [selected, setSelected] = useState<TaskResult | null>(null);
@@ -232,7 +229,6 @@ export function NativeTasksPanel({ noteDate, content, onChange, todoistAvailable
           ))}
         </div>
         <div className="native-tasks-actions">
-          {todoistAvailable && <button onClick={onTodoistOpen} title="Open Todoist integration"><ExternalLink size={12} />Todoist</button>}
           <button onClick={openQuickCapture} title="Add task with natural language"><Plus size={14} />Add</button>
         </div>
       </header>

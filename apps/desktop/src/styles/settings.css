@@ -104,8 +104,14 @@
   transition: background 0.1s, color 0.1s;
 }
 .btn-settings-secondary:hover { background: var(--color-border); color: var(--color-text); }
-.btn-icloud { color: var(--color-scheduled); border-color: var(--color-scheduled); }
-.btn-icloud:hover { background: rgba(96, 165, 250, 0.1); }
+.btn-settings-secondary.active { color: var(--color-accent); border-color: var(--color-accent); }
+
+/* Full-width text fields when the label sits above them. */
+.settings-row > .settings-input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+}
 
 .settings-hint {
   font-size: 11px;

@@ -19,4 +19,7 @@ notarytool-profile.json
 *.app
 *.dmg
 release/
-apps/desktop/src/components/EventComposer 2.tsx
+
+# Local-only files
+*.command
+/design/

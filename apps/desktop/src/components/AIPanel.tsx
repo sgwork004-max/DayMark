@@ -3,7 +3,6 @@ import { Sparkles, X } from "lucide-react";
 import { invoke } from "@tauri-apps/api/core";
 import { useNotesStore } from "../store/notesStore.js";
 import { showAppNotice } from "../appNotice.js";
-import type { ManagerAiAccess, ManagerAiResult } from "../managerAi.js";
 
 interface Message {
   role: "user" | "assistant";
@@ -26,16 +25,7 @@ export function AIPanel({ onClose }: { onClose: () => void }) {
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [access, setAccess] = useState<ManagerAiAccess | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const gatewayUrl = settings.aiGatewayUrl?.trim();
-    if (!gatewayUrl) return;
-    invoke<ManagerAiAccess>("get_manager_ai_status", { gatewayUrl })
-      .then(setAccess)
-      .catch(() => setAccess(null));
-  }, [settings.aiGatewayUrl]);
 
   function buildSystemPrompt(): string {
     const noteContext = note
@@ -67,8 +57,7 @@ You help the user write better notes, extract insights, create tasks, and think 
         .map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.content}`)
         .join("\n\n");
 
-      const result = await invoke<ManagerAiResult>("gemini_generate", {
-        gatewayUrl: settings.aiGatewayUrl || null,
+      const result = await invoke<{ text: string }>("gemini_generate", {
         systemInstruction: buildSystemPrompt(),
         input: history,
       });
@@ -78,15 +67,6 @@ You help the user write better notes, extract insights, create tasks, and think 
         next[next.length - 1] = { role: "assistant", content: result.text.trim() };
         return next;
       });
-      if (result.source === "manager" && result.remainingCredits !== null && result.creditLimit !== null) {
-        setAccess({
-          status: "active",
-          creditLimit: result.creditLimit,
-          usedCredits: result.usedCredits ?? result.creditLimit - result.remainingCredits,
-          remainingCredits: result.remainingCredits,
-          expiresAt: access?.expiresAt ?? null,
-        });
-      }
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     } catch (e: unknown) {
       const message = e instanceof Error ? e.message : String(e);
@@ -114,7 +94,6 @@ You help the user write better notes, extract insights, create tasks, and think 
         <div className="ai-panel-title">
           <span className="ai-panel-icon"><Sparkles size={15} strokeWidth={1.75} /></span>
           AI Assistant
-          {access && <span className="ai-credit-badge">{access.remainingCredits} credits</span>}
         </div>
         <button className="panel-close" onClick={onClose}><X size={15} strokeWidth={2} /></button>
       </div>
@@ -126,7 +105,7 @@ You help the user write better notes, extract insights, create tasks, and think 
             key={label}
             className="ai-quick-btn"
             onClick={() => send(prompt)}
-            disabled={streaming}
+            disabled={streaming || !settings.geminiApiKey}
           >
             {label}
           </button>
@@ -139,8 +118,8 @@ You help the user write better notes, extract insights, create tasks, and think 
           <div className="ai-empty">
             <div className="ai-empty-icon"><Sparkles size={36} strokeWidth={1.25} /></div>
             <p>Ask anything about your note, or use a quick action above.</p>
-            {!access && !settings.geminiApiKey && (
-              <p className="ai-empty-warn">Activate Manager AI in Settings (⌘,) to get started.</p>
+            {!settings.geminiApiKey && (
+              <p className="ai-empty-warn">Add a Gemini API key in Settings (⌘,) to get started.</p>
             )}
           </div>
         )}
@@ -149,7 +128,7 @@ You help the user write better notes, extract insights, create tasks, and think 
 
         {messages.map((msg, i) => (
           <div key={i} className={`ai-msg ai-msg-${msg.role}`}>
-            <div className="ai-msg-label">{msg.role === "user" ? "You" : "Manager AI"}</div>
+            <div className="ai-msg-label">{msg.role === "user" ? "You" : "Assistant"}</div>
             <div
               className="ai-msg-content"
               // Safe: content is from Gemini API or the user themselves.
@@ -163,7 +142,7 @@ You help the user write better notes, extract insights, create tasks, and think 
           </div>
         ))}
 
-        {streaming && <div className="ai-working">Manager AI is working...</div>}
+        {streaming && <div className="ai-working">Thinking…</div>}
 
         <div ref={bottomRef} />
       </div>
@@ -180,14 +159,14 @@ You help the user write better notes, extract insights, create tasks, and think 
               send(input);
             }
           }}
-          placeholder="Ask Manager AI..."
+          placeholder="Ask about this note…"
           rows={3}
           disabled={streaming}
         />
         <button
           className={`ai-send-btn ${streaming ? "streaming" : ""}`}
           onClick={() => send(input)}
-          disabled={streaming || !input.trim()}
+          disabled={streaming || !input.trim() || !settings.geminiApiKey}
         >
           {streaming ? "…" : "↑"}
         </button>

@@ -3,6 +3,9 @@ use serde::Serialize;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::{Path, PathBuf};
+use tauri::State;
+
+use super::vault::VaultState;
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -42,8 +45,9 @@ fn vault_is_writable(path: &Path) -> bool {
     result.is_ok()
 }
 
-fn collect_diagnostics(vault_path: String) -> Diagnostics {
-    let vault = PathBuf::from(&vault_path);
+fn collect_diagnostics(vault: &VaultState) -> Diagnostics {
+    let vault = vault.root().unwrap_or_default();
+    let vault_path = vault.to_string_lossy().into_owned();
     let reports = std::fs::read_dir(log_dir())
         .map(|entries| entries.filter_map(Result::ok).count())
         .unwrap_or(0);
@@ -85,13 +89,13 @@ pub fn report_app_error(
 }
 
 #[tauri::command]
-pub fn get_diagnostics(vault_path: String) -> Diagnostics {
-    collect_diagnostics(vault_path)
+pub fn get_diagnostics(vault: State<'_, VaultState>) -> Diagnostics {
+    collect_diagnostics(&vault)
 }
 
 #[tauri::command]
-pub fn export_diagnostics(vault_path: String) -> Result<String, String> {
-    let diagnostics = collect_diagnostics(vault_path);
+pub fn export_diagnostics(vault: State<'_, VaultState>) -> Result<String, String> {
+    let diagnostics = collect_diagnostics(&vault);
     let dir = daymark_dir();
     std::fs::create_dir_all(&dir).map_err(|error| error.to_string())?;
     let path = dir.join("diagnostics.json");

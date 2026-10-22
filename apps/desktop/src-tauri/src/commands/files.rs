@@ -5,7 +5,10 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use tauri::State;
 use walkdir::WalkDir;
+
+use super::vault::VaultState;
 
 static TEMP_COUNTER: AtomicU64 = AtomicU64::new(0);
 const BACKUP_INTERVAL: Duration = Duration::from_secs(5 * 60);
@@ -127,35 +130,36 @@ fn atomic_write(path: &Path, content: &str, keep_backup: bool) -> Result<(), Str
     result
 }
 
-/// Read a single note file
-#[tauri::command]
-pub fn read_note(path: String) -> Result<NoteFile, String> {
-    let p = Path::new(&path);
+fn note_file(display_path: String, p: &Path) -> Result<NoteFile, String> {
     let content = fs::read_to_string(p).map_err(|e| e.to_string())?;
     let meta = fs::metadata(p).map_err(|e| e.to_string())?;
     Ok(NoteFile {
-        path: path.clone(),
         filename: p
             .file_name()
             .unwrap_or_default()
             .to_string_lossy()
             .to_string(),
+        path: display_path,
         content,
         modified_at: file_timestamp(&meta, true),
         created_at: file_timestamp(&meta, false),
     })
 }
 
-/// Write (create or update) a note file
+/// Read a single note file
 #[tauri::command]
-pub fn write_note(path: String, content: String) -> Result<(), String> {
-    atomic_write(Path::new(&path), &content, true)
+pub fn read_note(path: String, vault: State<'_, VaultState>) -> Result<NoteFile, String> {
+    let p = vault.resolve(&path)?;
+    note_file(path, &p)
 }
 
-/// Create a note without ever replacing an existing file.
+/// Write (create or update) a note file
 #[tauri::command]
-pub fn create_note(path: String, content: String) -> Result<NoteFile, String> {
-    let p = Path::new(&path);
+pub fn write_note(path: String, content: String, vault: State<'_, VaultState>) -> Result<(), String> {
+    atomic_write(&vault.resolve(&path)?, &content, true)
+}
+
+fn create_note_at(display_path: String, p: &Path, content: &str) -> Result<NoteFile, String> {
     if p.exists() {
         return Err("A note with this name already exists.".to_string());
     }
@@ -171,30 +175,34 @@ pub fn create_note(path: String, content: String) -> Result<NoteFile, String> {
     file.write_all(content.as_bytes())
         .map_err(|e| e.to_string())?;
     file.sync_all().map_err(|e| e.to_string())?;
-    read_note(path)
+    note_file(display_path, p)
+}
+
+/// Create a note without ever replacing an existing file.
+#[tauri::command]
+pub fn create_note(path: String, content: String, vault: State<'_, VaultState>) -> Result<NoteFile, String> {
+    let p = vault.resolve(&path)?;
+    create_note_at(path, &p, &content)
 }
 
 /// Ensure a note file exists (create empty if not); return its content
 #[tauri::command]
-pub fn ensure_note_exists(path: String, default_content: String) -> Result<NoteFile, String> {
-    let p = Path::new(&path);
+pub fn ensure_note_exists(
+    path: String,
+    default_content: String,
+    vault: State<'_, VaultState>,
+) -> Result<NoteFile, String> {
+    let p = vault.resolve(&path)?;
     if !p.exists() {
         if let Some(parent) = p.parent() {
             fs::create_dir_all(parent).map_err(|e| e.to_string())?;
         }
-        fs::write(p, &default_content).map_err(|e| e.to_string())?;
+        fs::write(&p, &default_content).map_err(|e| e.to_string())?;
     }
-    read_note(path)
+    note_file(path, &p)
 }
 
-/// Move a note into the vault's recoverable trash instead of deleting it.
-#[tauri::command]
-pub fn delete_note(path: String, vault_path: String) -> Result<String, String> {
-    let source = fs::canonicalize(&path).map_err(|e| e.to_string())?;
-    let vault = fs::canonicalize(&vault_path).map_err(|e| e.to_string())?;
-    if !source.starts_with(&vault) {
-        return Err("Refusing to remove a note outside the active vault.".to_string());
-    }
+fn move_to_trash(source: &Path, vault: &Path) -> Result<String, String> {
     let trash = vault.join(".manager-trash");
     fs::create_dir_all(&trash).map_err(|e| e.to_string())?;
     let timestamp = SystemTime::now()
@@ -203,39 +211,48 @@ pub fn delete_note(path: String, vault_path: String) -> Result<String, String> {
         .as_millis();
     let filename = source.file_name().unwrap_or_default().to_string_lossy();
     let destination = trash.join(format!("{timestamp}-{filename}"));
-    fs::rename(&source, &destination).map_err(|e| e.to_string())?;
+    fs::rename(source, &destination).map_err(|e| e.to_string())?;
     Ok(destination.to_string_lossy().into_owned())
+}
+
+/// Move a note into the vault's recoverable trash instead of deleting it.
+#[tauri::command]
+pub fn delete_note(path: String, vault: State<'_, VaultState>) -> Result<String, String> {
+    let source = vault.resolve(&path)?;
+    move_to_trash(&source, &vault.root()?)
 }
 
 /// Update a note's title and move it without a destructive write/delete pair.
 #[tauri::command]
-pub fn rename_note(path: String, new_path: String, content: String) -> Result<NoteFile, String> {
-    let source = Path::new(&path);
-    let destination = Path::new(&new_path);
+pub fn rename_note(
+    path: String,
+    new_path: String,
+    content: String,
+    vault: State<'_, VaultState>,
+) -> Result<NoteFile, String> {
+    let source = vault.resolve(&path)?;
+    let destination = vault.resolve(&new_path)?;
     if source != destination && destination.exists() {
         return Err("A note with this name already exists.".to_string());
     }
-    atomic_write(source, &content, true)?;
+    atomic_write(&source, &content, true)?;
     if source != destination {
         if let Some(parent) = destination.parent() {
             fs::create_dir_all(parent).map_err(|e| e.to_string())?;
         }
-        fs::rename(source, destination).map_err(|e| e.to_string())?;
+        fs::rename(&source, &destination).map_err(|e| e.to_string())?;
     }
-    read_note(new_path)
+    note_file(new_path, &destination)
 }
 
-/// List all .md files under a vault directory (recursive)
-#[tauri::command]
-pub fn list_notes(vault_path: String) -> Result<Vec<NoteStub>, String> {
-    let base = PathBuf::from(&vault_path);
+fn list_notes_in(base: &Path) -> Result<Vec<NoteStub>, String> {
     if !base.exists() {
-        fs::create_dir_all(&base).map_err(|e| e.to_string())?;
+        fs::create_dir_all(base).map_err(|e| e.to_string())?;
         return Ok(vec![]);
     }
 
     let mut notes = Vec::new();
-    for entry in WalkDir::new(&base)
+    for entry in WalkDir::new(base)
         .into_iter()
         .filter_entry(|entry| {
             entry.depth() == 0 || !entry.file_name().to_string_lossy().starts_with(".manager-")
@@ -261,6 +278,22 @@ pub fn list_notes(vault_path: String) -> Result<Vec<NoteStub>, String> {
     }
 
     notes.sort_by(|a, b| b.modified_at.cmp(&a.modified_at));
+    Ok(notes)
+}
+
+/// List all .md files under a vault or import directory (recursive)
+#[tauri::command]
+pub fn list_notes(vault_path: String, vault: State<'_, VaultState>) -> Result<Vec<NoteStub>, String> {
+    let base = vault.resolve_readable(&vault_path)?;
+    let mut notes = list_notes_in(&base)?;
+    // Report paths under the folder the caller asked for, not its resolved form.
+    if base != Path::new(&vault_path) {
+        for note in &mut notes {
+            if let Ok(relative) = Path::new(&note.path).strip_prefix(&base) {
+                note.path = Path::new(&vault_path).join(relative).to_string_lossy().into_owned();
+            }
+        }
+    }
     Ok(notes)
 }
 
@@ -292,8 +325,9 @@ mod tests {
     fn create_never_overwrites_an_existing_note() {
         let vault = test_vault("create");
         let path = vault.join("Notes/Test.md");
-        create_note(path.to_string_lossy().into_owned(), "first".into()).unwrap();
-        assert!(create_note(path.to_string_lossy().into_owned(), "second".into()).is_err());
+        let display = path.to_string_lossy().into_owned();
+        create_note_at(display.clone(), &path, "first").unwrap();
+        assert!(create_note_at(display, &path, "second").is_err());
         assert_eq!(fs::read_to_string(&path).unwrap(), "first");
         let _ = fs::remove_dir_all(vault);
     }
@@ -304,24 +338,18 @@ mod tests {
         fs::create_dir_all(vault.join("Notes")).unwrap();
         let path = vault.join("Notes/Test.md");
         fs::write(&path, "recover me").unwrap();
-        let trashed = delete_note(
-            path.to_string_lossy().into_owned(),
-            vault.to_string_lossy().into_owned(),
-        )
-        .unwrap();
+        let trashed = move_to_trash(&path, &vault).unwrap();
         assert!(!path.exists());
         assert_eq!(fs::read_to_string(trashed).unwrap(), "recover me");
-        assert!(list_notes(vault.to_string_lossy().into_owned())
-            .unwrap()
-            .is_empty());
+        assert!(list_notes_in(&vault).unwrap().is_empty());
         let _ = fs::remove_dir_all(vault);
     }
 }
 
 /// List top-level folders inside vault
 #[tauri::command]
-pub fn list_folders(vault_path: String) -> Result<Vec<FolderEntry>, String> {
-    let base = PathBuf::from(&vault_path);
+pub fn list_folders(vault_path: String, vault: State<'_, VaultState>) -> Result<Vec<FolderEntry>, String> {
+    let base = vault.resolve(&vault_path)?;
     if !base.exists() {
         return Ok(vec![]);
     }

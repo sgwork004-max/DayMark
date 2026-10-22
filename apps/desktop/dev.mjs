@@ -52,7 +52,13 @@ const poller = setInterval(poll, 800);
 // Find the tauri CLI binary shipped with this package
 const tauriBin = join(DIR, 'node_modules/.bin/tauri');
 
-const proc = spawn(tauriBin, ['dev'], {
+// MANAGER_DEV_PORT runs Vite on another port when 1420 is taken.
+const port = process.env.MANAGER_DEV_PORT;
+const args = port
+  ? ['dev', '--config', JSON.stringify({ build: { devUrl: `http://localhost:${port}` } })]
+  : ['dev'];
+
+const proc = spawn(tauriBin, args, {
   stdio: 'inherit',
   cwd: DIR,
   env: { ...process.env },

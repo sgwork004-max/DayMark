@@ -31,9 +31,13 @@ export function convertObsidianNote(content: string, title: string): string {
     "#" + tag.replace(/\//g, "-")
   );
 
-  // Add title as H1 if missing
-  if (!out.trimStart().startsWith("#")) {
-    out = `# ${title}\n\n${out}`;
+  // Add title as H1 if missing, keeping YAML frontmatter at the top.
+  const frontmatter = /^---\n[\s\S]*?\n---\n?/.exec(out.trimStart())?.[0] ?? "";
+  const body = out.trimStart().slice(frontmatter.length).trimStart();
+  if (!/^# /.test(body)) {
+    out = `${frontmatter}# ${title}\n\n${body}`;
+  } else {
+    out = `${frontmatter}${body}`;
   }
 
   return out.trim() + "\n";

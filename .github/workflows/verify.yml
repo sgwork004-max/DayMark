@@ -19,10 +19,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @daymark/core test
-      - run: pnpm --filter @daymark/importers build
+      - run: pnpm --filter @daymark/importers test
       - run: pnpm --filter @daymark/desktop typecheck
       - run: pnpm --filter @daymark/web typecheck
-      - run: pnpm --filter @daymark/ai-gateway typecheck
       - run: cargo test --manifest-path apps/desktop/src-tauri/Cargo.toml
       - run: pnpm --filter @daymark/desktop vite:build
       - run: pnpm --filter @daymark/web build

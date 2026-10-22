@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   clearScreen: false,
   server: {
-    port: 1420,
+    port: Number(process.env.MANAGER_DEV_PORT ?? 1420),
     strictPort: true,
     watch: {
       // Tauri watches src-tauri separately

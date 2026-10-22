@@ -38,9 +38,8 @@ export function ImportModal({ onClose }: { onClose: () => void }) {
 
   async function pickFolder() {
     try {
-      const { open } = await import("@tauri-apps/plugin-dialog");
-      const dir = await open({ directory: true, multiple: false });
-      if (typeof dir === "string") setFolderPath(dir);
+      const dir = await invoke<string | null>("choose_import_folder");
+      if (dir) setFolderPath(dir);
     } catch {
       // dialog not available in dev
     }

@@ -5,7 +5,6 @@ import { defaultKeymap, historyKeymap, history, indentWithTab } from "@codemirro
 import { searchKeymap } from "@codemirror/search";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language";
-import { insertExternalAgendaTask } from "@daymark/core";
 import { inlineDecorations } from "./extensions/wikilinks.js";
 import { notePlanKeymap } from "./extensions/keymap.js";
 import { notePlanTheme } from "./theme.js";
@@ -18,45 +17,6 @@ interface NoteEditorProps {
   autoFocus?: boolean;
 }
 
-const TODOIST_TASK_MIME = "application/x-manager-todoist-task";
-
-interface TodoistDropPayload {
-  content: string;
-  priority?: number;
-}
-
-function insertTodoistDrop(
-  view: EditorView,
-  transferred: string,
-  clientX: number,
-  clientY: number,
-): boolean {
-  const raw = transferred;
-  if (!raw) return false;
-
-  let payload: TodoistDropPayload;
-  try { payload = JSON.parse(raw) as TodoistDropPayload; } catch { return false; }
-  const coords = { x: clientX, y: clientY };
-  const dropPosition = view.posAtCoords(coords) ?? view.state.selection.main.head;
-  const dropLine = view.state.doc.lineAt(dropPosition).number - 1;
-  const result = insertExternalAgendaTask(view.state.doc.toString(), payload.content, payload.priority, dropLine);
-  if (result.lineIndex < 0) return false;
-  const resultLines = result.content.split("\n");
-  const cursor = resultLines.slice(0, result.lineIndex).reduce((total, line) => total + line.length + 1, 0)
-    + (resultLines[result.lineIndex]?.length ?? 0);
-  if (!result.inserted) {
-    view.dispatch({ selection: { anchor: cursor }, effects: EditorView.scrollIntoView(cursor, { y: "center" }) });
-    view.focus();
-    return true;
-  }
-  view.dispatch({
-    changes: { from: 0, to: view.state.doc.length, insert: result.content },
-    selection: { anchor: cursor },
-    effects: EditorView.scrollIntoView(cursor, { y: "center" }),
-  });
-  view.focus();
-  return true;
-}
 
 function buildStaticExtensions(readOnly: boolean): Extension[] {
   return [
@@ -138,29 +98,6 @@ export function NoteEditor({
             if (m?.[1]) { handler(m[1]); return true; }
             return false;
           },
-          dragover(event, view) {
-            const todoistDrag = document.body.classList.contains("todoist-task-drag-active")
-              || Boolean(event.dataTransfer && Array.from(event.dataTransfer.types).includes(TODOIST_TASK_MIME));
-            if (!todoistDrag || !event.dataTransfer) return false;
-            event.preventDefault();
-            event.dataTransfer.dropEffect = "copy";
-            view.dom.classList.add("cm-todoist-dragover");
-            return true;
-          },
-          dragleave(event, view) {
-            if (!view.dom.contains(event.relatedTarget as Node | null)) view.dom.classList.remove("cm-todoist-dragover");
-            return false;
-          },
-          drop(event, view) {
-            view.dom.classList.remove("cm-todoist-dragover");
-            const custom = event.dataTransfer?.getData(TODOIST_TASK_MIME) ?? "";
-            const plain = event.dataTransfer?.getData("text/plain") ?? "";
-            const fallback = plain.startsWith("manager-todoist-task:") ? plain.slice("manager-todoist-task:".length) : "";
-            if (!custom && !fallback) return false;
-            event.preventDefault();
-            event.stopPropagation();
-            return insertTodoistDrop(view, custom || fallback, event.clientX, event.clientY);
-          },
         }),
       ],
     });
@@ -171,24 +108,6 @@ export function NoteEditor({
 
     return () => { view.destroy(); viewRef.current = null; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // WebKit can strip HTML drag payloads. The Todoist panel also emits this
-  // pointer-based event so the in-app drag path remains deterministic.
-  useEffect(() => {
-    function onTodoistPointerDrop(event: Event) {
-      const detail = (event as CustomEvent<TodoistDropPayload & { clientX: number; clientY: number }>).detail;
-      const view = viewRef.current;
-      if (!view || !detail?.content) return;
-      insertTodoistDrop(
-        view,
-        JSON.stringify({ content: detail.content, priority: detail.priority }),
-        detail.clientX,
-        detail.clientY,
-      );
-    }
-    document.addEventListener("daymark:drop-todoist-task", onTodoistPointerDrop);
-    return () => document.removeEventListener("daymark:drop-todoist-task", onTodoistPointerDrop);
   }, []);
 
   // Sync when the active note changes (external content change)

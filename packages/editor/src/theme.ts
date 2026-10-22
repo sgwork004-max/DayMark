@@ -10,6 +10,8 @@ export const notePlanTheme = EditorView.theme(
       color: "var(--color-text)",
     },
     ".cm-scroller": {
+      // CodeMirror's base theme sets monospace here, which hides the font setting.
+      fontFamily: "inherit",
       overflowY: "auto",
       overflowX: "hidden",
       lineHeight: "1.75",
@@ -116,10 +118,6 @@ export const notePlanTheme = EditorView.theme(
     ".cm-task-checkbox-token.is-checked": { color: "#35b87f !important" },
     ".cm-task-checkbox-token.is-scheduled": { color: "var(--color-scheduled) !important" },
     ".cm-task-checkbox-token.is-cancelled": { color: "var(--color-text-disabled) !important", opacity: "0.65" },
-    "&.cm-todoist-dragover": {
-      boxShadow: "inset 0 0 0 2px color-mix(in srgb, var(--color-accent) 45%, transparent)",
-      background: "color-mix(in srgb, var(--color-accent) 4%, transparent)",
-    },
 
     // Tasks
     ".cm-task-open":      { color: "var(--color-text)" },
