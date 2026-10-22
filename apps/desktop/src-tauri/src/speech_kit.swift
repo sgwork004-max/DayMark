@@ -26,7 +26,7 @@ private func requestSpeechPermissions() -> String? {
     }
 
     guard speechStatus == .authorized else {
-        return "Speech recognition is not allowed. Enable Manager in System Settings > Privacy & Security > Speech Recognition."
+        return "Speech recognition is not allowed. Enable DayMark in System Settings > Privacy & Security > Speech Recognition."
     }
 
     var microphoneGranted = AVCaptureDevice.authorizationStatus(for: .audio) == .authorized
@@ -44,7 +44,7 @@ private func requestSpeechPermissions() -> String? {
     }
 
     guard microphoneGranted else {
-        return "Microphone access is not allowed. Enable Manager in System Settings > Privacy & Security > Microphone."
+        return "Microphone access is not allowed. Enable DayMark in System Settings > Privacy & Security > Microphone."
     }
     return nil
 }
@@ -78,7 +78,7 @@ public func speechStart() -> UnsafeMutablePointer<CChar>? {
     let inputNode = engine.inputNode
     let format = inputNode.outputFormat(forBus: 0)
     guard format.sampleRate > 0 else {
-        return strdup("Manager could not access a valid microphone input.")
+        return strdup("DayMark could not access a valid microphone input.")
     }
 
     gSpeechLock.lock()

@@ -111,7 +111,7 @@ function NativeTaskEditor({ result, onSave, onClose }: {
       return;
     }
     if (reminderStatus === "denied") {
-      setError("Notification permission is off. Enable Manager in System Settings → Notifications.");
+      setError("Notification permission is off. Enable DayMark in System Settings → Notifications.");
       return;
     }
     onClose();
@@ -211,7 +211,7 @@ export function NativeTasksPanel({ noteDate, content, onChange }: Props) {
   }
 
   return (
-    <section className="native-tasks-panel" style={{ height: panelHeight }} aria-label="Manager tasks">
+    <section className="native-tasks-panel" style={{ height: panelHeight }} aria-label="DayMark tasks">
       <div
         className="native-tasks-resize"
         title="Drag to resize"

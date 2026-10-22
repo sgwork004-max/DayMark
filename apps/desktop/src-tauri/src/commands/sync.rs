@@ -27,13 +27,13 @@ fn display_event_path(
 pub fn icloud_vault_path() -> String {
     let home = std::env::var("HOME").unwrap_or_default();
     let base = PathBuf::from(&home).join("Library/Mobile Documents/com~apple~CloudDocs");
-    for name in ["Manager", "Daymark", "NotePlan"] {
+    for name in ["Manager", "DayMark", "Daymark", "NotePlan"] {
         let candidate = base.join(name);
         if candidate.exists() {
             return candidate.to_string_lossy().into_owned();
         }
     }
-    base.join("Manager").to_string_lossy().into_owned()
+    base.join("DayMark").to_string_lossy().into_owned()
 }
 
 #[tauri::command]

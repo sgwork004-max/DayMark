@@ -6,7 +6,7 @@ export default function DocsPage() {
       </a>
       <h1 style={{ fontSize: 32, fontWeight: 800, marginTop: 24, marginBottom: 8 }}>Documentation</h1>
       <p style={{ color: "var(--color-text-muted)", marginBottom: 40 }}>
-        Everything you need to get started with Manager. See the <a href="https://github.com/sgwork004-max/manager/blob/main/INSTALL.md">Mac install instructions</a> for the current release.
+        Everything you need to get started with DayMark. See the <a href="https://github.com/sgwork004-max/DayMark/blob/main/INSTALL.md">Mac install instructions</a> for the current release.
       </p>
 
       {SECTIONS.map((s) => (
@@ -29,7 +29,7 @@ const SECTIONS = [
   {
     title: "Getting Started",
     content: [
-      "Download the Mac release and follow the scoped terminal install step. On first launch, your vault is created at ~/Manager/.",
+      "Download the Mac release and follow the scoped terminal install step. On first launch, your vault is created at ~/DayMark/.",
       "Open today's daily note with ⌘T. Write your tasks as markdown checkboxes: - [ ] Task text.",
       "Press ⌘K to open the command palette and search your notes or run commands.",
     ],
@@ -48,7 +48,7 @@ const SECTIONS = [
     title: "Wiki-Links",
     content: [
       "Type [[Note Title]] to link to any note in your vault. Click the link to navigate there.",
-      "If the linked note doesn't exist, Manager creates it automatically.",
+      "If the linked note doesn't exist, DayMark creates it automatically.",
       "The Backlinks panel (⌘⇧B) shows all notes that link to the current note.",
     ],
   },
@@ -57,7 +57,7 @@ const SECTIONS = [
     content: [
       "Go to Settings (⌘,) and click 'iCloud Drive' to move your vault to iCloud.",
       "iCloud Drive can sync the Markdown folder between Macs using the same Apple account. Keep a separate backup of important notes.",
-      "Manager watches your vault for external changes and shows a conflict dialog if a note was edited on another device.",
+      "DayMark watches your vault for external changes and shows a conflict dialog if a note was edited on another device.",
     ],
   },
   {

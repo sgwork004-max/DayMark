@@ -1,4 +1,4 @@
-export const PRODUCT_NAME = "Manager";
+export const PRODUCT_NAME = "DayMark";
 export const PRODUCT_ID = "co.daymark.desktop";
 
 export const APP_EVENTS = {

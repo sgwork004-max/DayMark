@@ -4,8 +4,8 @@
 use tauri::menu::{Menu, MenuBuilder, MenuEvent, MenuItemBuilder, SubmenuBuilder};
 use tauri::{AppHandle, Emitter, Runtime};
 
-const REPO_URL: &str = "https://github.com/sgwork004-max/manager";
-const ISSUES_URL: &str = "https://github.com/sgwork004-max/manager/issues/new/choose";
+const REPO_URL: &str = "https://github.com/sgwork004-max/DayMark";
+const ISSUES_URL: &str = "https://github.com/sgwork004-max/DayMark/issues/new/choose";
 
 fn item<R: Runtime>(
     app: &AppHandle<R>,
@@ -21,7 +21,7 @@ fn item<R: Runtime>(
 }
 
 pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
-    let app_menu = SubmenuBuilder::new(app, "Manager")
+    let app_menu = SubmenuBuilder::new(app, "DayMark")
         .about(None)
         .separator()
         .item(&item(app, "settings", "Settings…", Some("CmdOrCtrl+,"))?)
@@ -80,7 +80,7 @@ pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
         .item(&item(app, "shortcuts", "Keyboard Shortcuts", None)?)
         .separator()
         .item(&item(app, "report-issue", "Report an Issue…", None)?)
-        .item(&item(app, "github", "Manager on GitHub", None)?)
+        .item(&item(app, "github", "DayMark on GitHub", None)?)
         .build()?;
 
     MenuBuilder::new(app)

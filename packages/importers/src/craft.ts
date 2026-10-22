@@ -1,4 +1,4 @@
-/** Convert Craft exported markdown to Manager format.
+/** Convert Craft exported markdown to DayMark format.
  *
  * Craft exports markdown with:
  * - `* item` for bullets (already markdown)

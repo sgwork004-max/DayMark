@@ -13,18 +13,18 @@ use super::vault::VaultState;
 static TEMP_COUNTER: AtomicU64 = AtomicU64::new(0);
 const BACKUP_INTERVAL: Duration = Duration::from_secs(5 * 60);
 
-/// Preserve existing vaults; new installations use ~/Manager.
+/// Preserve existing vaults (including ~/Manager from 0.5–0.6); new installations use ~/DayMark.
 #[tauri::command]
 pub fn default_vault_path() -> String {
     let home = std::env::var("HOME").unwrap_or_else(|_| "/tmp".to_string());
     let home = PathBuf::from(home);
-    for name in ["Manager", "Daymark", "NotePlan"] {
+    for name in ["Manager", "DayMark", "Daymark", "NotePlan"] {
         let candidate = home.join(name);
         if candidate.exists() {
             return candidate.to_string_lossy().into_owned();
         }
     }
-    home.join("Manager").to_string_lossy().into_owned()
+    home.join("DayMark").to_string_lossy().into_owned()
 }
 
 #[derive(Debug, Serialize, Deserialize)]

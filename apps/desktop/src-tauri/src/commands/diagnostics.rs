@@ -76,7 +76,7 @@ pub fn report_app_error(
     let timestamp = Utc::now();
     let filename = format!("crash-{}.log", timestamp.format("%Y%m%d-%H%M%S"));
     let report = format!(
-        "Manager crash report\nGenerated: {}\nVersion: {}\nOS: {} {}\n\nMessage:\n{}\n\nStack:\n{}\n\nComponent stack:\n{}\n",
+        "DayMark crash report\nGenerated: {}\nVersion: {}\nOS: {} {}\n\nMessage:\n{}\n\nStack:\n{}\n\nComponent stack:\n{}\n",
         timestamp.to_rfc3339(),
         env!("CARGO_PKG_VERSION"),
         std::env::consts::OS,

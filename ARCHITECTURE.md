@@ -1,4 +1,4 @@
-# Manager architecture and growth path
+# DayMark architecture and growth path
 
 ## Current release boundary
 

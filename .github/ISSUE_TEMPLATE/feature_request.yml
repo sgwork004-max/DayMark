@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest a change to Manager
+description: Suggest a change to DayMark
 labels: [enhancement]
 body:
   - type: textarea

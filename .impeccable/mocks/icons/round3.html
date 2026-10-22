@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recto icons, round 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #232427; color: #e9e9ea; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; padding: 28px 16px 80px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 650; }
+  .lead { color: #a0a1a6; max-width: 76ch; margin-top: 4px; }
+  .ui { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px; padding: 14px 16px; border-radius: 12px; background: #EFEEEA; color: #24262A; }
+  .ui .lbl { font: 600 11px/1 -apple-system, sans-serif; color: #85878C; }
+  .chips { display: flex; gap: 6px; }
+  .chips i { width: 26px; height: 26px; border-radius: 6px; display: block; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+  .mini-card { width: 64px; height: 64px; border-radius: 8px; background: #24262A; color: #FBFAF8; padding: 6px 7px; display: flex; flex-direction: column; justify-content: space-between; }
+  .mini-card span { font: 500 8px/1 "JetBrains Mono", monospace; opacity: .7; }
+  .mini-card b { font: 700 32px/.9 "Zilla Slab", serif; }
+  .mini-strip { display: flex; gap: 3px; width: 120px; } .mini-strip i { height: 5px; flex: 1; border-radius: 2px; background: #E4E2DC; } .mini-strip i.on { background: #2E6F8E; }
+  .hero { margin-top: 18px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 26px 18px; border-radius: 14px; background: linear-gradient(180deg, #dfe2e4 0%, #c6ccd0 100%); }
+  .hero.dark { background: linear-gradient(180deg, #2e3238 0%, #15181c 100%); margin-top: 10px; }
+  .hero figure { text-align: center; }
+  .hero svg { width: 100%; height: auto; max-width: 196px; display: block; margin: 0 auto; }
+  .hero figcaption { font-size: 12px; color: #3a3d42; margin-top: 4px; }
+  .hero.dark figcaption { color: #c9cdd2; }
+  .opt { margin-top: 30px; display: grid; grid-template-columns: 300px 1fr; gap: 28px; align-items: center; padding-top: 26px; border-top: 1px solid #3a3b40; }
+  .opt h2 { font-size: 17px; font-weight: 650; }
+  .opt h2 span { font: 500 12px "JetBrains Mono", monospace; color: #a0a1a6; margin-right: 8px; }
+  .opt p { color: #a0a1a6; font-size: 13px; margin-top: 4px; max-width: 60ch; }
+  .big svg { width: 300px; height: 300px; display: block; }
+  .sizes { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
+  .tile { border-radius: 10px; padding: 14px 16px; display: flex; align-items: flex-end; gap: 14px; }
+  .tile.light { background: linear-gradient(135deg, #e6ebef, #cdd6dd); }
+  .tile.dark { background: linear-gradient(135deg, #2c3138, #15181c); }
+  .tile svg { display: block; }
+  .tile .lbl { font: 500 10px "JetBrains Mono", monospace; color: #6b7178; text-align: center; }
+  .tile.dark .lbl { color: #8b9198; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="sq"><rect x="100" y="100" width="824" height="824" rx="186"/></clipPath>
+    <filter id="iconShadow" x="-15%" y="-15%" width="130%" height="135%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".3"/></filter>
+    <filter id="cardShadow" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1B1C1F" flood-opacity=".25"/><feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#1B1C1F" flood-opacity=".22"/></filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="46"/></filter>
+    <filter id="glowS" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="20"/></filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="10"/></filter>
+
+    <linearGradient id="paperBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBFAF8"/><stop offset="1" stop-color="#E7E4DC"/></linearGradient>
+    <linearGradient id="inkBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34373D"/><stop offset="1" stop-color="#1B1C1F"/></linearGradient>
+    <linearGradient id="inkCard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33363B"/><stop offset="1" stop-color="#1E2023"/></linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7C25A"/><stop offset=".55" stop-color="#EE9A3C"/><stop offset="1" stop-color="#D2553A"/></linearGradient>
+    <radialGradient id="sunR" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFE4A3"/><stop offset=".45" stop-color="#F4B04B"/><stop offset="1" stop-color="#DB6B3A"/></radialGradient>
+    <linearGradient id="dawnSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F5168"/><stop offset=".45" stop-color="#3E7E97"/><stop offset=".78" stop-color="#C9A877"/><stop offset="1" stop-color="#F0C27A"/></linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F1EEE7"/></linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A84A6"/><stop offset="1" stop-color="#245A74"/></linearGradient>
+    <linearGradient id="longShadow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B1C1F" stop-opacity=".55"/><stop offset="1" stop-color="#1B1C1F" stop-opacity="0"/></linearGradient>
+    <linearGradient id="dialShadow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#24262A" stop-opacity=".42"/><stop offset="1" stop-color="#24262A" stop-opacity="0"/></linearGradient>
+    <radialGradient id="cornerSun" cx=".12" cy=".1" r=".75"><stop offset="0" stop-color="#F7C25A" stop-opacity=".75"/><stop offset=".4" stop-color="#F0A64A" stop-opacity=".18"/><stop offset="1" stop-color="#F0A64A" stop-opacity="0"/></radialGradient>
+  </defs>
+
+  <!-- 1 Date Sunrise -->
+  <symbol id="ic1" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#paperBg)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".16"/>
+      <circle cx="512" cy="440" r="250" fill="#F2B04A" opacity=".55" filter="url(#glow)"/>
+      <g stroke="#E9A140" stroke-width="10" stroke-linecap="round" opacity=".5">
+        <path d="M512 160 V 210"/><path d="M332 214 l 30 40"/><path d="M692 214 l -30 40"/><path d="M212 340 l 46 22"/><path d="M812 340 l -46 22"/>
+      </g>
+    </g>
+    <circle cx="512" cy="470" r="176" fill="url(#sunR)"/>
+    <g filter="url(#cardShadow)"><rect x="252" y="456" width="520" height="372" rx="54" fill="url(#inkCard)"/></g>
+    <path d="M306 458 H 718" stroke="#fff" stroke-width="3" opacity=".18" stroke-linecap="round"/>
+    <text x="304" y="526" font-family="JetBrains Mono, monospace" font-weight="500" font-size="34" fill="#FBFAF8" opacity=".62" letter-spacing="3">TODAY</text>
+    <text x="300" y="738" font-family="Zilla Slab, serif" font-weight="700" font-size="250" fill="#FBFAF8">R</text>
+    <g>
+      <rect x="520" y="726" width="44" height="14" rx="7" fill="#6FAFCB"/>
+      <rect x="572" y="726" width="44" height="14" rx="7" fill="#6FAFCB"/>
+      <rect x="624" y="726" width="44" height="14" rx="7" fill="#4A4D53"/>
+      <rect x="676" y="726" width="44" height="14" rx="7" fill="#4A4D53"/>
+    </g>
+  </symbol>
+
+  <!-- 2 Day Arc -->
+  <symbol id="ic2" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#inkBg)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".06"/>
+      <circle cx="358" cy="388" r="190" fill="#F2A848" opacity=".35" filter="url(#glow)"/>
+    </g>
+    <!-- arc of 6 segments, center (512,700) r=300, from 180deg to 0deg -->
+    <g fill="none" stroke-linecap="round" stroke-width="40">
+      <path d="M212 700 A300 300 0 0 1 252 550" stroke="#6FAFCB"/>
+      <path d="M272 520 A300 300 0 0 1 382 430" stroke="#6FAFCB"/>
+      <path d="M418 415 A300 300 0 0 1 606 415" stroke="#4A4D53"/>
+      <path d="M642 430 A300 300 0 0 1 752 520" stroke="#4A4D53"/>
+      <path d="M772 550 A300 300 0 0 1 812 700" stroke="#4A4D53"/>
+    </g>
+    <circle cx="400" cy="420" r="84" fill="url(#sunR)"/>
+    <circle cx="400" cy="420" r="84" fill="none" stroke="#FFE9B8" stroke-width="4" opacity=".6"/>
+    <!-- horizon page -->
+    <g filter="url(#cardShadow)"><rect x="196" y="700" width="632" height="150" rx="34" fill="url(#card)"/></g>
+    <rect x="196" y="700" width="632" height="22" rx="11" fill="#C2412D"/>
+    <text x="512" y="808" text-anchor="middle" font-family="Zilla Slab, serif" font-weight="700" font-size="74" fill="#24262A">Recto</text>
+  </symbol>
+
+  <!-- 3 Long Shadow -->
+  <symbol id="ic3" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#dawnSky)"/></g>
+    <g clip-path="url(#sq)">
+      <circle cx="512" cy="600" r="210" fill="#FFD27E" opacity=".75" filter="url(#glow)"/>
+      <circle cx="512" cy="610" r="128" fill="url(#sunR)"/>
+      <!-- ground -->
+      <rect x="100" y="640" width="824" height="300" fill="#EFEEEA"/>
+      <rect x="100" y="640" width="824" height="300" fill="#fff" filter="url(#grain)" opacity=".2"/>
+      <rect x="100" y="636" width="824" height="8" fill="#FFE2A6" opacity=".8"/>
+      <!-- long shadow toward viewer -->
+      <path d="M352 640 L 672 640 L 860 940 L 164 940 Z" fill="url(#longShadow)"/>
+    </g>
+    <!-- standing P1 card -->
+    <g filter="url(#cardShadow)">
+      <rect x="352" y="300" width="320" height="344" rx="36" fill="url(#card)"/>
+    </g>
+    <rect x="352" y="300" width="320" height="28" rx="14" fill="#C2412D"/>
+    <rect x="352" y="314" width="320" height="16" fill="#C2412D"/>
+    <rect x="352" y="300" width="320" height="344" rx="36" fill="#fff" filter="url(#grain)" opacity=".15"/>
+    <rect x="392" y="380" width="58" height="58" rx="14" fill="url(#teal)"/>
+    <path d="M407 409 l 12 12 l 22 -25" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="470" y="396" width="160" height="22" rx="11" fill="#D6D1C6"/>
+    <rect x="392" y="474" width="58" height="58" rx="14" fill="none" stroke="#24262A" stroke-width="8"/>
+    <rect x="470" y="492" width="170" height="22" rx="11" fill="#24262A"/>
+    <rect x="392" y="566" width="200" height="18" rx="9" fill="#DCD7CC"/>
+    <!-- rim light from the sun behind -->
+    <rect x="352" y="300" width="320" height="344" rx="36" fill="none" stroke="#FFD99A" stroke-width="4" opacity=".7"/>
+  </symbol>
+
+  <!-- 4 Sundial R -->
+  <symbol id="ic4" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#paperBg)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="url(#cornerSun)"/>
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".16"/>
+      <circle cx="210" cy="210" r="70" fill="url(#sunR)"/>
+    </g>
+    <!-- hour ticks on a dial arc (center 512,760, r 300) -->
+    <g stroke="#24262A" stroke-linecap="round" stroke-width="10">
+      <path d="M212 760 h 34"/><path d="M252 610 l 30 17"/><path d="M362 500 l 17 30"/><path d="M512 460 v 34"/><path d="M662 500 l -17 30"/><path d="M772 610 l -30 17"/><path d="M812 760 h -34"/>
+    </g>
+    <g font-family="JetBrains Mono, monospace" font-weight="700" font-size="34" fill="#85878C" text-anchor="middle">
+      <text x="196" y="806">6</text><text x="512" y="440">12</text><text x="830" y="806">18</text>
+    </g>
+    <!-- shadow of the gnomon falling to the lower right -->
+    <path d="M440 760 L 600 760 L 846 900 L 640 900 Z" fill="url(#dialShadow)" clip-path="url(#sq)"/>
+    <path d="M300 760 H 724" stroke="#24262A" stroke-width="8" stroke-linecap="round" opacity=".25"/>
+    <!-- gnomon R standing on the line -->
+    <text x="512" y="760" text-anchor="middle" font-family="Zilla Slab, serif" font-weight="700" font-size="330" fill="#24262A">R</text>
+    <rect x="300" y="770" width="424" height="16" rx="8" fill="#2E6F8E"/>
+  </symbol>
+
+  <!-- 5 Horizon Bands -->
+  <symbol id="ic5" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#paperBg)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".16"/>
+      <circle cx="512" cy="560" r="240" fill="#F2B04A" opacity=".45" filter="url(#glow)"/>
+    </g>
+    <defs><clipPath id="sunClip5"><circle cx="512" cy="560" r="236"/></clipPath></defs>
+    <g clip-path="url(#sunClip5)">
+      <rect x="276" y="324" width="472" height="472" fill="url(#sun)"/>
+      <rect x="276" y="574" width="472" height="40" fill="#C2412D"/>
+      <rect x="276" y="632" width="472" height="34" fill="#C48A1C"/>
+      <rect x="276" y="684" width="472" height="28" fill="#2E6F8E"/>
+      <rect x="276" y="730" width="472" height="22" fill="#24262A"/>
+      <rect x="276" y="770" width="472" height="18" fill="#85878C"/>
+    </g>
+    <rect x="176" y="800" width="672" height="14" rx="7" fill="#24262A" opacity=".85"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+  <h1>Recto icons, round 3: the sun, in Field Day's language</h1>
+  <p class="lead">Every icon here is built from the app's own parts: warm paper, the ink date card, the teal accent, brick and ochre priorities, slab numerals and the progress strip. Shown on light and dark desktops, then each at real sizes.</p>
+
+  <div class="ui">
+    <span class="lbl">FIELD DAY UI</span>
+    <div class="chips"><i style="background:#FBFAF8"></i><i style="background:#EFEEEA"></i><i style="background:#24262A"></i><i style="background:#2E6F8E"></i><i style="background:#C2412D"></i><i style="background:#C48A1C"></i></div>
+    <div class="mini-card"><span>OCT 2026</span><b>21</b><span>DAY 294</span></div>
+    <div><div style="font:700 22px/1 'Zilla Slab',serif">Wednesday</div><div class="mini-strip" style="margin-top:8px"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+  </div>
+
+  <div class="hero">
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic1"/></svg><figcaption>Date Sunrise</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic2"/></svg><figcaption>Day Arc</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic3"/></svg><figcaption>Long Shadow</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic4"/></svg><figcaption>Sundial R</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic5"/></svg><figcaption>Horizon Bands</figcaption></figure>
+  </div>
+  <div class="hero dark">
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic1"/></svg><figcaption>Date Sunrise</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic2"/></svg><figcaption>Day Arc</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic3"/></svg><figcaption>Long Shadow</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic4"/></svg><figcaption>Sundial R</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic5"/></svg><figcaption>Horizon Bands</figcaption></figure>
+  </div>
+
+  <section class="opt" data-ic="ic1"><div class="big"></div><div><h2><span>01</span>Date Sunrise</h2><p>The app's ink date card with the sun coming up behind it. Instead of a date, the card holds the slab R and the day's progress strip, two segments done in teal.</p></div></section>
+  <section class="opt" data-ic="ic2"><div class="big"></div><div><h2><span>02</span>Day Arc</h2><p>The progress strip bent into the sun's path across a charcoal sky. Two segments are done in teal and the sun sits where the day has reached, over a page with a brick P1 edge.</p></div></section>
+  <section class="opt" data-ic="ic3"><div class="big"></div><div><h2><span>03</span>Long Shadow</h2><p>A P1 card stands on warm paper at dawn, rim-lit by the sun behind it and casting a long morning shadow toward you.</p></div></section>
+  <section class="opt" data-ic="ic4"><div class="big"></div><div><h2><span>04</span>Sundial R</h2><p>A sundial on warm paper: the slab R is the gnomon, and its shadow falls across the day's hours (6, 12, 18) while the sun sits in the corner. A teal base line ties it to the UI.</p></div></section>
+  <section class="opt" data-ic="ic5"><div class="big"></div><div><h2><span>05</span>Horizon Bands</h2><p>The sun setting into bands of the priority colors (brick, ochre, teal, ink, gray), like the colored card edges in the app. The boldest graphic of the five.</p></div></section>
+</div>
+
+<script>
+  document.querySelectorAll('.opt').forEach(function (sec) {
+    var id = sec.dataset.ic;
+    var svg = function (s) { return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 1024 1024"><use href="#' + id + '"/></svg>'; };
+    sec.querySelector('.big').innerHTML = svg(300);
+    var sizes = document.createElement('div');
+    sizes.className = 'sizes';
+    ['light', 'dark'].forEach(function (mode) {
+      sizes.innerHTML += '<div class="tile ' + mode + '">' + [128, 64, 32, 16].map(function (s) { return '<div>' + svg(s) + '<div class="lbl">' + s + '</div></div>'; }).join('') + '</div>';
+    });
+    sec.querySelector('div:last-child').appendChild(sizes);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recto directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600&family=Archivo:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --gallery-bg: #2a2b2e; --gallery-ink: #e9e9ea; --gallery-muted: #a0a1a6; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--gallery-bg); color: var(--gallery-ink); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; padding: 28px 16px 80px; }
+  .gallery-head { max-width: 1280px; margin: 0 auto 18px; }
+  .gallery-head h1 { font-size: 20px; font-weight: 650; }
+  .gallery-head p { color: var(--gallery-muted); max-width: 70ch; margin-top: 4px; }
+  .jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .jump a { color: var(--gallery-ink); text-decoration: none; border: 1px solid #45464b; border-radius: 6px; padding: 4px 10px; font-size: 13px; }
+  .jump a:hover { background: #3a3b40; }
+  section.option { max-width: 1280px; margin: 44px auto 0; }
+  .option-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+  .option-head .num { font: 600 13px/1 "JetBrains Mono", monospace; color: var(--gallery-muted); }
+  .option-head h2 { font-size: 18px; font-weight: 650; }
+  .option-head p { color: var(--gallery-muted); font-size: 13px; }
+  .stage { width: 100%; overflow: hidden; }
+  .scaler { width: 1280px; height: 800px; transform-origin: top left; }
+  .window { width: 1280px; height: 800px; border-radius: 11px; overflow: hidden; position: relative; box-shadow: 0 24px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(0,0,0,.5); display: flex; flex-direction: column; }
+  .lights { display: flex; gap: 8px; }
+  .lights i { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; display: block; }
+  .lights i:nth-child(2) { background: #febc2e; }
+  .lights i:nth-child(3) { background: #28c840; }
+
+  /* ================= 1. MORNING EDITION ================= */
+  .m1 { background: #F1F0EB; color: #16181D; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+  .m1 .bar { height: 40px; display: flex; align-items: center; padding: 0 16px; gap: 16px; border-bottom: 1px solid #16181D; }
+  .m1 .bar .title { margin-left: auto; margin-right: auto; font: 600 12px/1 "Zilla Slab", serif; letter-spacing: .02em; }
+  .m1 .bar .tools { display: flex; gap: 14px; font-size: 12px; color: #55585f; }
+  .m1 .body { flex: 1; display: grid; grid-template-columns: 196px 1fr 300px; min-height: 0; }
+  .m1 .side { border-right: 1px solid #c9c7bf; padding: 18px 16px; font-size: 13px; }
+  .m1 .side h6 { font: 700 10px/1 -apple-system, sans-serif; letter-spacing: .08em; color: #6b6e75; margin: 18px 0 8px; text-transform: uppercase; }
+  .m1 .side h6:first-child { margin-top: 0; }
+  .m1 .side a { display: flex; justify-content: space-between; padding: 4px 0; color: #16181D; text-decoration: none; border-bottom: 1px solid #e0ded7; }
+  .m1 .side a.on { font-weight: 650; color: #0E4C86; }
+  .m1 .side a small { color: #8C8F96; font-variant-numeric: tabular-nums; }
+  .m1 .page { padding: 26px 44px; overflow: hidden; }
+  .m1 .mast { display: grid; grid-template-columns: 1fr auto; align-items: end; border-bottom: 3px double #16181D; padding-bottom: 10px; }
+  .m1 .mast .date { font: 700 46px/1 "Zilla Slab", serif; letter-spacing: -.01em; }
+  .m1 .mast .meta { text-align: right; font-size: 12px; color: #55585f; line-height: 1.6; }
+  .m1 .mast .meta b { color: #16181D; font-weight: 650; }
+  .m1 .dek { display: flex; gap: 18px; font-size: 12px; color: #55585f; padding: 7px 0; border-bottom: 1px solid #16181D; }
+  .m1 .dek span b { color: #16181D; }
+  .m1 .heads { display: grid; grid-template-columns: 1.25fr 1fr; gap: 0 28px; margin-top: 18px; }
+  .m1 .sect { border-left: 4px solid var(--c); padding: 2px 0 14px 14px; }
+  .m1 .sect + .sect { margin-top: 4px; }
+  .m1 .sect .k { font: 700 11px/1 -apple-system, sans-serif; letter-spacing: .08em; color: var(--c); }
+  .m1 .lead { font: 700 25px/1.18 "Zilla Slab", serif; margin-top: 6px; }
+  .m1 .sub { font: 600 17px/1.25 "Zilla Slab", serif; margin-top: 6px; }
+  .m1 .done { text-decoration: line-through; text-decoration-thickness: 2px; color: #8C8F96; }
+  .m1 .sched { border-bottom: 1.5px dashed #0E4C86; }
+  .m1 .tag { font: 500 11px/1 -apple-system, sans-serif; color: #0E4C86; margin-left: 6px; }
+  .m1 .notes { margin-top: 18px; border-top: 1px solid #16181D; padding-top: 10px; columns: 2; column-gap: 28px; column-rule: 1px solid #c9c7bf; font: 400 14px/1.6 "Literata", Georgia, serif; }
+  .m1 .notes .kick { font: 700 11px/1 -apple-system, sans-serif; letter-spacing: .08em; display: block; margin-bottom: 6px; color: #55585f; }
+  .m1 .notes a { color: #0E4C86; text-decoration: none; border-bottom: 1px solid #9bb5cf; }
+  .m1 .rail { border-left: 1px solid #16181D; display: flex; flex-direction: column; min-height: 0; }
+  .m1 .rail h5 { font: 700 11px/1 -apple-system, sans-serif; letter-spacing: .08em; padding: 12px 16px 8px; border-bottom: 1px solid #16181D; display: flex; justify-content: space-between; }
+  .m1 .sched-col { position: relative; height: 380px; margin: 0 16px; }
+  .m1 .hr { position: absolute; left: 0; right: 0; border-top: 1px solid #dad8d0; font: 500 10px/1 "JetBrains Mono", monospace; color: #8C8F96; padding-top: 2px; }
+  .m1 .ev { position: absolute; left: 40px; right: 0; background: #e4e3dc; border-top: 2px solid #16181D; padding: 4px 8px; font-size: 12px; line-height: 1.3; }
+  .m1 .ev b { display: block; font-weight: 650; }
+  .m1 .ev.focus { border-top-color: #0E4C86; background: #dfe6ee; }
+  .m1 .tasks { border-top: 1px solid #16181D; padding: 8px 16px; font-size: 13px; }
+  .m1 .tasks div { display: flex; gap: 8px; padding: 5px 0; border-bottom: 1px solid #dad8d0; }
+  .m1 .tasks div::before { content: ""; width: 12px; height: 12px; border: 1.5px solid #16181D; margin-top: 3px; flex: none; }
+  .m1 .tasks .s::before { border-style: dashed; border-color: #0E4C86; }
+  .m1 .tasks small { margin-left: auto; color: #8C8F96; font-variant-numeric: tabular-nums; }
+  .m1 .foot { height: 26px; border-top: 1px solid #16181D; display: flex; align-items: center; padding: 0 16px; gap: 14px; font-size: 11px; color: #55585f; }
+
+  /* ================= 2. DAILY PLANNER PAGE ================= */
+  .m2 { background: #E9E7E1; color: #2A2B2E; font-family: "Zen Kaku Gothic New", -apple-system, sans-serif; }
+  .m2 .bar { height: 40px; display: flex; align-items: center; padding: 0 16px; gap: 16px; }
+  .m2 .bar .title { margin: 0 auto; font-size: 12px; color: #6F7378; }
+  .m2 .body { flex: 1; display: grid; grid-template-columns: 200px 1fr; min-height: 0; padding: 0 18px 18px 0; }
+  .m2 .side { padding: 6px 16px; font-size: 13px; }
+  .m2 .side h6 { font-size: 11px; font-weight: 500; color: #8a8d92; margin: 16px 0 6px; }
+  .m2 .side a { display: block; padding: 4px 8px; border-radius: 4px; color: #2A2B2E; text-decoration: none; }
+  .m2 .side a.on { background: #3E7C6B; color: #fff; }
+  .m2 .paper { background-color: #FBFAF7; background-image: linear-gradient(#e7e5de 1px, transparent 1px), linear-gradient(90deg, #e7e5de 1px, transparent 1px); background-size: 14px 14px; background-position: -1px -1px; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.06); display: grid; grid-template-columns: 1fr 230px; overflow: hidden; }
+  .m2 .write { padding: 26px 34px; }
+  .m2 .dateblock { display: flex; align-items: flex-end; gap: 14px; border-bottom: 1.5px solid #2A2B2E; padding-bottom: 10px; }
+  .m2 .dateblock .d { font: 500 64px/0.9 "JetBrains Mono", monospace; letter-spacing: -.04em; }
+  .m2 .dateblock .w { font-size: 15px; line-height: 1.35; padding-bottom: 4px; }
+  .m2 .dateblock .w b { display: block; font-size: 22px; font-weight: 700; }
+  .m2 .dateblock .stamp { margin-left: auto; width: 62px; height: 62px; border: 2px solid #3E7C6B; border-radius: 50%; color: #3E7C6B; display: grid; place-items: center; text-align: center; font: 700 10px/1.15 "Zen Kaku Gothic New", sans-serif; transform: rotate(-8deg); opacity: .9; }
+  .m2 .pri { margin-top: 18px; display: grid; grid-template-columns: 44px 1fr; row-gap: 2px; }
+  .m2 .pri .p { font: 700 12px/28px "JetBrains Mono", monospace; color: var(--c); }
+  .m2 .pri .t { font-size: 15px; line-height: 28px; display: flex; align-items: center; gap: 10px; }
+  .m2 .pri .t::before { content: ""; width: 13px; height: 13px; border: 1.5px solid #2A2B2E; border-radius: 3px; flex: none; }
+  .m2 .pri .t.x { color: #9a9ca0; text-decoration: line-through; }
+  .m2 .pri .t.x::before { background: #3E7C6B; border-color: #3E7C6B; }
+  .m2 .pri .t .when { font: 500 11px "JetBrains Mono", monospace; color: #3E7C6B; border: 1px solid #3E7C6B; border-radius: 3px; padding: 0 4px; line-height: 16px; }
+  .m2 .pri .gap { grid-column: 1 / -1; height: 10px; }
+  .m2 .memo { margin-top: 18px; border-top: 1px dashed #b8b6af; padding-top: 10px; font-size: 14.5px; line-height: 28px; }
+  .m2 .memo h4 { font-size: 12px; color: #6F7378; font-weight: 500; }
+  .m2 .memo a { color: #3E7C6B; text-decoration: none; border-bottom: 1px solid #3E7C6B; }
+  .m2 .hours { border-left: 1.5px solid #2A2B2E; padding: 26px 16px 16px 12px; position: relative; background: rgba(251,250,247,.6); }
+  .m2 .hours h4 { font-size: 12px; color: #6F7378; font-weight: 500; margin-bottom: 8px; }
+  .m2 .hcol { position: relative; height: 600px; }
+  .m2 .h { position: absolute; left: 0; right: 0; font: 500 11px/1 "JetBrains Mono", monospace; color: #8a8d92; border-top: 1px solid #d9d7d0; padding-top: 2px; }
+  .m2 .e { position: absolute; left: 34px; right: 0; border-left: 3px solid #3E7C6B; background: rgba(62,124,107,.10); font-size: 12px; line-height: 1.3; padding: 3px 6px; }
+  .m2 .e.alt { border-left-color: #2A2B2E; background: rgba(42,43,46,.06); }
+  .m2 .foot { position: absolute; bottom: 0; left: 0; right: 0; }
+
+  /* ================= 3. TABBED REFERENCE MANUAL ================= */
+  .m3 { background: #D9A21B; color: #1C1D1F; font-family: "Literata", Georgia, serif; }
+  .m3 .bar { height: 40px; display: flex; align-items: center; padding: 0 16px; background: #1C1D1F; color: #E9ECEA; }
+  .m3 .bar .title { margin: 0 auto; font: 600 12px/1 "Archivo", sans-serif; letter-spacing: .04em; }
+  .m3 .bar .crumb { font: 500 11px/1 "JetBrains Mono", monospace; color: #a8adb0; }
+  .m3 .body { flex: 1; display: grid; grid-template-columns: 1fr 112px; min-height: 0; }
+  .m3 .board { padding: 26px 26px 26px 34px; display: grid; grid-template-columns: 1fr 270px; gap: 22px; min-height: 0; }
+  .m3 .leaf { background: rgba(250,251,250,.86); box-shadow: 4px 4px 0 rgba(28,29,31,.18); position: relative; padding: 30px 40px 30px 56px; overflow: hidden; }
+  .m3 .leaf::before, .m3 .leaf::after { content: ""; position: absolute; left: 18px; width: 12px; height: 12px; border-radius: 50%; background: #D9A21B; box-shadow: inset 0 1px 2px rgba(0,0,0,.35); }
+  .m3 .leaf::before { top: 70px; } .m3 .leaf::after { bottom: 70px; }
+  .m3 .runhead { display: flex; justify-content: space-between; font: 500 11px/1 "JetBrains Mono", monospace; color: #6a6e72; border-bottom: 1px solid #1C1D1F; padding-bottom: 8px; }
+  .m3 h1 { font: 800 34px/1.05 "Archivo", sans-serif; letter-spacing: -.01em; margin: 18px 0 4px; }
+  .m3 .lede { font-size: 15px; color: #4b4f53; }
+  .m3 .pgrid { display: grid; grid-template-columns: 88px 1fr; margin-top: 20px; row-gap: 14px; }
+  .m3 .pgrid .ph { font: 700 12px/1.6 "Archivo", sans-serif; letter-spacing: .06em; color: var(--c); text-transform: uppercase; }
+  .m3 .pgrid ul { list-style: none; font-size: 16px; line-height: 1.55; }
+  .m3 .pgrid li { display: flex; gap: 10px; align-items: baseline; }
+  .m3 .pgrid li::before { content: ""; width: 11px; height: 11px; border: 1.5px solid #1C1D1F; flex: none; transform: translateY(1px); }
+  .m3 .pgrid li.x { color: #8b8f93; text-decoration: line-through; }
+  .m3 .pgrid li.x::before { background: #1C1D1F; }
+  .m3 .kbd { font: 500 11px "JetBrains Mono", monospace; background: #1C1D1F; color: #E9ECEA; padding: 1px 5px; margin-left: 6px; }
+  .m3 .notes { margin-top: 20px; border-top: 1px solid #1C1D1F; padding-top: 12px; font-size: 15px; line-height: 1.65; max-width: 62ch; }
+  .m3 .notes a { color: #2F5DA8; }
+  .m3 .side-leaf { background: rgba(250,251,250,.78); box-shadow: 4px 4px 0 rgba(28,29,31,.18); padding: 16px; font-size: 13px; overflow: hidden; }
+  .m3 .side-leaf h5 { font: 700 11px/1 "Archivo", sans-serif; letter-spacing: .08em; text-transform: uppercase; border-bottom: 1px solid #1C1D1F; padding-bottom: 8px; margin-bottom: 8px; }
+  .m3 .slot { display: grid; grid-template-columns: 46px 1fr; border-bottom: 1px solid #c9ccca; padding: 6px 0; font-family: "Archivo", sans-serif; }
+  .m3 .slot span { font: 500 11px "JetBrains Mono", monospace; color: #6a6e72; padding-top: 2px; }
+  .m3 .slot b { font-weight: 600; font-size: 13px; }
+  .m3 .slot.tall { padding: 6px 0 34px; }
+  .m3 .tabs { display: flex; flex-direction: column; padding-top: 26px; gap: 3px; }
+  .m3 .tab { margin-left: 14px; background: var(--c); color: #1C1D1F; font: 700 12px/1 "Archivo", sans-serif; letter-spacing: .04em; padding: 12px 10px; border-radius: 0 6px 6px 0; writing-mode: horizontal-tb; box-shadow: 2px 2px 0 rgba(28,29,31,.18); }
+  .m3 .tab small { display: block; font: 500 10px "JetBrains Mono", monospace; margin-top: 4px; opacity: .75; }
+  .m3 .tab.on { margin-left: 0; background: #D9A21B; padding-left: 24px; box-shadow: none; }
+  .m3 .foot { height: 26px; background: #1C1D1F; color: #a8adb0; display: flex; align-items: center; gap: 16px; padding: 0 16px; font: 500 11px/1 "JetBrains Mono", monospace; }
+
+  /* ================= 4. SWISS TIMETABLE ================= */
+  .m4 { background: #FFFFFF; color: #000; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .m4 .bar { height: 40px; display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid #000; }
+  .m4 .bar .title { margin: 0 auto; font-size: 12px; font-weight: 500; }
+  .m4 .body { flex: 1; display: grid; grid-template-columns: 180px 1fr; min-height: 0; }
+  .m4 .side { border-right: 1px solid #000; font-size: 13px; }
+  .m4 .side a { display: block; padding: 8px 16px; border-bottom: 1px solid #e3e3e3; color: #000; text-decoration: none; }
+  .m4 .side a.on { background: #000; color: #fff; font-weight: 500; }
+  .m4 .side h6 { font-size: 10px; font-weight: 700; letter-spacing: .06em; padding: 14px 16px 6px; color: #7a7a7a; }
+  .m4 .main { display: grid; grid-template-rows: auto 1fr; min-height: 0; }
+  .m4 .board { background: #000; color: #fff; display: grid; grid-template-columns: auto 1fr auto; align-items: end; padding: 18px 28px; gap: 28px; }
+  .m4 .clock { width: 64px; height: 64px; border-radius: 50%; background: #fff; position: relative; }
+  .m4 .clock::before { content: ""; position: absolute; left: 31px; top: 10px; width: 3px; height: 23px; background: #000; transform-origin: 50% 100%; transform: rotate(-60deg); }
+  .m4 .clock::after { content: ""; position: absolute; left: 31.5px; top: 6px; width: 2px; height: 27px; background: #EB0000; transform-origin: 50% 100%; transform: rotate(150deg); }
+  .m4 .board h1 { font-size: 40px; font-weight: 700; letter-spacing: -.02em; line-height: 1; }
+  .m4 .board p { font-size: 13px; color: #bdbdbd; margin-top: 6px; }
+  .m4 .board .next { text-align: right; font-size: 12px; color: #bdbdbd; }
+  .m4 .board .next b { display: block; color: #fff; font-size: 20px; font-weight: 700; }
+  .m4 .grid { display: grid; grid-template-columns: 1fr 340px; min-height: 0; }
+  .m4 .table { padding: 20px 28px; overflow: hidden; }
+  .m4 .th { display: grid; grid-template-columns: 54px 1fr 120px; font-size: 10px; font-weight: 700; letter-spacing: .06em; color: #7a7a7a; border-bottom: 2px solid #000; padding-bottom: 6px; }
+  .m4 .row { display: grid; grid-template-columns: 54px 1fr 120px; align-items: center; border-bottom: 1px solid #d6d6d6; min-height: 40px; font-size: 15px; }
+  .m4 .row .pr { font-size: 12px; font-weight: 700; display: inline-grid; place-items: center; width: 30px; height: 22px; color: #fff; background: var(--c); }
+  .m4 .row .st { font-size: 12px; color: #555; }
+  .m4 .row.x .tx { color: #9a9a9a; text-decoration: line-through; }
+  .m4 .row.x .st { color: #1a7f37; font-weight: 700; }
+  .m4 .row .st.late { color: #EB0000; font-weight: 700; }
+  .m4 .notes { margin-top: 18px; font-size: 14px; line-height: 1.6; max-width: 60ch; }
+  .m4 .notes h4 { font-size: 10px; letter-spacing: .06em; color: #7a7a7a; margin-bottom: 6px; }
+  .m4 .notes a { color: #000; text-decoration: underline; text-decoration-color: #EB0000; text-underline-offset: 3px; }
+  .m4 .times { border-left: 1px solid #000; padding: 20px 20px; }
+  .m4 .times .th { grid-template-columns: 70px 1fr; }
+  .m4 .dep { display: grid; grid-template-columns: 70px 1fr; border-bottom: 1px solid #d6d6d6; padding: 9px 0; }
+  .m4 .dep .t { font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; }
+  .m4 .dep .n { font-size: 14px; }
+  .m4 .dep .n small { display: block; color: #555; font-size: 12px; }
+  .m4 .dep.now { background: #fff6d6; margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+  .m4 .foot { height: 26px; border-top: 1px solid #000; display: flex; align-items: center; gap: 16px; padding: 0 16px; font-size: 11px; }
+
+  /* ================= 5. MAC STANDARD ================= */
+  .m5 { background: #FFFFFF; color: #1D1D1F; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif; }
+  .m5 .body { flex: 1; display: grid; grid-template-columns: 230px 1fr 280px; min-height: 0; }
+  .m5 .side { background: #EEEDF0; padding: 14px 10px; font-size: 13px; border-right: 1px solid #dcdbe0; }
+  .m5 .side h6 { font-size: 11px; font-weight: 600; color: #8b8b91; margin: 14px 8px 4px; }
+  .m5 .side a { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 6px; color: #1D1D1F; text-decoration: none; }
+  .m5 .side a i { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid #0A6CFF; display: block; }
+  .m5 .side a.on { background: #d9d8de; font-weight: 500; }
+  .m5 .side a small { margin-left: auto; color: #8b8b91; }
+  .m5 .tb { height: 44px; display: flex; align-items: center; padding: 0 18px; border-bottom: 1px solid #ececef; gap: 10px; }
+  .m5 .tb .t { font-weight: 600; font-size: 13px; margin: 0 auto; }
+  .m5 .center { display: flex; flex-direction: column; min-height: 0; }
+  .m5 .doc { padding: 30px 64px; max-width: 760px; }
+  .m5 .doc h1 { font-size: 28px; font-weight: 700; letter-spacing: -.01em; }
+  .m5 .doc .sub { color: #8b8b91; font-size: 13px; margin-top: 2px; }
+  .m5 .group { margin-top: 20px; }
+  .m5 .group h3 { font-size: 13px; font-weight: 700; color: var(--c); }
+  .m5 .task { display: flex; gap: 10px; align-items: center; padding: 6px 0; font-size: 15px; border-bottom: 1px solid #f1f1f3; }
+  .m5 .task::before { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #c4c4c9; flex: none; }
+  .m5 .task.x { color: #a1a1a6; text-decoration: line-through; }
+  .m5 .task.x::before { background: #0A6CFF; border-color: #0A6CFF; }
+  .m5 .chip { font-size: 11px; color: #0A6CFF; background: #e8f0ff; border-radius: 5px; padding: 1px 6px; margin-left: 6px; }
+  .m5 .doc p { font-size: 15px; line-height: 1.6; margin-top: 20px; color: #3a3a3c; }
+  .m5 .doc p a { color: #0A6CFF; text-decoration: none; }
+  .m5 .cal { border-left: 1px solid #ececef; background: #FAFAFB; padding: 14px 16px; font-size: 12px; }
+  .m5 .cal h4 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .m5 .ccol { position: relative; height: 560px; }
+  .m5 .ch { position: absolute; left: 0; right: 0; border-top: 1px solid #ececef; color: #a1a1a6; font-size: 10px; padding-top: 2px; }
+  .m5 .ce { position: absolute; left: 36px; right: 0; border-radius: 6px; background: #e8f0ff; color: #0A4FBF; padding: 4px 8px; font-weight: 500; border-left: 3px solid #0A6CFF; }
+  .m5 .ce.g { background: #e6f6ec; color: #1a7f37; border-left-color: #34c759; }
+</style>
+</head>
+<body>
+  <header class="gallery-head">
+    <h1>Recto: five directions, same day</h1>
+    <p>Each mock shows today's page for the same sample day (Wednesday, October 21, 2026), at the app's real window size (1280 × 800). Content is sample data.</p>
+    <nav class="jump"><a href="#o1">1 Morning Edition</a><a href="#o2">2 Daily Planner Page</a><a href="#o3">3 Tabbed Manual</a><a href="#o4">4 Swiss Timetable</a><a href="#o5">5 Mac Standard</a></nav>
+  </header>
+
+  <!-- 1 -->
+  <section class="option" id="o1">
+    <div class="option-head"><span class="num">01</span><h2>The Morning Edition</h2><p>Every day is a new edition. Priorities as headlines, calendar as listings.</p></div>
+    <div class="stage"><div class="scaler"><div class="window m1">
+      <div class="bar"><div class="lights"><i></i><i></i><i></i></div><span class="title">RECTO</span><div class="tools"><span>Search</span><span>Calendar</span><span>Settings</span></div></div>
+      <div class="body">
+        <aside class="side">
+          <h6>Today</h6>
+          <a class="on" href="#">Today's edition <small>6</small></a><a href="#">Upcoming <small>4</small></a><a href="#">Overdue <small>1</small></a>
+          <h6>Editions</h6>
+          <a href="#">Tue 20 Oct <small>293</small></a><a href="#">Mon 19 Oct <small>292</small></a><a href="#">This week</a><a href="#">October</a>
+          <h6>Notes</h6>
+          <a href="#">Release plan</a><a href="#">Reading list</a><a href="#">Icon ideas</a>
+        </aside>
+        <main class="page">
+          <div class="mast"><div class="date">Wednesday, 21 October</div><div class="meta"><b>No. 294</b><br>2026 · Week 43</div></div>
+          <div class="dek"><span><b>6</b> on the page</span><span><b>1</b> done</span><span><b>4</b> meetings</span><span>Carried from yesterday: <b>1</b></span></div>
+          <div class="heads">
+            <div>
+              <div class="sect" style="--c:#B8322B"><span class="k">P1</span><div class="lead">Write the release notes for 0.7</div><div class="sub done">Fix the vault picker copy</div></div>
+              <div class="sect" style="--c:#C98A1B"><span class="k">P2</span><div class="sub">Review the new onboarding screens</div><div class="sub"><span class="sched">Reply to Maya about the icon brief</span><span class="tag">Thu 22</span></div></div>
+            </div>
+            <div>
+              <div class="sect" style="--c:#0E4C86"><span class="k">P3</span><div class="sub">Clear out the downloads folder</div></div>
+              <div class="sect" style="--c:#8C8F96"><span class="k">MISC</span><div class="sub">Pick up the dry cleaning</div></div>
+            </div>
+          </div>
+          <div class="notes"><span class="kick">NOTES</span>The vault picker should name the folder, not show a raw path. People recognise "Notes in iCloud" faster than a string of slashes. Ask Maya whether the icon still reads at 16 pixels before we commit to the masthead idea. Linked from <a href="#">Release plan</a>, filed under <a href="#">#launch</a>.</div>
+        </main>
+        <aside class="rail">
+          <h5><span>LISTINGS</span><span style="font-weight:500;color:#55585f">Wed</span></h5>
+          <div class="sched-col">
+            <div class="hr" style="top:0">09</div><div class="hr" style="top:48px">10</div><div class="hr" style="top:96px">11</div><div class="hr" style="top:144px">12</div><div class="hr" style="top:192px">13</div><div class="hr" style="top:240px">14</div><div class="hr" style="top:288px">15</div><div class="hr" style="top:336px">16</div>
+            <div class="ev" style="top:24px;height:24px"><b>Standup</b></div>
+            <div class="ev" style="top:96px;height:48px"><b>Design review</b>Studio · 1 hr</div>
+            <div class="ev focus" style="top:240px;height:96px"><b>Focus: release notes</b>2 hrs, notifications off</div>
+            <div class="ev" style="top:360px;height:20px"><b>Dentist</b></div>
+          </div>
+          <div class="tasks"><div>Write the release notes for 0.7 <small>P1</small></div><div class="s">Reply to Maya about the icon brief <small>Thu</small></div><div>Review the new onboarding screens <small>P2</small></div></div>
+        </aside>
+      </div>
+      <div class="foot"><span>Edition 294</span><span>212 words</span><span style="margin-left:auto">Close the day</span></div>
+    </div></div></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="option" id="o2">
+    <div class="option-head"><span class="num">02</span><h2>The Daily Planner Page</h2><p>One page a day on thin planner paper: date block, hour scale, faint grid.</p></div>
+    <div class="stage"><div class="scaler"><div class="window m2">
+      <div class="bar"><div class="lights"><i></i><i></i><i></i></div><span class="title">Recto</span></div>
+      <div class="body">
+        <aside class="side">
+          <a class="on" href="#">Today</a><a href="#">Upcoming</a><a href="#">Overdue</a>
+          <h6>Days</h6><a href="#">Yesterday</a><a href="#">Tomorrow</a><a href="#">This week</a><a href="#">October</a>
+          <h6>Notes</h6><a href="#">Release plan</a><a href="#">Reading list</a><a href="#">Icon ideas</a>
+        </aside>
+        <div class="paper">
+          <div class="write">
+            <div class="dateblock"><div class="d">21</div><div class="w">October 2026<b>Wednesday</b></div><div class="stamp">DAY<br>294</div></div>
+            <div class="pri">
+              <div class="p" style="--c:#B8322B">P1</div><div class="t">Write the release notes for 0.7</div>
+              <div class="p"></div><div class="t x">Fix the vault picker copy</div>
+              <div class="gap"></div>
+              <div class="p" style="--c:#C98A1B">P2</div><div class="t">Review the new onboarding screens</div>
+              <div class="p"></div><div class="t">Reply to Maya about the icon brief <span class="when">Thu 22</span></div>
+              <div class="gap"></div>
+              <div class="p" style="--c:#2F6FB0">P3</div><div class="t">Clear out the downloads folder</div>
+              <div class="gap"></div>
+              <div class="p" style="--c:#8a8d92">MISC</div><div class="t">Pick up the dry cleaning</div>
+            </div>
+            <div class="memo"><h4>Notes</h4>The vault picker should name the folder, not show a raw path. Ask Maya whether the icon still reads at 16 pixels. See <a href="#">Release plan</a> · <a href="#">#launch</a></div>
+          </div>
+          <div class="hours">
+            <h4>Schedule</h4>
+            <div class="hcol">
+              <div class="h" style="top:0">9</div><div class="h" style="top:56px">10</div><div class="h" style="top:112px">11</div><div class="h" style="top:168px">12</div><div class="h" style="top:224px">13</div><div class="h" style="top:280px">14</div><div class="h" style="top:336px">15</div><div class="h" style="top:392px">16</div><div class="h" style="top:448px">17</div>
+              <div class="e alt" style="top:28px;height:28px">Standup</div>
+              <div class="e alt" style="top:112px;height:56px">Design review</div>
+              <div class="e" style="top:280px;height:112px">Focus: release notes</div>
+              <div class="e alt" style="top:420px;height:28px">Dentist</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="option" id="o3">
+    <div class="option-head"><span class="num">03</span><h2>The Tabbed Reference Manual</h2><p>Each area a colored tab; today's page on a clear leaf over its board.</p></div>
+    <div class="stage"><div class="scaler"><div class="window m3">
+      <div class="bar"><div class="lights"><i></i><i></i><i></i></div><span class="title">RECTO</span><span class="crumb">DAY › 2026-10-21</span></div>
+      <div class="body">
+        <div class="board">
+          <article class="leaf">
+            <div class="runhead"><span>SECTION 1 · TODAY</span><span>p. 294</span></div>
+            <h1>Wednesday, 21 October</h1>
+            <p class="lede">Six items on the page, one carried over from Tuesday.</p>
+            <div class="pgrid">
+              <div class="ph" style="--c:#C2502E">P1</div><ul><li>Write the release notes for 0.7</li><li class="x">Fix the vault picker copy</li></ul>
+              <div class="ph" style="--c:#2E7D5B">P2</div><ul><li>Review the new onboarding screens</li><li>Reply to Maya about the icon brief <span class="kbd">THU 22</span></li></ul>
+              <div class="ph" style="--c:#2F5DA8">P3</div><ul><li>Clear out the downloads folder</li></ul>
+              <div class="ph" style="--c:#6a6e72">Misc</div><ul><li>Pick up the dry cleaning</li></ul>
+            </div>
+            <div class="notes">The vault picker should name the folder, not show a raw path. Ask Maya whether the icon still reads at 16 pixels. See <a href="#">Release plan</a>.</div>
+          </article>
+          <aside class="side-leaf">
+            <h5>Schedule</h5>
+            <div class="slot"><span>09:30</span><b>Standup</b></div>
+            <div class="slot tall"><span>11:00</span><b>Design review</b></div>
+            <div class="slot tall" style="padding-bottom:74px"><span>14:00</span><b>Focus: release notes</b></div>
+            <div class="slot"><span>16:30</span><b>Dentist</b></div>
+            <h5 style="margin-top:16px">Carried over</h5>
+            <div class="slot"><span>TUE</span><b>Clear out the downloads folder</b></div>
+          </aside>
+        </div>
+        <nav class="tabs">
+          <div class="tab on">TODAY<small>294</small></div>
+          <div class="tab" style="--c:#2E7D5B">WEEK<small>43</small></div>
+          <div class="tab" style="--c:#2F5DA8">MONTH<small>OCT</small></div>
+          <div class="tab" style="--c:#C2502E">YEAR<small>2026</small></div>
+          <div class="tab" style="--c:#E9ECEA">NOTES<small>48</small></div>
+          <div class="tab" style="--c:#9AA0A6">TASKS<small>12</small></div>
+        </nav>
+      </div>
+      <div class="foot"><span>⌘K COMMANDS</span><span>212 WORDS</span><span style="margin-left:auto">CLOSE THE DAY</span></div>
+    </div></div></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="option" id="o4">
+    <div class="option-head"><span class="num">04</span><h2>The Swiss Timetable</h2><p>Your day as a departure board: precise, black and white, one red.</p></div>
+    <div class="stage"><div class="scaler"><div class="window m4">
+      <div class="bar"><div class="lights"><i></i><i></i><i></i></div><span class="title">Recto</span></div>
+      <div class="body">
+        <aside class="side">
+          <h6>TODAY</h6><a class="on" href="#">Wednesday 21</a><a href="#">Upcoming</a><a href="#">Overdue</a>
+          <h6>DAYS</h6><a href="#">Tuesday 20</a><a href="#">Thursday 22</a><a href="#">Week 43</a>
+          <h6>NOTES</h6><a href="#">Release plan</a><a href="#">Reading list</a><a href="#">Icon ideas</a>
+        </aside>
+        <div class="main">
+          <div class="board"><div class="clock"></div><div><h1>Wednesday 21 October</h1><p>Day 294 · Week 43 · 6 items, 1 done</p></div><div class="next">Next<b>11:00 Design review</b></div></div>
+          <div class="grid">
+            <div class="table">
+              <div class="th"><span>PRI</span><span>TASK</span><span>STATUS</span></div>
+              <div class="row"><span><i class="pr" style="--c:#EB0000">P1</i></span><span class="tx">Write the release notes for 0.7</span><span class="st">Today</span></div>
+              <div class="row x"><span><i class="pr" style="--c:#EB0000">P1</i></span><span class="tx">Fix the vault picker copy</span><span class="st">Done 08:40</span></div>
+              <div class="row"><span><i class="pr" style="--c:#000">P2</i></span><span class="tx">Review the new onboarding screens</span><span class="st">Today</span></div>
+              <div class="row"><span><i class="pr" style="--c:#000">P2</i></span><span class="tx">Reply to Maya about the icon brief</span><span class="st">Thu 22</span></div>
+              <div class="row"><span><i class="pr" style="--c:#7a7a7a">P3</i></span><span class="tx">Clear out the downloads folder</span><span class="st late">+1 day</span></div>
+              <div class="row"><span><i class="pr" style="--c:#c4c4c4;color:#000">M</i></span><span class="tx">Pick up the dry cleaning</span><span class="st">Today</span></div>
+              <div class="notes"><h4>NOTES</h4>The vault picker should name the folder, not show a raw path. Ask Maya whether the icon still reads at 16 pixels. See <a href="#">Release plan</a>.</div>
+            </div>
+            <div class="times">
+              <div class="th"><span>TIME</span><span>EVENT</span></div>
+              <div class="dep"><span class="t">09:30</span><span class="n">Standup<small>30 min</small></span></div>
+              <div class="dep now"><span class="t">11:00</span><span class="n">Design review<small>Studio · 60 min</small></span></div>
+              <div class="dep"><span class="t">14:00</span><span class="n">Focus: release notes<small>120 min</small></span></div>
+              <div class="dep"><span class="t">16:30</span><span class="n">Dentist<small>30 min</small></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="foot"><span>212 words</span><span style="margin-left:auto">Close the day</span></div>
+    </div></div></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="option" id="o5">
+    <div class="option-head"><span class="num">05</span><h2>Mac Standard</h2><p>The arrangement Mac users expect, done carefully. The standing safe option.</p></div>
+    <div class="stage"><div class="scaler"><div class="window m5">
+      <div class="body">
+        <aside class="side">
+          <div class="lights" style="margin:2px 6px 16px"><i></i><i></i><i></i></div>
+          <a class="on" href="#"><i></i>Today<small>6</small></a><a href="#"><i></i>Upcoming<small>4</small></a><a href="#"><i></i>Overdue<small>1</small></a>
+          <h6>Days</h6><a href="#"><i style="border-color:#8b8b91"></i>Yesterday</a><a href="#"><i style="border-color:#8b8b91"></i>Tomorrow</a><a href="#"><i style="border-color:#8b8b91"></i>This Week</a>
+          <h6>Notes</h6><a href="#"><i style="border-color:#8b8b91"></i>Release plan</a><a href="#"><i style="border-color:#8b8b91"></i>Reading list</a><a href="#"><i style="border-color:#8b8b91"></i>Icon ideas</a>
+        </aside>
+        <div class="center">
+          <div class="tb"><span class="t">Today</span></div>
+          <div class="doc">
+            <h1>Wednesday, October 21</h1><div class="sub">6 items · 1 completed</div>
+            <div class="group"><h3 style="--c:#ff3b30">P1</h3><div class="task">Write the release notes for 0.7</div><div class="task x">Fix the vault picker copy</div></div>
+            <div class="group"><h3 style="--c:#ff9500">P2</h3><div class="task">Review the new onboarding screens</div><div class="task">Reply to Maya about the icon brief<span class="chip">Thu</span></div></div>
+            <div class="group"><h3 style="--c:#0A6CFF">P3</h3><div class="task">Clear out the downloads folder</div></div>
+            <p>The vault picker should name the folder, not show a raw path. Ask Maya whether the icon still reads at 16 pixels. See <a href="#">Release plan</a>.</p>
+          </div>
+        </div>
+        <aside class="cal">
+          <h4>Wednesday</h4>
+          <div class="ccol">
+            <div class="ch" style="top:0">9 AM</div><div class="ch" style="top:56px">10</div><div class="ch" style="top:112px">11</div><div class="ch" style="top:168px">12 PM</div><div class="ch" style="top:224px">1</div><div class="ch" style="top:280px">2</div><div class="ch" style="top:336px">3</div><div class="ch" style="top:392px">4</div><div class="ch" style="top:448px">5</div>
+            <div class="ce" style="top:28px;height:26px">Standup</div>
+            <div class="ce" style="top:112px;height:54px">Design review</div>
+            <div class="ce g" style="top:280px;height:110px">Focus: release notes</div>
+            <div class="ce" style="top:420px;height:26px">Dentist</div>
+          </div>
+        </aside>
+      </div>
+    </div></div></div>
+  </section>
+
+<script>
+  // Fit each 1280px window to the available width without horizontal scroll.
+  function fit() {
+    document.querySelectorAll('.stage').forEach(function (stage) {
+      var scale = Math.min(1, stage.clientWidth / 1280);
+      var s = stage.querySelector('.scaler');
+      s.style.transform = 'scale(' + scale + ')';
+      stage.style.height = (800 * scale) + 'px';
+    });
+  }
+  window.addEventListener('resize', fit);
+  fit();
+</script>
+</body>
+</html>

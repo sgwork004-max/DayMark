@@ -1,6 +1,6 @@
 # Security
 
-Report vulnerabilities privately through [GitHub private vulnerability reporting](https://github.com/sgwork004-max/manager/security/advisories/new). Do not open a public issue.
+Report vulnerabilities privately through [GitHub private vulnerability reporting](https://github.com/sgwork004-max/DayMark/security/advisories/new). Do not open a public issue.
 
 Include reproduction steps and the affected version. Never include real API keys, access tokens, or private note contents in a report.
 

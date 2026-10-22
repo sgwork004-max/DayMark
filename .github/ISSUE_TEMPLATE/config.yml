@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Report a security vulnerability
-    url: https://github.com/sgwork004-max/manager/security/advisories/new
+    url: https://github.com/sgwork004-max/DayMark/security/advisories/new
     about: Report security problems privately, not in a public issue.

@@ -6,7 +6,7 @@ export default function Home() {
       textAlign: "center",
     }}>
       <div style={{ fontSize: 48, color: "var(--color-accent)" }}>◆</div>
-      <h1 style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1 }}>Manager</h1>
+      <h1 style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1 }}>DayMark</h1>
       <p style={{ fontSize: 18, color: "var(--color-text-muted)", maxWidth: 480, lineHeight: 1.6 }}>
         A focused Mac workspace for Markdown notes, daily planning, tasks and your calendar.
         Your notes stay in a folder you control.

@@ -1,4 +1,4 @@
-/** Convert an Obsidian markdown note to Manager format.
+/** Convert an Obsidian markdown note to DayMark format.
  *
  * Differences handled:
  * - Obsidian embed `![[note]]` → `[[note]]`

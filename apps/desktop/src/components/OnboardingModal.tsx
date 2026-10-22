@@ -36,7 +36,7 @@ export function OnboardingModal({ onComplete }: Props) {
       window.localStorage.setItem("manager.onboarding.version", "2");
       onComplete();
     } catch {
-      setError("Manager could not prepare that vault. Choose another location in Settings.");
+      setError("DayMark could not prepare that vault. Choose another location in Settings.");
     } finally {
       setWorking(false);
     }
@@ -44,14 +44,14 @@ export function OnboardingModal({ onComplete }: Props) {
 
   return (
     <div className="onboarding-backdrop">
-      <section className="onboarding-modal" aria-label="Welcome to Manager">
+      <section className="onboarding-modal" aria-label="Welcome to DayMark">
         <div className="onboarding-progress" aria-hidden="true">
           {[0, 1, 2, 3].map((index) => <span key={index} className={index <= step ? "active" : ""} />)}
         </div>
 
         {step === 0 && (
           <div className="onboarding-page onboarding-welcome">
-            <div className="onboarding-brand-mark"><span /></div>
+            <img className="onboarding-brand-mark" src="/daymark-icon.png" alt="" width="64" height="64" />
             <h1>Your day, with context intact.</h1>
             <p>Plan what matters. Close the loop. Carry the useful signal forward.</p>
           </div>
@@ -93,7 +93,7 @@ export function OnboardingModal({ onComplete }: Props) {
 
         {step === 3 && (
           <div className="onboarding-page">
-            <h1>Make Manager feel native.</h1>
+            <h1>Make DayMark feel native.</h1>
             <div className="onboarding-preferences">
               <div className="onboarding-preference-row">
                 <span><Moon size={17} /><strong>Appearance</strong></span>

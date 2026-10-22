@@ -14,7 +14,7 @@ const BASE_DIR: string =
   FileSystem.documentDirectory ??
   "";
 
-const VAULT_PATH = BASE_DIR.endsWith("/") ? `${BASE_DIR}Manager` : `${BASE_DIR}/Manager`;
+const VAULT_PATH = BASE_DIR.endsWith("/") ? `${BASE_DIR}DayMark` : `${BASE_DIR}/DayMark`;
 
 export type SmartViewId = "today" | "overdue" | "upcoming";
 

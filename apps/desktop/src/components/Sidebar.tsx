@@ -115,7 +115,7 @@ export function Sidebar() {
     <aside className="sidebar">
       <div className="sidebar-header">
         <span className="sidebar-logo">
-          <span className="sidebar-logo-diamond" />
+          <img className="sidebar-logo-icon" src="/daymark-icon.png" alt="" width="18" height="18" />
           {PRODUCT_NAME}
         </span>
       </div>

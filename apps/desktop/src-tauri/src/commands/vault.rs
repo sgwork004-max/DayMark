@@ -1,6 +1,6 @@
 //! Confines native file access to the active vault.
 //!
-//! The webview never decides on its own which folder Manager may touch. A vault
+//! The webview never decides on its own which folder DayMark may touch. A vault
 //! becomes active only when it comes from the saved settings at launch, is one
 //! of the built-in local or iCloud locations, or was picked by the user in a
 //! native folder dialog. Import folders follow the same rule and are read-only.

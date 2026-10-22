@@ -110,7 +110,7 @@ export function App() {
       const directResults = await Promise.all(requestedSaves);
       const queuedSaved = await flushPendingNoteWrites();
       if (!directResults.every(Boolean) || !queuedSaved) {
-        showAppNotice("Manager could not save your latest changes. The app will remain open so you can try again.", "error");
+        showAppNotice("DayMark could not save your latest changes. The app will remain open so you can try again.", "error");
         return;
       }
       closing = true;
@@ -202,7 +202,7 @@ export function App() {
         {startupError ? (
           <>
             <AlertTriangle size={30} strokeWidth={1.7} />
-            <h1>Manager could not open your notes</h1>
+            <h1>DayMark could not open your notes</h1>
             <p>{startupError}</p>
             <button className="btn-primary" onClick={() => void initializeApp()}>
               <RefreshCw size={14} /> Retry
@@ -211,7 +211,7 @@ export function App() {
         ) : (
           <>
             <div className="startup-spinner" />
-            <p>Opening Manager...</p>
+            <p>Opening DayMark...</p>
           </>
         )}
       </div>

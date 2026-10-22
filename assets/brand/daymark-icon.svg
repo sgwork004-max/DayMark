@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>DayMark app icon (Card Slices)</title>
+  <defs>
+        <clipPath id="sq"><rect x="100" y="100" width="824" height="824" rx="186"/></clipPath>
+    <filter id="iconShadow" x="-15%" y="-15%" width="130%" height="135%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".3"/></filter>
+    <filter id="sliceShadow" x="-10%" y="-60%" width="120%" height="260%"><feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#1B1C1F" flood-opacity=".28"/></filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="50"/></filter>
+    <linearGradient id="warmSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBF7EF"/><stop offset=".7" stop-color="#F6E6CC"/><stop offset="1" stop-color="#F1D6AE"/></linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD983"/><stop offset=".45" stop-color="#F5A847"/><stop offset=".8" stop-color="#E06E3B"/><stop offset="1" stop-color="#C2412D"/></linearGradient>
+    <radialGradient id="sunHi" cx=".38" cy=".28" r=".55"><stop offset="0" stop-color="#FFF4D2" stop-opacity=".85"/><stop offset="1" stop-color="#FFF4D2" stop-opacity="0"/></radialGradient>
+    <linearGradient id="brick" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D65640"/><stop offset="1" stop-color="#A9351F"/></linearGradient>
+    <linearGradient id="ochre" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDA53A"/><stop offset="1" stop-color="#A9741A"/></linearGradient>
+    <linearGradient id="tealG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3D89AC"/><stop offset="1" stop-color="#245A74"/></linearGradient>
+    <linearGradient id="inkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A3D42"/><stop offset="1" stop-color="#202226"/></linearGradient>
+    <clipPath id="sunUpper"><rect x="100" y="100" width="824" height="460"/></clipPath>
+  </defs>
+
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#warmSky)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".18"/>
+      <circle cx="512" cy="500" r="240" fill="#F4A847" opacity=".5" filter="url(#glow)"/>
+      <g clip-path="url(#sunUpper)">
+        <circle cx="512" cy="560" r="232" fill="url(#sun)"/>
+        <circle cx="512" cy="560" r="232" fill="url(#sunHi)"/>
+      </g>
+    </g>
+    <!-- slices: priority card edges, narrowing toward the viewer -->
+    <g filter="url(#sliceShadow)">
+      <rect x="262" y="570" width="500" height="58" rx="29" fill="url(#brick)"/>
+    </g>
+    <path d="M292 576 H 732" stroke="#F3A28E" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <g filter="url(#sliceShadow)"><rect x="298" y="646" width="428" height="50" rx="25" fill="url(#ochre)"/></g>
+    <path d="M326 652 H 698" stroke="#F6D58E" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <g filter="url(#sliceShadow)"><rect x="340" y="714" width="344" height="42" rx="21" fill="url(#tealG)"/></g>
+    <path d="M364 720 H 660" stroke="#9FD0E4" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <g filter="url(#sliceShadow)"><rect x="390" y="774" width="244" height="34" rx="17" fill="url(#inkG)"/></g>
+    <path d="M410 779 H 614" stroke="#6E737A" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+</svg>

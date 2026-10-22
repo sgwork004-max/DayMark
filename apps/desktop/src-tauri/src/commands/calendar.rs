@@ -87,10 +87,10 @@ fn event_range(date_from: &str, date_to: &str) -> Result<(i64, i64), String> {
 fn calendar_access_error() -> Option<String> {
     match unsafe { ek_authorization_status() } {
         4 => None,
-        0 => Some("Calendar permission is waiting for a response. Approve Manager, then retry.".to_string()),
-        1 => Some("Calendar access is denied. Enable Manager in System Settings → Privacy & Security → Calendars.".to_string()),
+        0 => Some("Calendar permission is waiting for a response. Approve DayMark, then retry.".to_string()),
+        1 => Some("Calendar access is denied. Enable DayMark in System Settings → Privacy & Security → Calendars.".to_string()),
         2 => Some("Calendar access is restricted by macOS or device policy.".to_string()),
-        3 => Some("Manager only has write access. Full Calendar access is required to show events.".to_string()),
+        3 => Some("DayMark only has write access. Full Calendar access is required to show events.".to_string()),
         _ => Some("Calendar permission is unavailable.".to_string()),
     }
 }

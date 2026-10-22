@@ -32,13 +32,13 @@ export function AIPanel({ onClose }: { onClose: () => void }) {
       ? `Current note: "${note.title}"\n\nContent:\n${note.content.slice(0, 4000)}`
       : "No note is currently open.";
 
-    return `You are an AI writing assistant integrated into Manager, a markdown note-taking and task management app.
+    return `You are an AI writing assistant integrated into DayMark, a markdown note-taking and task management app.
 
 ${noteContext}
 
 You help the user write better notes, extract insights, create tasks, and think through ideas.
 - Respond concisely and use markdown formatting
-- When generating tasks, use Manager syntax: \`- [ ] task text\`
+- When generating tasks, use DayMark syntax: \`- [ ] task text\`
 - When referencing other notes, use wiki-link syntax: \`[[Note Title]]\`
 - Keep responses focused and actionable`;
   }

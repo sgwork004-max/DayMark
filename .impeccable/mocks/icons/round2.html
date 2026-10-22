@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recto icons, round 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #232427; color: #e9e9ea; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; padding: 28px 16px 80px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 650; }
+  .lead { color: #a0a1a6; max-width: 72ch; margin-top: 4px; }
+  .hero { margin-top: 24px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 26px 18px; border-radius: 14px; background: radial-gradient(120% 140% at 30% 0%, #6d8aa6 0%, #2f4258 45%, #151a21 100%); }
+  .hero figure { text-align: center; }
+  .hero svg { width: 100%; height: auto; max-width: 200px; display: block; margin: 0 auto; }
+  .hero figcaption { font-size: 12px; color: #d9dee4; margin-top: 4px; }
+  .opt { margin-top: 30px; display: grid; grid-template-columns: 300px 1fr; gap: 28px; align-items: center; padding-top: 26px; border-top: 1px solid #3a3b40; }
+  .opt h2 { font-size: 17px; font-weight: 650; }
+  .opt h2 span { font: 500 12px "JetBrains Mono", monospace; color: #a0a1a6; margin-right: 8px; }
+  .opt p { color: #a0a1a6; font-size: 13px; margin-top: 4px; max-width: 58ch; }
+  .big svg { width: 300px; height: 300px; display: block; }
+  .sizes { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
+  .tile { border-radius: 10px; padding: 14px 16px; display: flex; align-items: flex-end; gap: 14px; }
+  .tile.light { background: linear-gradient(135deg, #e6ebef, #cdd6dd); }
+  .tile.dark { background: linear-gradient(135deg, #2c3138, #15181c); }
+  .tile svg { display: block; }
+  .tile .lbl { font: 500 10px "JetBrains Mono", monospace; color: #6b7178; text-align: center; }
+  .tile.dark .lbl { color: #8b9198; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- shared -->
+    <clipPath id="sq"><rect x="100" y="100" width="824" height="824" rx="186"/></clipPath>
+    <filter id="iconShadow" x="-15%" y="-15%" width="130%" height="135%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".32"/></filter>
+    <filter id="objShadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".22"/>
+      <feDropShadow dx="0" dy="26" stdDeviation="26" flood-color="#000" flood-opacity=".28"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="linen" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".004 .55" numOctaves="2" seed="2" result="h"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".55 .004" numOctaves="2" seed="7" result="v"/>
+      <feBlend in="h" in2="v" mode="multiply" result="hv"/>
+      <feColorMatrix in="hv" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 -.25"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="blur40"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="blur18"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+
+    <!-- 1 Linen Daybook -->
+    <linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1EFEA"/><stop offset="1" stop-color="#D6D2C9"/></linearGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A86A8"/><stop offset=".55" stop-color="#2A6A88"/><stop offset="1" stop-color="#1D4D64"/></linearGradient>
+    <linearGradient id="spine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#173F52"/><stop offset=".6" stop-color="#235C77"/><stop offset="1" stop-color="#2E7192"/></linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9C6A12"/><stop offset=".35" stop-color="#E2A73C"/><stop offset=".65" stop-color="#C98E22"/><stop offset="1" stop-color="#8A5C0E"/></linearGradient>
+    <linearGradient id="edges" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E9E3D6"/><stop offset="1" stop-color="#C9C1B1"/></linearGradient>
+    <pattern id="pagelines" width="6" height="7" patternUnits="userSpaceOnUse"><rect width="6" height="7" fill="url(#edges)"/><rect y="5.5" width="6" height="1.2" fill="#B9B09E"/></pattern>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8E2A1C"/><stop offset=".5" stop-color="#C9442F"/><stop offset="1" stop-color="#93301F"/></linearGradient>
+    <radialGradient id="sheen" cx=".3" cy=".15" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></radialGradient>
+
+    <!-- 2 Tear-off Day -->
+    <linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3F8DB0"/><stop offset="1" stop-color="#1E4F67"/></linearGradient>
+    <radialGradient id="b2glow" cx=".5" cy=".2" r=".7"><stop offset="0" stop-color="#9CD3E8" stop-opacity=".55"/><stop offset="1" stop-color="#9CD3E8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="page2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFEFB"/><stop offset="1" stop-color="#F1EEE7"/></linearGradient>
+    <linearGradient id="curl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#E7E2D7"/><stop offset="1" stop-color="#B9B2A3"/></linearGradient>
+    <linearGradient id="clip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9EDF0"/><stop offset=".45" stop-color="#9AA3AB"/><stop offset=".55" stop-color="#C6CDD3"/><stop offset="1" stop-color="#6E7780"/></linearGradient>
+    <pattern id="stack" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#E4DFD3"/><rect y="4.6" width="8" height="1.4" fill="#BDB5A4"/></pattern>
+
+    <!-- 3 Fanned Priorities -->
+    <linearGradient id="b3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B2D32"/><stop offset="1" stop-color="#16171A"/></linearGradient>
+    <radialGradient id="b3glow" cx=".5" cy=".35" r=".6"><stop offset="0" stop-color="#E7C489" stop-opacity=".35"/><stop offset="1" stop-color="#E7C489" stop-opacity="0"/></radialGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#EFECE5"/></linearGradient>
+    <linearGradient id="chk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3C8DB0"/><stop offset="1" stop-color="#245C77"/></linearGradient>
+
+    <!-- 4 Morning Spread -->
+    <linearGradient id="b4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26303B"/><stop offset="1" stop-color="#121519"/></linearGradient>
+    <radialGradient id="b4glow" cx=".78" cy=".1" r=".85"><stop offset="0" stop-color="#F6C779" stop-opacity=".75"/><stop offset=".5" stop-color="#E39A4E" stop-opacity=".18"/><stop offset="1" stop-color="#E39A4E" stop-opacity="0"/></radialGradient>
+    <linearGradient id="verso" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#8E959C"/><stop offset=".15" stop-color="#B9BEC2"/><stop offset="1" stop-color="#C9CCCF"/></linearGradient>
+    <linearGradient id="recto" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D9CDB6"/><stop offset=".12" stop-color="#FBF4E6"/><stop offset=".7" stop-color="#FFFBF2"/><stop offset="1" stop-color="#F6EAD3"/></linearGradient>
+    <linearGradient id="beam" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE3AE" stop-opacity=".55"/><stop offset="1" stop-color="#FFE3AE" stop-opacity="0"/></linearGradient>
+    <linearGradient id="cover4" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1D4D64"/><stop offset="1" stop-color="#2E7192"/></linearGradient>
+
+    <!-- 5 Glass Page -->
+    <linearGradient id="b5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2F7FA3"/><stop offset="1" stop-color="#173E54"/></linearGradient>
+    <linearGradient id="glassFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".42"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".16"/></linearGradient>
+    <linearGradient id="glassEdge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".95"/><stop offset=".4" stop-color="#FFFFFF" stop-opacity=".25"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".6"/></linearGradient>
+    <clipPath id="glassClip"><rect x="270" y="210" width="484" height="604" rx="64"/></clipPath>
+  </defs>
+
+  <!-- ===== 1. Linen Daybook ===== -->
+  <symbol id="ic1" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#b1)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".18"/>
+      <ellipse cx="512" cy="872" rx="300" ry="40" fill="#000" opacity=".18" filter="url(#blur18)"/>
+    </g>
+    <g filter="url(#objShadow)">
+      <!-- page block peeking right -->
+      <rect x="292" y="196" width="470" height="652" rx="26" fill="url(#pagelines)"/>
+      <!-- cover -->
+      <rect x="262" y="180" width="480" height="672" rx="34" fill="url(#cloth)"/>
+    </g>
+    <rect x="262" y="180" width="480" height="672" rx="34" fill="#fff" filter="url(#linen)" opacity=".22"/>
+    <rect x="262" y="180" width="480" height="672" rx="34" fill="url(#sheen)"/>
+    <!-- spine hinge -->
+    <path d="M262 214 A34 34 0 0 1 296 180 H 330 V 852 H 296 A34 34 0 0 1 262 818 Z" fill="url(#spine)"/>
+    <path d="M332 186 V 846" stroke="#0F2F3E" stroke-width="5" opacity=".6"/>
+    <path d="M338 186 V 846" stroke="#6FB2CF" stroke-width="2" opacity=".5"/>
+    <!-- debossed R -->
+    <text x="508" y="612" text-anchor="middle" font-family="Zilla Slab, serif" font-weight="700" font-size="300" fill="#6FB2CF" opacity=".55">R</text>
+    <text x="508" y="606" text-anchor="middle" font-family="Zilla Slab, serif" font-weight="700" font-size="300" fill="#16384A">R</text>
+    <text x="508" y="606" text-anchor="middle" font-family="Zilla Slab, serif" font-weight="700" font-size="300" fill="#fff" filter="url(#linen)" opacity=".18">R</text>
+    <!-- elastic band -->
+    <rect x="652" y="176" width="34" height="680" fill="url(#band)"/>
+    <rect x="652" y="176" width="34" height="680" fill="#fff" filter="url(#grain)" opacity=".25"/>
+    <!-- ribbon -->
+    <path d="M440 846 H 482 V 930 L 461 908 L 440 930 Z" fill="url(#ribbon)" filter="url(#objShadow)"/>
+  </symbol>
+
+  <!-- ===== 2. Tear-off Day ===== -->
+  <symbol id="ic2" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#b2)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="url(#b2glow)"/>
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".12"/>
+    </g>
+    <g filter="url(#objShadow)">
+      <!-- stack thickness -->
+      <path d="M244 720 H 780 L 772 792 H 252 Z" fill="url(#stack)"/>
+      <rect x="244" y="250" width="536" height="476" rx="30" fill="#EDE8DD"/>
+      <!-- next page (revealed under curl) -->
+      <rect x="244" y="250" width="536" height="476" rx="30" fill="#F4F0E8"/>
+    </g>
+    <!-- today page with curl cut-out at bottom right -->
+    <path d="M274 250 H 750 A30 30 0 0 1 780 280 V 560 L 616 726 H 274 A30 30 0 0 1 244 696 V 280 A30 30 0 0 1 274 250 Z" fill="url(#page2)"/>
+    <rect x="244" y="250" width="536" height="476" rx="30" fill="#000" opacity="0" />
+    <path d="M274 250 H 750 A30 30 0 0 1 780 280 V 352 H 244 V 280 A30 30 0 0 1 274 250 Z" fill="#C2412D"/>
+    <path d="M244 352 H 780" stroke="#8E2A1C" stroke-width="4" opacity=".5"/>
+    <text x="512" y="324" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="500" font-size="44" fill="#FBEAE5" letter-spacing="6">TODAY</text>
+    <!-- priority lines -->
+    <g stroke-linecap="round">
+      <rect x="302" y="404" width="44" height="44" rx="10" fill="#2E6F8E"/>
+      <path d="M313 427 l 9 9 l 15 -18" stroke="#fff" stroke-width="7" fill="none" stroke-linejoin="round"/>
+      <path d="M374 426 H 600" stroke="#C9C3B6" stroke-width="20"/>
+      <rect x="302" y="484" width="44" height="44" rx="10" fill="none" stroke="#2A2C30" stroke-width="7"/>
+      <path d="M374 506 H 640" stroke="#2A2C30" stroke-width="20"/>
+      <rect x="302" y="564" width="44" height="44" rx="10" fill="none" stroke="#2A2C30" stroke-width="7"/>
+      <path d="M374 586 H 540" stroke="#2A2C30" stroke-width="20"/>
+    </g>
+    <!-- underside revealed and curl -->
+    <path d="M616 726 L 780 560 L 780 726 Z" fill="#F4F0E8"/>
+    <path d="M780 560 L 616 726 C 664 676 700 654 742 640 C 752 616 766 590 780 560 Z" fill="url(#curl)"/>
+    <path d="M616 726 C 664 676 700 654 742 640" stroke="#A39B8B" stroke-width="3" fill="none" opacity=".6"/>
+    <ellipse cx="700" cy="700" rx="70" ry="22" transform="rotate(-42 700 700)" fill="#000" opacity=".12" filter="url(#blur6)"/>
+    <!-- binder clip -->
+    <g filter="url(#objShadow)">
+      <rect x="430" y="214" width="164" height="70" rx="14" fill="url(#clip)"/>
+      <path d="M454 214 C 454 168 570 168 570 214" stroke="#AEB6BD" stroke-width="12" fill="none"/>
+      <path d="M454 214 C 454 168 570 168 570 214" stroke="#F3F5F7" stroke-width="4" fill="none" opacity=".8"/>
+    </g>
+  </symbol>
+
+  <!-- ===== 3. Fanned Priorities ===== -->
+  <symbol id="ic3" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#b3)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="url(#b3glow)"/>
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".06"/>
+    </g>
+    <!-- back card P3 -->
+    <g transform="rotate(14 512 560)" filter="url(#objShadow)">
+      <rect x="282" y="250" width="460" height="560" rx="44" fill="url(#card)"/>
+      <path d="M326 250 H 698 A44 44 0 0 1 742 294 V 290 H 282 V 294 A44 44 0 0 1 326 250 Z" fill="#2E6F8E"/>
+      <rect x="282" y="250" width="460" height="38" rx="19" fill="#2E6F8E"/>
+    </g>
+    <!-- middle card P2 -->
+    <g transform="rotate(4 512 560)" filter="url(#objShadow)">
+      <rect x="282" y="250" width="460" height="560" rx="44" fill="url(#card)"/>
+      <rect x="282" y="250" width="460" height="38" rx="19" fill="#C48A1C"/>
+      <rect x="282" y="270" width="460" height="22" fill="#C48A1C"/>
+    </g>
+    <!-- front card P1 -->
+    <g transform="rotate(-8 512 560)" filter="url(#objShadow)">
+      <rect x="282" y="250" width="460" height="560" rx="44" fill="url(#card)"/>
+      <rect x="282" y="250" width="460" height="560" rx="44" fill="#fff" filter="url(#grain)" opacity=".2"/>
+      <rect x="282" y="250" width="460" height="44" rx="22" fill="#C2412D"/>
+      <rect x="282" y="272" width="460" height="24" fill="#C2412D"/>
+      <text x="334" y="380" font-family="JetBrains Mono, monospace" font-weight="500" font-size="40" fill="#C2412D">P1</text>
+      <rect x="334" y="430" width="84" height="84" rx="22" fill="url(#chk)"/>
+      <path d="M356 472 l 18 18 l 32 -36" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="446" y="456" width="230" height="30" rx="15" fill="#CFC9BC"/>
+      <rect x="334" y="560" width="84" height="84" rx="22" fill="none" stroke="#2A2C30" stroke-width="11"/>
+      <rect x="446" y="586" width="250" height="32" rx="16" fill="#2A2C30"/>
+      <rect x="334" y="690" width="210" height="26" rx="13" fill="#DCD7CC"/>
+    </g>
+  </symbol>
+
+  <!-- ===== 4. Morning Spread ===== -->
+  <symbol id="ic4" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#b4)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="url(#b4glow)"/>
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".07"/>
+    </g>
+    <g filter="url(#objShadow)">
+      <!-- cover under pages -->
+      <path d="M150 720 L 512 790 L 874 720 L 874 736 L 512 808 L 150 736 Z" fill="url(#cover4)"/>
+      <!-- verso (left page) -->
+      <path d="M170 330 C 290 300 420 310 512 362 L 512 780 C 420 728 290 720 170 742 Z" fill="url(#verso)"/>
+      <!-- recto (right page) -->
+      <path d="M854 330 C 734 300 604 310 512 362 L 512 780 C 604 728 734 720 854 742 Z" fill="url(#recto)"/>
+    </g>
+    <!-- page stack edges -->
+    <path d="M854 742 C 734 720 604 728 512 780 L 512 790 C 604 740 734 732 862 754 Z" fill="#E2D6BE"/>
+    <path d="M170 742 C 290 720 420 728 512 780 L 512 790 C 420 740 290 732 162 754 Z" fill="#A7ADB2"/>
+    <!-- gutter shadow -->
+    <path d="M512 362 L 512 780" stroke="#5E5A52" stroke-width="5" opacity=".55"/>
+    <path d="M512 362 C 540 380 552 520 540 780 L 512 780 Z" fill="#000" opacity=".08"/>
+    <!-- text on recto -->
+    <g stroke-linecap="round">
+      <path d="M572 420 C 640 404 712 398 790 404" stroke="#C2412D" stroke-width="22" fill="none"/>
+      <path d="M572 486 C 640 472 712 466 776 470" stroke="#3A3C40" stroke-width="12" fill="none" opacity=".75"/>
+      <path d="M572 530 C 640 516 712 510 790 514" stroke="#3A3C40" stroke-width="12" fill="none" opacity=".75"/>
+      <path d="M572 574 C 640 560 690 556 740 558" stroke="#3A3C40" stroke-width="12" fill="none" opacity=".75"/>
+      <path d="M572 640 C 640 626 712 620 760 624" stroke="#2E6F8E" stroke-width="12" fill="none" opacity=".85"/>
+    </g>
+    <!-- faint text on verso -->
+    <g stroke="#7D848A" stroke-width="10" stroke-linecap="round" fill="none" opacity=".55">
+      <path d="M232 420 C 300 404 380 404 452 420"/><path d="M232 464 C 300 450 380 450 452 466"/><path d="M232 508 C 300 494 380 494 440 508"/>
+    </g>
+    <!-- light beam -->
+    <path d="M924 100 L 924 260 L 600 800 L 470 800 Z" fill="url(#beam)" clip-path="url(#sq)"/>
+    <!-- ribbon -->
+    <path d="M520 772 L 548 776 L 540 900 L 524 880 L 508 896 Z" fill="url(#ribbon)"/>
+  </symbol>
+
+  <!-- ===== 5. Glass Page ===== -->
+  <symbol id="ic5" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#b5)"/></g>
+    <g clip-path="url(#sq)">
+      <g filter="url(#blur40)">
+        <circle cx="300" cy="300" r="170" fill="#E7A63B" opacity=".9"/>
+        <circle cx="760" cy="760" r="190" fill="#C9452F" opacity=".85"/>
+        <circle cx="760" cy="300" r="120" fill="#7CC4DE" opacity=".8"/>
+      </g>
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".08"/>
+    </g>
+    <!-- glass pane: blurred copy of background inside -->
+    <g filter="url(#objShadow)"><rect x="270" y="210" width="484" height="604" rx="64" fill="#2a6a88" opacity=".35"/></g>
+    <g clip-path="url(#glassClip)">
+      <rect x="100" y="100" width="824" height="824" fill="url(#b5)"/>
+      <g filter="url(#blur40)" opacity=".75">
+        <circle cx="300" cy="300" r="190" fill="#F0B451"/>
+        <circle cx="760" cy="760" r="210" fill="#D9573F"/>
+        <circle cx="760" cy="300" r="140" fill="#9AD6EA"/>
+      </g>
+      <rect x="270" y="210" width="484" height="604" fill="url(#glassFill)"/>
+      <rect x="270" y="210" width="484" height="604" fill="#fff" filter="url(#grain)" opacity=".1"/>
+      <path d="M270 210 H 754 V 380 C 600 330 420 330 270 400 Z" fill="#fff" opacity=".12"/>
+    </g>
+    <rect x="272" y="212" width="480" height="600" rx="62" fill="none" stroke="url(#glassEdge)" stroke-width="4"/>
+    <!-- etched R -->
+    <text x="512" y="618" text-anchor="middle" font-family="Zilla Slab, serif" font-weight="700" font-size="330" fill="#fff" opacity=".95">R</text>
+    <text x="512" y="621" text-anchor="middle" font-family="Zilla Slab, serif" font-weight="700" font-size="330" fill="#0E2C3B" opacity=".18">R</text>
+    <!-- progress strip -->
+    <g>
+      <rect x="352" y="700" width="62" height="16" rx="8" fill="#fff"/>
+      <rect x="426" y="700" width="62" height="16" rx="8" fill="#fff" opacity=".45"/>
+      <rect x="500" y="700" width="62" height="16" rx="8" fill="#fff" opacity=".45"/>
+      <rect x="574" y="700" width="62" height="16" rx="8" fill="#fff" opacity=".45"/>
+      <rect x="648" y="700" width="24" height="16" rx="8" fill="#fff" opacity=".45"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="wrap">
+  <h1>Recto icons, round 2</h1>
+  <p class="lead">Rendered objects instead of flat symbols: material, light, depth and texture, on the macOS icon grid. The strip below shows all five together on a desktop; each one then gets its own row at real sizes.</p>
+
+  <div class="hero">
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic1"/></svg><figcaption>Linen Daybook</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic2"/></svg><figcaption>Tear-off Day</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic3"/></svg><figcaption>Fanned Priorities</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic4"/></svg><figcaption>Morning Spread</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic5"/></svg><figcaption>Glass Page</figcaption></figure>
+  </div>
+
+  <section class="opt" data-ic="ic1"><div class="big"></div><div><h2><span>01</span>Linen Daybook</h2><p>A cloth-bound planner, front on: teal linen weave, a debossed slab R, an ochre elastic band, cream page edges and a brick ribbon. Feels like a well-made object you own.</p></div></section>
+  <section class="opt" data-ic="ic2"><div class="big"></div><div><h2><span>02</span>Tear-off Day</h2><p>A desk calendar block with a binder clip. Today's page shows its P1 header and checklist, its corner curling up to reveal the next day underneath.</p></div></section>
+  <section class="opt" data-ic="ic3"><div class="big"></div><div><h2><span>03</span>Fanned Priorities</h2><p>The app's P3, P2 and P1 cards fanned in depth on charcoal, a warm glow behind. The front P1 card has one task checked off.</p></div></section>
+  <section class="opt" data-ic="ic4"><div class="big"></div><div><h2><span>04</span>Morning Spread</h2><p>An open book at dawn. Light falls across the right-hand page, the recto, where today's priorities are written; the left page stays in shadow.</p></div></section>
+  <section class="opt" data-ic="ic5"><div class="big"></div><div><h2><span>05</span>Glass Page</h2><p>The newest macOS look: a frosted glass page over soft ochre, brick and sky light, with an etched R and the day's progress strip.</p></div></section>
+</div>
+
+<script>
+  document.querySelectorAll('.opt').forEach(function (sec) {
+    var id = sec.dataset.ic;
+    var svg = function (s) { return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 1024 1024"><use href="#' + id + '"/></svg>'; };
+    sec.querySelector('.big').innerHTML = svg(300);
+    var sizes = document.createElement('div');
+    sizes.className = 'sizes';
+    ['light', 'dark'].forEach(function (mode) {
+      sizes.innerHTML += '<div class="tile ' + mode + '">' + [128, 64, 32, 16].map(function (s) { return '<div>' + svg(s) + '<div class="lbl">' + s + '</div></div>'; }).join('') + '</div>';
+    });
+    sec.querySelector('div:last-child').appendChild(sizes);
+  });
+</script>
+</body>
+</html>

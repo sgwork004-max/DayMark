@@ -7,7 +7,7 @@ if (process.platform === "darwin") {
   const targetDir = process.env.CARGO_TARGET_DIR
     ? path.resolve(process.env.CARGO_TARGET_DIR)
     : path.join(root, "src-tauri", "target");
-  const app = path.join(targetDir, "release", "bundle", "macos", "Manager.app");
+  const app = path.join(targetDir, "release", "bundle", "macos", "DayMark.app");
   const entitlements = path.join(root, "src-tauri", "entitlements.plist");
 
   execFileSync("xattr", ["-cr", app], { stdio: "inherit" });

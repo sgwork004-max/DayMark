@@ -58,7 +58,7 @@ export async function scheduleNativeTaskReminder(args: {
 
   await sendNotification({
     id,
-    title: "Manager reminder",
+    title: "DayMark reminder",
     body: args.title,
     schedule: Schedule.at(at),
     sound: "Ping",

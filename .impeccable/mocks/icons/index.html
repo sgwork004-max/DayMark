@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recto icons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #2a2b2e; color: #e9e9ea; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; padding: 28px 16px 80px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 650; }
+  .lead { color: #a0a1a6; max-width: 72ch; margin-top: 4px; }
+  .opt { margin-top: 36px; display: grid; grid-template-columns: 260px 1fr; gap: 28px; align-items: center; padding-top: 28px; border-top: 1px solid #3a3b40; }
+  .opt h2 { font-size: 17px; font-weight: 650; }
+  .opt h2 span { font: 500 12px "JetBrains Mono", monospace; color: #a0a1a6; margin-right: 8px; }
+  .opt p { color: #a0a1a6; font-size: 13px; margin-top: 4px; max-width: 54ch; }
+  .big svg { width: 256px; height: 256px; display: block; }
+  .sizes { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
+  .tile { border-radius: 10px; padding: 14px 16px; display: flex; align-items: flex-end; gap: 14px; }
+  .tile.light { background: linear-gradient(135deg, #dfe6ec, #c9d4dc); }
+  .tile.dark { background: linear-gradient(135deg, #2c3138, #15181c); }
+  .tile svg { display: block; }
+  .tile .lbl { font: 500 10px "JetBrains Mono", monospace; color: #6b7178; }
+  .tile.dark .lbl { color: #8b9198; }
+  .menu { display: flex; align-items: center; gap: 8px; height: 26px; padding: 0 10px; border-radius: 6px; font-size: 13px; }
+  .menu.light { background: rgba(255,255,255,.75); color: #1d1d1f; }
+  .menu.dark { background: rgba(30,30,32,.85); color: #f2f2f2; }
+  .dock { margin-top: 14px; display: inline-flex; gap: 10px; padding: 8px 12px; border-radius: 20px; background: rgba(255,255,255,.18); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.2); }
+  .dockbg { background: linear-gradient(160deg, #4d6a86, #1f2b3a 60%, #14181f); border-radius: 12px; padding: 22px 18px 16px; }
+  .ph { width: 64px; height: 64px; border-radius: 15px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity=".28"/></filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity=".18"/></filter>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDFCFA"/><stop offset="1" stop-color="#ECEAE3"/></linearGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34373C"/><stop offset="1" stop-color="#1D1F23"/></linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A84A6"/><stop offset="1" stop-color="#245A74"/></linearGradient>
+    <linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F6F8E"/><stop offset=".62" stop-color="#5E93A8"/><stop offset="1" stop-color="#E8C98A"/></linearGradient>
+    <clipPath id="sq"><rect x="100" y="100" width="824" height="824" rx="186"/></clipPath>
+  </defs>
+
+  <!-- 1. Date Card -->
+  <symbol id="ic1" viewBox="0 0 1024 1024">
+    <g filter="url(#sh)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#ink)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="176" fill="#2E6F8E"/>
+      <circle cx="330" cy="188" r="22" fill="#1D1F23" opacity=".55"/><circle cx="694" cy="188" r="22" fill="#1D1F23" opacity=".55"/>
+    </g>
+    <text x="512" y="700" text-anchor="middle" font-family="Zilla Slab, serif" font-weight="700" font-size="430" fill="#FBFAF8">R</text>
+    <g fill="#4A4D53"><rect x="262" y="790" width="76" height="22" rx="6" fill="#6FAFCB"/><rect x="354" y="790" width="76" height="22" rx="6"/><rect x="446" y="790" width="76" height="22" rx="6"/><rect x="538" y="790" width="76" height="22" rx="6"/><rect x="630" y="790" width="76" height="22" rx="6"/><rect x="722" y="790" width="40" height="22" rx="6"/></g>
+  </symbol>
+
+  <!-- 2. Recto Page (open book, right page lit) -->
+  <symbol id="ic2" viewBox="0 0 1024 1024">
+    <g filter="url(#sh)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#teal)"/></g>
+    <g filter="url(#soft)">
+      <path d="M512 300 C 430 270 320 268 236 290 L 236 744 C 320 722 430 724 512 754 Z" fill="#C9D5DA"/>
+      <path d="M512 300 C 594 270 704 268 788 290 L 788 744 C 704 722 594 724 512 754 Z" fill="#FBFAF8"/>
+    </g>
+    <path d="M512 300 L 512 754" stroke="#9FB2BA" stroke-width="6"/>
+    <g stroke-linecap="round" stroke-width="30">
+      <path d="M580 400 H 720" stroke="#C2412D"/>
+      <path d="M580 480 H 690" stroke="#C48A1C"/>
+      <path d="M580 560 H 706" stroke="#2E6F8E"/>
+      <path d="M580 640 H 660" stroke="#C9C6BE"/>
+    </g>
+    <g stroke="#9FB2BA" stroke-width="14" stroke-linecap="round" opacity=".8"><path d="M300 420 H 440"/><path d="M300 500 H 420"/><path d="M300 580 H 440"/></g>
+  </symbol>
+
+  <!-- 3. Priority Card -->
+  <symbol id="ic3" viewBox="0 0 1024 1024">
+    <g filter="url(#sh)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#paper)"/></g>
+    <g filter="url(#soft)"><rect x="232" y="226" width="560" height="572" rx="56" fill="#FFFFFF"/></g>
+    <path d="M288 226 H 736 A 56 56 0 0 1 792 282 V 262 H 232 V 282 A 56 56 0 0 1 288 226 Z" fill="#C2412D"/>
+    <rect x="232" y="226" width="560" height="40" rx="20" fill="#C2412D"/>
+    <rect x="232" y="246" width="560" height="22" fill="#C2412D"/>
+    <g>
+      <rect x="298" y="346" width="76" height="76" rx="18" fill="#2E6F8E"/>
+      <path d="M318 384 l 18 18 l 34 -38" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="410" y="370" width="260" height="30" rx="15" fill="#C9C6BE"/>
+      <rect x="298" y="484" width="76" height="76" rx="18" fill="none" stroke="#24262A" stroke-width="12"/>
+      <rect x="410" y="508" width="310" height="30" rx="15" fill="#24262A"/>
+      <rect x="298" y="622" width="76" height="76" rx="18" fill="none" stroke="#24262A" stroke-width="12"/>
+      <rect x="410" y="646" width="220" height="30" rx="15" fill="#24262A"/>
+    </g>
+  </symbol>
+
+  <!-- 4. First Light (page with sunrise) -->
+  <symbol id="ic4" viewBox="0 0 1024 1024">
+    <g filter="url(#sh)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#dawn)"/></g>
+    <g clip-path="url(#sq)">
+      <circle cx="512" cy="760" r="190" fill="#F2B64E"/>
+      <rect x="100" y="760" width="824" height="200" fill="#24262A" opacity=".9"/>
+    </g>
+    <g filter="url(#soft)" transform="rotate(-6 512 480)">
+      <path d="M332 232 H 640 L 712 304 V 680 H 332 Z" fill="#FBFAF8"/>
+      <path d="M640 232 V 304 H 712 Z" fill="#DDD9CF"/>
+      <g stroke-linecap="round" stroke-width="26"><path d="M396 360 H 600" stroke="#C2412D"/><path d="M396 440 H 640" stroke="#24262A"/><path d="M396 520 H 590" stroke="#24262A"/><path d="M396 600 H 540" stroke="#C9C6BE"/></g>
+    </g>
+  </symbol>
+
+  <!-- 5. Bookmark R -->
+  <symbol id="ic5" viewBox="0 0 1024 1024">
+    <g filter="url(#sh)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#paper)"/></g>
+    <g clip-path="url(#sq)"><path d="M640 100 H 760 V 400 L 700 356 L 640 400 Z" fill="#2E6F8E"/></g>
+    <text x="470" y="730" text-anchor="middle" font-family="Zilla Slab, serif" font-weight="700" font-size="520" fill="#24262A">R</text>
+    <rect x="236" y="790" width="430" height="20" rx="10" fill="#C2412D"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+  <h1>Recto: five app icon directions</h1>
+  <p class="lead">Each icon follows the macOS icon grid (824 px shape on a 1024 px canvas). Next to each: real sizes on light and dark desktops, the menu bar size, and a Dock. Small sizes are where an icon succeeds or fails, so judge those too.</p>
+
+  <section class="opt" data-ic="ic1"><div class="big"></div><div><h2><span>01</span>Date Card</h2><p>The Field Day date card as the whole icon: a teal header with two binding holes, a slab R, and the day's progress strip underneath.</p></div></section>
+  <section class="opt" data-ic="ic2"><div class="big"></div><div><h2><span>02</span>Recto Page</h2><p>An open book on teal. The right-hand page, the recto, is lit and holds today's priorities in brick, ochre and teal. The name, drawn literally.</p></div></section>
+  <section class="opt" data-ic="ic3"><div class="big"></div><div><h2><span>03</span>Priority Card</h2><p>A single P1 card from the app: brick top edge, one task checked off in teal, two to go. Says "tasks", less "notes".</p></div></section>
+  <section class="opt" data-ic="ic4"><div class="big"></div><div><h2><span>04</span>First Light</h2><p>Today's page over a sunrise: the day starting on a page. Warmest and most illustrative of the five.</p></div></section>
+  <section class="opt" data-ic="ic5"><div class="big"></div><div><h2><span>05</span>Bookmark R</h2><p>Warm paper, a big slab R, a teal bookmark marking today's page and a brick underline. Simplest and most typographic.</p></div></section>
+</div>
+
+<script>
+  document.querySelectorAll('.opt').forEach(function (sec) {
+    var id = sec.dataset.ic;
+    var svg = function (s) { return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 1024 1024"><use href="#' + id + '"/></svg>'; };
+    sec.querySelector('.big').innerHTML = svg(256);
+    var info = sec.querySelector('div:last-child');
+    var sizes = document.createElement('div');
+    sizes.className = 'sizes';
+    ['light', 'dark'].forEach(function (mode) {
+      sizes.innerHTML += '<div class="tile ' + mode + '">' +
+        [128, 64, 32, 16].map(function (s) { return '<div>' + svg(s) + '<div class="lbl">' + s + '</div></div>'; }).join('') +
+        '<div class="menu ' + mode + '">' + svg(18) + 'Recto</div></div>';
+    });
+    info.appendChild(sizes);
+    var dock = document.createElement('div');
+    dock.className = 'dockbg';
+    var others = ['#e8e8ea', '#3478f6', '#f5b52e', '#34c759', '#ff453a'].map(function (c) { return '<div class="ph" style="background:' + c + '"></div>'; });
+    others.splice(2, 0, svg(64));
+    dock.innerHTML = '<div class="dock">' + others.join('') + '</div>';
+    info.appendChild(dock);
+  });
+</script>
+</body>
+</html>

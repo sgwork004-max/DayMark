@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Manager",
+    "name": "DayMark",
     "slug": "daymark-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,7 +14,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "co.daymark.mobile",
       "infoPlist": {
-        "NSDocumentsFolderUsageDescription": "Manager stores your notes in iCloud Drive so they sync across devices."
+        "NSDocumentsFolderUsageDescription": "DayMark stores your notes in iCloud Drive so they sync across devices."
       },
       "entitlements": {
         "com.apple.developer.icloud-container-identifiers": [

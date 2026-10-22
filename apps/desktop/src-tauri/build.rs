@@ -22,15 +22,15 @@ fn macos_setup() {
   <key>CFBundleIdentifier</key>
   <string>co.daymark.desktop</string>
   <key>CFBundleName</key>
-  <string>Manager</string>
+  <string>DayMark</string>
   <key>NSCalendarsUsageDescription</key>
-  <string>Manager reads your calendar events to show them alongside your notes and daily plans.</string>
+  <string>DayMark reads your calendar events to show them alongside your notes and daily plans.</string>
   <key>NSCalendarsFullAccessUsageDescription</key>
-  <string>Manager reads your calendar events to show them alongside your notes and daily plans.</string>
+  <string>DayMark reads your calendar events to show them alongside your notes and daily plans.</string>
   <key>NSMicrophoneUsageDescription</key>
-  <string>Manager uses the microphone only while you dictate a note.</string>
+  <string>DayMark uses the microphone only while you dictate a note.</string>
   <key>NSSpeechRecognitionUsageDescription</key>
-  <string>Manager converts your spoken words into text inside the current note.</string>
+  <string>DayMark converts your spoken words into text inside the current note.</string>
 </dict>
 </plist>"#;
 

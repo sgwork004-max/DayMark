@@ -7,7 +7,7 @@ export interface PluginCommand {
   run: () => void | Promise<void>;
 }
 
-export interface ManagerPluginAPI {
+export interface DayMarkPluginAPI {
   getCurrentNote(): { id: string; title: string; content: string } | null;
   saveNote(id: string, content: string): Promise<void>;
   insertTextAtEnd(text: string): Promise<void>;
@@ -39,7 +39,7 @@ function showToast(message: string, durationMs = 3000) {
   }, durationMs);
 }
 
-export function buildPluginAPI(): ManagerPluginAPI {
+export function buildPluginAPI(): DayMarkPluginAPI {
   return {
     getCurrentNote() {
       const { activeNoteId, notes } = useNotesStore.getState();

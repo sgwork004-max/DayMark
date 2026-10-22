@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recto blends</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600;7..72,700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #2a2b2e; color: #e9e9ea; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; padding: 28px 16px 80px; }
+  .gallery-head { max-width: 1280px; margin: 0 auto 18px; }
+  .gallery-head h1 { font-size: 20px; font-weight: 650; }
+  .gallery-head p { color: #a0a1a6; max-width: 72ch; margin-top: 4px; }
+  section.option { max-width: 1280px; margin: 44px auto 0; }
+  .option-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .option-head .num { font: 600 13px/1 "JetBrains Mono", monospace; color: #a0a1a6; }
+  .option-head h2 { font-size: 18px; font-weight: 650; }
+  .option-head p { color: #a0a1a6; font-size: 13px; }
+  .mix { font: 500 11px/1 "JetBrains Mono", monospace; color: #c8c9cd; border: 1px solid #45464b; border-radius: 4px; padding: 3px 6px; }
+  .stage { width: 100%; overflow: hidden; }
+  .scaler { width: 1280px; height: 800px; transform-origin: top left; }
+  .window { width: 1280px; height: 800px; border-radius: 11px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(0,0,0,.5); display: flex; flex-direction: column; }
+  .lights { display: flex; gap: 8px; }
+  .lights i { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; display: block; }
+  .lights i:nth-child(2) { background: #febc2e; }
+  .lights i:nth-child(3) { background: #28c840; }
+
+  /* Shared app skeleton, themed per option through custom properties */
+  .app { background: var(--chrome); color: var(--ink); font-family: var(--ui); }
+  .app .bar { height: 40px; display: flex; align-items: center; padding: 0 16px; gap: 14px; flex: none; }
+  .app .bar .title { margin: 0 auto; font-size: 12px; color: var(--muted); }
+  .app .bar .tools { display: flex; gap: 14px; font-size: 12px; color: var(--muted); }
+  .app .body { flex: 1; display: grid; grid-template-columns: 196px 1fr; min-height: 0; padding: 0 16px 16px 0; }
+  .app .side { padding: 4px 12px 12px; font-size: 13px; }
+  .app .side h6 { font-size: 11px; font-weight: 500; color: var(--muted); margin: 16px 6px 5px; }
+  .app .side a { display: flex; justify-content: space-between; padding: 4px 8px; border-radius: 5px; color: var(--ink); text-decoration: none; }
+  .app .side a small { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .app .side a.on { background: var(--sel-bg); color: var(--sel-ink); font-weight: 500; }
+  .app .side a.on small { color: inherit; opacity: .75; }
+  .app .sheet { background: var(--paper); border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,.10), 0 10px 28px rgba(0,0,0,.06); display: grid; grid-template-columns: 1fr 250px; overflow: hidden; position: relative; }
+  .app .write { padding: 28px 40px; position: relative; overflow: hidden; }
+  .app .margin { border-left: 1px solid var(--rule); padding: 24px 16px 16px 14px; display: flex; flex-direction: column; gap: 12px; }
+  .app .margin h4 { font-size: 11px; font-weight: 600; color: var(--muted); display: flex; justify-content: space-between; }
+  .app .hcol { position: relative; height: 470px; }
+  .app .h { position: absolute; left: 0; right: 0; border-top: 1px solid var(--rule-soft); font: 500 10.5px/1 "JetBrains Mono", monospace; color: var(--muted); padding-top: 3px; }
+  .app .e { position: absolute; left: 30px; right: 0; font-size: 12px; line-height: 1.3; padding: 4px 7px; border-radius: var(--ev-r); background: var(--ev-bg); border-left: 3px solid var(--ev-line); }
+  .app .e small { display: block; color: var(--muted); font-size: 11px; }
+  .app .e.focus { background: var(--accent-soft); border-left-color: var(--accent); }
+  .app .now { position: absolute; left: 22px; right: 0; border-top: 1.5px solid var(--now); }
+  .app .now::before { content: ""; position: absolute; left: -4px; top: -4px; width: 7px; height: 7px; border-radius: 50%; background: var(--now); }
+  .app .mini-tasks { border-top: 1px solid var(--rule); padding-top: 10px; font-size: 12.5px; }
+  .app .mini-tasks div { display: flex; gap: 8px; padding: 4px 0; }
+  .app .mini-tasks div::before { content: ""; width: 11px; height: 11px; border: 1.5px solid var(--ink); border-radius: var(--box-r); flex: none; margin-top: 3px; }
+  .app .mini-tasks .s::before { border-style: dashed; border-color: var(--accent); }
+  .app .foot { height: 24px; display: flex; align-items: center; gap: 14px; padding: 0 16px; font-size: 11px; color: var(--muted); flex: none; }
+
+  /* task rows */
+  .app .task { display: flex; align-items: baseline; gap: 10px; }
+  .app .task::before { content: ""; width: 13px; height: 13px; border: 1.5px solid var(--ink); border-radius: var(--box-r); flex: none; transform: translateY(2px); }
+  .app .task.x { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+  .app .task.x::before { background: var(--accent); border-color: var(--accent); }
+  .app .task .when { font: 500 11px/16px "JetBrains Mono", monospace; color: var(--accent); border: 1px solid var(--accent); border-radius: 3px; padding: 0 4px; margin-left: 4px; }
+  .app .task .sched { border-bottom: 1.5px dashed var(--accent); }
+  .app .notes a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft-line); }
+
+  /* ============ A. Planner, edited ============ */
+  .a { --chrome: #E8E6E0; --paper: #FBFAF7; --ink: #26272A; --muted: #7B7E83; --rule: #2A2B2E; --rule-soft: #E2E0D9; --accent: #3E7C6B; --accent-soft: rgba(62,124,107,.12); --accent-soft-line: rgba(62,124,107,.4); --ev-bg: rgba(38,39,42,.05); --ev-line: #26272A; --ev-r: 2px; --now: #B8322B; --sel-bg: #3E7C6B; --sel-ink: #fff; --box-r: 3px; --ui: "Zen Kaku Gothic New", -apple-system, sans-serif; }
+  .a .write { background-image: linear-gradient(#ecebe5 1px, transparent 1px), linear-gradient(90deg, #ecebe5 1px, transparent 1px); background-size: 14px 14px; background-position: -1px -1px; }
+  .a .dateblock { display: flex; align-items: flex-end; gap: 16px; border-bottom: 1.5px solid var(--rule); padding-bottom: 12px; }
+  .a .dateblock .d { font: 500 68px/.88 "JetBrains Mono", monospace; letter-spacing: -.05em; }
+  .a .dateblock .w { font-size: 14px; color: var(--muted); padding-bottom: 4px; line-height: 1.3; }
+  .a .dateblock .w b { display: block; color: var(--ink); font: 600 26px/1.15 "Literata", Georgia, serif; }
+  .a .dateblock .stamp { margin-left: auto; width: 60px; height: 60px; border: 2px solid var(--accent); border-radius: 50%; color: var(--accent); display: grid; place-items: center; text-align: center; font: 700 10px/1.1 "Zen Kaku Gothic New", sans-serif; transform: rotate(-8deg); }
+  .a .pri { margin-top: 20px; display: grid; grid-template-columns: 46px 1fr; row-gap: 4px; }
+  .a .pri .p { font: 700 11px/26px "JetBrains Mono", monospace; color: var(--c); }
+  .a .pri .lead { font: 600 22px/1.25 "Literata", Georgia, serif; }
+  .a .pri .t { font-size: 15px; line-height: 26px; }
+  .a .pri .gap { grid-column: 1 / -1; height: 10px; }
+  .a .notes { margin-top: 20px; border-top: 1px dashed #c9c6be; padding-top: 10px; font: 400 15px/28px "Literata", Georgia, serif; max-width: 64ch; }
+  .a .notes h5 { font: 500 11px/1 "Zen Kaku Gothic New", sans-serif; color: var(--muted); margin-bottom: 4px; }
+
+  /* ============ B. The Daybook ============ */
+  .b { --chrome: #F2F1EE; --paper: #FFFFFF; --ink: #1B1D21; --muted: #7A7D84; --rule: #1B1D21; --rule-soft: #ECEBE7; --accent: #2D5D8F; --accent-soft: rgba(45,93,143,.10); --accent-soft-line: rgba(45,93,143,.35); --ev-bg: #F3F2EE; --ev-line: #1B1D21; --ev-r: 3px; --now: #B8322B; --sel-bg: #1B1D21; --sel-ink: #fff; --box-r: 50%; --ui: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+  .b .mast { display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+  .b .mast .d { font: 600 76px/.82 "Literata", Georgia, serif; letter-spacing: -.03em; }
+  .b .mast .w { padding-bottom: 4px; }
+  .b .mast .w b { display: block; font: 600 24px/1.15 "Literata", Georgia, serif; }
+  .b .mast .w span { font-size: 13px; color: var(--muted); }
+  .b .mast .meta { text-align: right; font-size: 12px; color: var(--muted); line-height: 1.6; padding-bottom: 4px; }
+  .b .mast .meta b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .b .summary { display: flex; gap: 16px; font-size: 12px; color: var(--muted); padding: 8px 0 0; }
+  .b .summary b { color: var(--ink); }
+  .b .heads { margin-top: 18px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 6px 32px; }
+  .b .sect { border-left: 2px solid var(--c); padding: 0 0 12px 14px; }
+  .b .sect .k { font: 600 11px/1 -apple-system, sans-serif; color: var(--c); letter-spacing: .04em; }
+  .b .sect .lead { font: 600 22px/1.22 "Literata", Georgia, serif; margin-top: 6px; }
+  .b .sect .task { font-size: 15px; line-height: 1.55; margin-top: 6px; }
+  .b .sect .lead.task { font-size: 22px; }
+  .b .ruled { margin-top: 14px; background-image: repeating-linear-gradient(transparent 0 27px, #ECEBE7 27px 28px); font: 400 15px/28px "Literata", Georgia, serif; max-width: 66ch; }
+  .b .ruled h5 { font: 600 11px/28px -apple-system, sans-serif; color: var(--muted); letter-spacing: .04em; }
+
+  /* ============ C. Field Day ============ */
+  .c { --chrome: #E4E2DC; --paper: #F7F5F0; --ink: #24262A; --muted: #7C7F84; --rule: #24262A; --rule-soft: #E3E0D8; --accent: #2E6F8E; --accent-soft: rgba(46,111,142,.12); --accent-soft-line: rgba(46,111,142,.4); --ev-bg: #EAE7DF; --ev-line: #8A6D3B; --ev-r: 4px; --now: #C4472F; --sel-bg: #24262A; --sel-ink: #F7F5F0; --box-r: 3px; --ui: "Zen Kaku Gothic New", -apple-system, sans-serif; }
+  .c .write { background-image: radial-gradient(#d4d1c8 1px, transparent 1.2px); background-size: 16px 16px; background-position: 8px 8px; }
+  .c .top { display: grid; grid-template-columns: 112px 1fr; gap: 20px; align-items: stretch; }
+  .c .datecard { background: #24262A; color: #F7F5F0; border-radius: 6px; padding: 12px 12px 10px; display: flex; flex-direction: column; justify-content: space-between; }
+  .c .datecard span { font: 500 11px/1 "JetBrains Mono", monospace; opacity: .75; }
+  .c .datecard b { font: 700 58px/.9 "Zilla Slab", serif; letter-spacing: -.02em; }
+  .c .heading h1 { font: 700 30px/1.1 "Zilla Slab", serif; }
+  .c .heading p { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .c .progress { display: flex; gap: 3px; margin-top: 12px; }
+  .c .progress i { height: 6px; flex: 1; background: #DDD9CF; border-radius: 2px; }
+  .c .progress i.on { background: var(--accent); }
+  .c .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+  .c .card { background: rgba(255,255,255,.72); border: 1px solid #E0DCD2; border-top: 3px solid var(--c); border-radius: 5px; padding: 10px 12px 12px; }
+  .c .card .k { font: 700 11px/1 "JetBrains Mono", monospace; color: var(--c); }
+  .c .card .task { font-size: 14.5px; margin-top: 7px; line-height: 1.4; }
+  .c .card .lead.task { font: 700 18px/1.25 "Zilla Slab", serif; }
+  .c .notes { margin-top: 16px; font-size: 14.5px; line-height: 1.7; max-width: 66ch; }
+  .c .notes h5 { font: 700 11px/1 "JetBrains Mono", monospace; color: var(--muted); margin-bottom: 4px; }
+
+  /* ============ D. Quiet Sheet ============ */
+  .d { --chrome: #F4F4F2; --paper: #FFFFFF; --ink: #1D1D1F; --muted: #86868B; --rule: #E6E5E1; --rule-soft: #F0EFEC; --accent: #3C6E5F; --accent-soft: rgba(60,110,95,.10); --accent-soft-line: rgba(60,110,95,.35); --ev-bg: #F4F4F2; --ev-line: #C9C8C3; --ev-r: 6px; --now: #D04A3A; --sel-bg: #E7E6E2; --sel-ink: #1D1D1F; --box-r: 50%; --ui: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+  .d .sheet { box-shadow: 0 0 0 1px #E6E5E1; border-radius: 8px; }
+  .d .write { padding: 34px 56px; }
+  .d .datehead { display: flex; align-items: baseline; gap: 14px; }
+  .d .datehead .d1 { font: 500 15px/1 "JetBrains Mono", monospace; color: var(--muted); }
+  .d .datehead h1 { font: 600 34px/1.1 "Literata", Georgia, serif; letter-spacing: -.01em; }
+  .d .sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .d .pri { margin-top: 26px; }
+  .d .group { display: grid; grid-template-columns: 54px 1fr; padding: 10px 0; border-top: 1px solid var(--rule); }
+  .d .group .k { font: 600 12px/24px -apple-system, sans-serif; color: var(--c); }
+  .d .group .task { font-size: 15px; line-height: 24px; }
+  .d .group .lead.task { font: 600 20px/1.3 "Literata", Georgia, serif; }
+  .d .notes { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--rule); font: 400 15.5px/1.7 "Literata", Georgia, serif; color: #3a3a3c; max-width: 64ch; }
+  .d .margin { border-left-color: var(--rule); background: #FBFBFA; }
+</style>
+</head>
+<body>
+  <header class="gallery-head">
+    <h1>Recto: four blends of the Edition and the Planner</h1>
+    <p>Same sample day as before (Wednesday, October 21, 2026), at the real window size. Each blend keeps the planner's paper, date block and hour margin, and the edition's headline hierarchy, in different proportions. Content is sample data.</p>
+  </header>
+
+  <!-- A -->
+  <section class="option">
+    <div class="option-head"><span class="num">A</span><h2>Planner, edited</h2><span class="mix">70% planner · 30% edition</span><p>Planner paper and date stamp; P1 set as a serif headline.</p></div>
+    <div class="stage"><div class="scaler"><div class="window app a">
+      <div class="bar"><div class="lights"><i></i><i></i><i></i></div><span class="title">Recto</span><div class="tools"><span>Search</span><span>Calendar</span><span>Settings</span></div></div>
+      <div class="body">
+        <aside class="side">
+          <a class="on" href="#">Today <small>6</small></a><a href="#">Upcoming <small>4</small></a><a href="#">Overdue <small>1</small></a>
+          <h6>Days</h6><a href="#">Yesterday</a><a href="#">Tomorrow</a><a href="#">This week</a><a href="#">October</a>
+          <h6>Notes</h6><a href="#">Release plan</a><a href="#">Reading list</a><a href="#">Icon ideas</a>
+        </aside>
+        <div class="sheet">
+          <div class="write">
+            <div class="dateblock"><div class="d">21</div><div class="w">October 2026<b>Wednesday</b></div><div class="stamp">DAY<br>294</div></div>
+            <div class="pri">
+              <div class="p" style="--c:#B8322B">P1</div><div class="lead task">Write the release notes for 0.7</div>
+              <div class="p"></div><div class="t task x">Fix the vault picker copy</div>
+              <div class="gap"></div>
+              <div class="p" style="--c:#C98A1B">P2</div><div class="t task">Review the new onboarding screens</div>
+              <div class="p"></div><div class="t task"><span class="sched">Reply to Maya about the icon brief</span><span class="when">Thu 22</span></div>
+              <div class="gap"></div>
+              <div class="p" style="--c:#2F6FB0">P3</div><div class="t task">Clear out the downloads folder</div>
+              <div class="gap"></div>
+              <div class="p" style="--c:#7B7E83">MISC</div><div class="t task">Pick up the dry cleaning</div>
+            </div>
+            <div class="notes"><h5>Notes</h5>The vault picker should name the folder, not show a raw path. Ask Maya whether the icon still reads at 16 pixels. See <a href="#">Release plan</a> · <a href="#">#launch</a></div>
+          </div>
+          <div class="margin">
+            <h4><span>Schedule</span><span>Wed</span></h4>
+            <div class="hcol">
+              <div class="h" style="top:0">9</div><div class="h" style="top:52px">10</div><div class="h" style="top:104px">11</div><div class="h" style="top:156px">12</div><div class="h" style="top:208px">13</div><div class="h" style="top:260px">14</div><div class="h" style="top:312px">15</div><div class="h" style="top:364px">16</div><div class="h" style="top:416px">17</div>
+              <div class="e" style="top:26px;height:26px">Standup</div>
+              <div class="now" style="top:84px"></div>
+              <div class="e" style="top:104px;height:52px">Design review<small>Studio</small></div>
+              <div class="e focus" style="top:260px;height:104px">Focus: release notes<small>2 hrs</small></div>
+              <div class="e" style="top:390px;height:26px">Dentist</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="foot"><span>212 words</span><span style="margin-left:auto">Close the day</span></div>
+    </div></div></div>
+  </section>
+
+  <!-- B -->
+  <section class="option">
+    <div class="option-head"><span class="num">B</span><h2>The Daybook</h2><span class="mix">50 · 50</span><p>White page, big serif date numeral, headline columns, ruled notes, hour margin.</p></div>
+    <div class="stage"><div class="scaler"><div class="window app b">
+      <div class="bar"><div class="lights"><i></i><i></i><i></i></div><span class="title">Recto</span><div class="tools"><span>Search</span><span>Calendar</span><span>Settings</span></div></div>
+      <div class="body">
+        <aside class="side">
+          <a class="on" href="#">Today <small>6</small></a><a href="#">Upcoming <small>4</small></a><a href="#">Overdue <small>1</small></a>
+          <h6>Days</h6><a href="#">Yesterday</a><a href="#">Tomorrow</a><a href="#">This week</a><a href="#">October</a>
+          <h6>Notes</h6><a href="#">Release plan</a><a href="#">Reading list</a><a href="#">Icon ideas</a>
+        </aside>
+        <div class="sheet">
+          <div class="write">
+            <div class="mast"><div class="d">21</div><div class="w"><b>Wednesday</b><span>October 2026</span></div><div class="meta"><b>Day 294</b><br>Week 43</div></div>
+            <div class="summary"><span><b>6</b> on today's page</span><span><b>1</b> done</span><span><b>4</b> meetings</span><span>1 carried from yesterday</span></div>
+            <div class="heads">
+              <div>
+                <div class="sect" style="--c:#B8322B"><span class="k">P1</span><div class="lead task">Write the release notes for 0.7</div><div class="task x">Fix the vault picker copy</div></div>
+                <div class="sect" style="--c:#C98A1B"><span class="k">P2</span><div class="task">Review the new onboarding screens</div><div class="task"><span class="sched">Reply to Maya about the icon brief</span><span class="when">Thu 22</span></div></div>
+              </div>
+              <div>
+                <div class="sect" style="--c:#2D5D8F"><span class="k">P3</span><div class="task">Clear out the downloads folder</div></div>
+                <div class="sect" style="--c:#7A7D84"><span class="k">MISC</span><div class="task">Pick up the dry cleaning</div></div>
+              </div>
+            </div>
+            <div class="ruled notes"><h5>NOTES</h5>The vault picker should name the folder, not show a raw path. People recognise "Notes in iCloud" faster than a string of slashes. Ask Maya whether the icon still reads at 16 pixels. See <a href="#">Release plan</a>, <a href="#">#launch</a>.</div>
+          </div>
+          <div class="margin">
+            <h4><span>Schedule</span><span>Wed</span></h4>
+            <div class="hcol">
+              <div class="h" style="top:0">9</div><div class="h" style="top:52px">10</div><div class="h" style="top:104px">11</div><div class="h" style="top:156px">12</div><div class="h" style="top:208px">13</div><div class="h" style="top:260px">14</div><div class="h" style="top:312px">15</div><div class="h" style="top:364px">16</div><div class="h" style="top:416px">17</div>
+              <div class="e" style="top:26px;height:26px">Standup</div>
+              <div class="now" style="top:84px"></div>
+              <div class="e" style="top:104px;height:52px">Design review<small>Studio</small></div>
+              <div class="e focus" style="top:260px;height:104px">Focus: release notes<small>2 hrs</small></div>
+              <div class="e" style="top:390px;height:26px">Dentist</div>
+            </div>
+            <div class="mini-tasks"><div>Write the release notes</div><div class="s">Reply to Maya · Thu</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="foot"><span>212 words</span><span style="margin-left:auto">Close the day</span></div>
+    </div></div></div>
+  </section>
+
+  <!-- C -->
+  <section class="option">
+    <div class="option-head"><span class="num">C</span><h2>Field Day</h2><span class="mix">60% planner · 40% edition</span><p>Dot-grid paper, a dark date card, priorities as cards with slab leads, a progress strip.</p></div>
+    <div class="stage"><div class="scaler"><div class="window app c">
+      <div class="bar"><div class="lights"><i></i><i></i><i></i></div><span class="title">Recto</span><div class="tools"><span>Search</span><span>Calendar</span><span>Settings</span></div></div>
+      <div class="body">
+        <aside class="side">
+          <a class="on" href="#">Today <small>6</small></a><a href="#">Upcoming <small>4</small></a><a href="#">Overdue <small>1</small></a>
+          <h6>Days</h6><a href="#">Yesterday</a><a href="#">Tomorrow</a><a href="#">This week</a><a href="#">October</a>
+          <h6>Notes</h6><a href="#">Release plan</a><a href="#">Reading list</a><a href="#">Icon ideas</a>
+        </aside>
+        <div class="sheet">
+          <div class="write">
+            <div class="top">
+              <div class="datecard"><span>OCT · 2026</span><b>21</b><span>DAY 294</span></div>
+              <div class="heading"><h1>Wednesday</h1><p>6 on today's page · 1 done · 4 meetings · 1 carried from yesterday</p><div class="progress"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div></div>
+            </div>
+            <div class="cols">
+              <div class="card" style="--c:#B8322B"><span class="k">P1</span><div class="lead task">Write the release notes for 0.7</div><div class="task x">Fix the vault picker copy</div></div>
+              <div class="card" style="--c:#C98A1B"><span class="k">P2</span><div class="task">Review the new onboarding screens</div><div class="task"><span class="sched">Reply to Maya about the icon brief</span><span class="when">Thu 22</span></div></div>
+              <div class="card" style="--c:#2E6F8E"><span class="k">P3</span><div class="task">Clear out the downloads folder</div></div>
+              <div class="card" style="--c:#7C7F84"><span class="k">MISC</span><div class="task">Pick up the dry cleaning</div></div>
+            </div>
+            <div class="notes"><h5>NOTES</h5>The vault picker should name the folder, not show a raw path. Ask Maya whether the icon still reads at 16 pixels. See <a href="#">Release plan</a> · <a href="#">#launch</a></div>
+          </div>
+          <div class="margin">
+            <h4><span>Schedule</span><span>Wed</span></h4>
+            <div class="hcol">
+              <div class="h" style="top:0">9</div><div class="h" style="top:52px">10</div><div class="h" style="top:104px">11</div><div class="h" style="top:156px">12</div><div class="h" style="top:208px">13</div><div class="h" style="top:260px">14</div><div class="h" style="top:312px">15</div><div class="h" style="top:364px">16</div><div class="h" style="top:416px">17</div>
+              <div class="e" style="top:26px;height:26px">Standup</div>
+              <div class="now" style="top:84px"></div>
+              <div class="e" style="top:104px;height:52px">Design review<small>Studio</small></div>
+              <div class="e focus" style="top:260px;height:104px">Focus: release notes<small>2 hrs</small></div>
+              <div class="e" style="top:390px;height:26px">Dentist</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="foot"><span>212 words</span><span style="margin-left:auto">Close the day</span></div>
+    </div></div></div>
+  </section>
+
+  <!-- D -->
+  <section class="option">
+    <div class="option-head"><span class="num">D</span><h2>Quiet Sheet</h2><span class="mix">30% planner · 30% edition · 40% native</span><p>The calmest, broadest one: clean white sheet, serif date headline, hour margin, ruled priority groups.</p></div>
+    <div class="stage"><div class="scaler"><div class="window app d">
+      <div class="bar"><div class="lights"><i></i><i></i><i></i></div><span class="title">Recto</span><div class="tools"><span>Search</span><span>Calendar</span><span>Settings</span></div></div>
+      <div class="body">
+        <aside class="side">
+          <a class="on" href="#">Today <small>6</small></a><a href="#">Upcoming <small>4</small></a><a href="#">Overdue <small>1</small></a>
+          <h6>Days</h6><a href="#">Yesterday</a><a href="#">Tomorrow</a><a href="#">This week</a><a href="#">October</a>
+          <h6>Notes</h6><a href="#">Release plan</a><a href="#">Reading list</a><a href="#">Icon ideas</a>
+        </aside>
+        <div class="sheet">
+          <div class="write">
+            <div class="datehead"><span class="d1">10.21</span><h1>Wednesday, October 21</h1></div>
+            <div class="sub">Day 294 · 6 on today's page · 1 done · 1 carried from yesterday</div>
+            <div class="pri">
+              <div class="group" style="--c:#B8322B"><span class="k">P1</span><div><div class="lead task">Write the release notes for 0.7</div><div class="task x">Fix the vault picker copy</div></div></div>
+              <div class="group" style="--c:#C98A1B"><span class="k">P2</span><div><div class="task">Review the new onboarding screens</div><div class="task"><span class="sched">Reply to Maya about the icon brief</span><span class="when">Thu 22</span></div></div></div>
+              <div class="group" style="--c:#2F6FB0"><span class="k">P3</span><div><div class="task">Clear out the downloads folder</div></div></div>
+              <div class="group" style="--c:#86868B"><span class="k">Misc</span><div><div class="task">Pick up the dry cleaning</div></div></div>
+            </div>
+            <div class="notes">The vault picker should name the folder, not show a raw path. Ask Maya whether the icon still reads at 16 pixels. See <a href="#">Release plan</a>.</div>
+          </div>
+          <div class="margin">
+            <h4><span>Schedule</span><span>Wed</span></h4>
+            <div class="hcol">
+              <div class="h" style="top:0">9</div><div class="h" style="top:52px">10</div><div class="h" style="top:104px">11</div><div class="h" style="top:156px">12</div><div class="h" style="top:208px">13</div><div class="h" style="top:260px">14</div><div class="h" style="top:312px">15</div><div class="h" style="top:364px">16</div><div class="h" style="top:416px">17</div>
+              <div class="e" style="top:26px;height:26px">Standup</div>
+              <div class="now" style="top:84px"></div>
+              <div class="e" style="top:104px;height:52px">Design review<small>Studio</small></div>
+              <div class="e focus" style="top:260px;height:104px">Focus: release notes<small>2 hrs</small></div>
+              <div class="e" style="top:390px;height:26px">Dentist</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="foot"><span>212 words</span><span style="margin-left:auto">Close the day</span></div>
+    </div></div></div>
+  </section>
+
+<script>
+  function fit() {
+    document.querySelectorAll('.stage').forEach(function (stage) {
+      var scale = Math.min(1, stage.clientWidth / 1280);
+      stage.querySelector('.scaler').style.transform = 'scale(' + scale + ')';
+      stage.style.height = (800 * scale) + 'px';
+    });
+  }
+  window.addEventListener('resize', fit);
+  fit();
+</script>
+</body>
+</html>

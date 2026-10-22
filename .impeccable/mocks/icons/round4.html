@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recto icon: Horizon Bands refined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #232427; color: #e9e9ea; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; padding: 28px 16px 80px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 650; }
+  .lead { color: #a0a1a6; max-width: 76ch; margin-top: 4px; }
+  .hero { margin-top: 18px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 26px 18px; border-radius: 14px; background: linear-gradient(180deg, #dfe2e4 0%, #c6ccd0 100%); }
+  .hero.dark { background: linear-gradient(180deg, #2e3238 0%, #15181c 100%); margin-top: 10px; }
+  .hero figure { text-align: center; }
+  .hero svg { width: 100%; height: auto; max-width: 196px; display: block; margin: 0 auto; }
+  .hero figcaption { font-size: 12px; color: #3a3d42; margin-top: 4px; }
+  .hero.dark figcaption { color: #c9cdd2; }
+  .opt { margin-top: 30px; display: grid; grid-template-columns: 300px 1fr; gap: 28px; align-items: center; padding-top: 26px; border-top: 1px solid #3a3b40; }
+  .opt h2 { font-size: 17px; font-weight: 650; }
+  .opt h2 span { font: 500 12px "JetBrains Mono", monospace; color: #a0a1a6; margin-right: 8px; }
+  .opt p { color: #a0a1a6; font-size: 13px; margin-top: 4px; max-width: 60ch; }
+  .big svg { width: 300px; height: 300px; display: block; }
+  .sizes { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
+  .tile { border-radius: 10px; padding: 14px 16px; display: flex; align-items: flex-end; gap: 14px; }
+  .tile.light { background: linear-gradient(135deg, #e6ebef, #cdd6dd); }
+  .tile.dark { background: linear-gradient(135deg, #2c3138, #15181c); }
+  .tile svg { display: block; }
+  .tile .lbl { font: 500 10px "JetBrains Mono", monospace; color: #6b7178; text-align: center; }
+  .tile.dark .lbl { color: #8b9198; }
+  .dockbg { margin-top: 14px; background: linear-gradient(160deg, #4d6a86, #1f2b3a 60%, #14181f); border-radius: 12px; padding: 22px 18px 16px; display: inline-block; }
+  .dock { display: inline-flex; gap: 10px; padding: 8px 12px; border-radius: 20px; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.2); }
+  .ph { width: 64px; height: 64px; border-radius: 15px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="sq"><rect x="100" y="100" width="824" height="824" rx="186"/></clipPath>
+    <filter id="iconShadow" x="-15%" y="-15%" width="130%" height="135%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".3"/></filter>
+    <filter id="cardShadow" x="-25%" y="-40%" width="150%" height="180%"><feDropShadow dx="0" dy="-2" stdDeviation="4" flood-color="#1B1C1F" flood-opacity=".18"/><feDropShadow dx="0" dy="-14" stdDeviation="18" flood-color="#7A4A1E" flood-opacity=".18"/></filter>
+    <filter id="sliceShadow" x="-10%" y="-60%" width="120%" height="260%"><feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#1B1C1F" flood-opacity=".28"/></filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="50"/></filter>
+    <filter id="glowS" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="14"/></filter>
+
+    <linearGradient id="paperBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCFBF8"/><stop offset="1" stop-color="#ECE8DF"/></linearGradient>
+    <linearGradient id="warmSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBF7EF"/><stop offset=".7" stop-color="#F6E6CC"/><stop offset="1" stop-color="#F1D6AE"/></linearGradient>
+    <linearGradient id="nightSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1D1F23"/><stop offset=".6" stop-color="#2B2C30"/><stop offset="1" stop-color="#4A3426"/></linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD983"/><stop offset=".45" stop-color="#F5A847"/><stop offset=".8" stop-color="#E06E3B"/><stop offset="1" stop-color="#C2412D"/></linearGradient>
+    <radialGradient id="sunHi" cx=".38" cy=".28" r=".55"><stop offset="0" stop-color="#FFF4D2" stop-opacity=".85"/><stop offset="1" stop-color="#FFF4D2" stop-opacity="0"/></radialGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F1EEE7"/></linearGradient>
+    <linearGradient id="pageNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBFAF8"/><stop offset="1" stop-color="#E3DFD6"/></linearGradient>
+    <linearGradient id="brick" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D65640"/><stop offset="1" stop-color="#A9351F"/></linearGradient>
+    <linearGradient id="ochre" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDA53A"/><stop offset="1" stop-color="#A9741A"/></linearGradient>
+    <linearGradient id="tealG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3D89AC"/><stop offset="1" stop-color="#245A74"/></linearGradient>
+    <linearGradient id="inkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A3D42"/><stop offset="1" stop-color="#202226"/></linearGradient>
+    <linearGradient id="waterFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E3C4"/><stop offset="1" stop-color="#FBFAF7"/></linearGradient>
+
+    <clipPath id="sunC"><circle cx="512" cy="520" r="232"/></clipPath>
+    <clipPath id="sunUpper"><rect x="100" y="100" width="824" height="460"/></clipPath>
+  </defs>
+
+  <!-- Original from round 3 -->
+  <symbol id="ic0" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#paperBg)"/></g>
+    <g clip-path="url(#sq)"><circle cx="512" cy="560" r="240" fill="#F2B04A" opacity=".45" filter="url(#glow)"/></g>
+    <defs><clipPath id="c0"><circle cx="512" cy="560" r="236"/></clipPath></defs>
+    <g clip-path="url(#c0)">
+      <rect x="276" y="324" width="472" height="472" fill="url(#sun)"/>
+      <rect x="276" y="574" width="472" height="40" fill="#C2412D"/><rect x="276" y="632" width="472" height="34" fill="#C48A1C"/><rect x="276" y="684" width="472" height="28" fill="#2E6F8E"/><rect x="276" y="730" width="472" height="22" fill="#24262A"/><rect x="276" y="770" width="472" height="18" fill="#85878C"/>
+    </g>
+    <rect x="176" y="800" width="672" height="14" rx="7" fill="#24262A" opacity=".85"/>
+  </symbol>
+
+  <!-- A. Sliced Sun on a Page -->
+  <symbol id="icA" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#warmSky)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".18"/>
+      <circle cx="512" cy="540" r="250" fill="#F4A847" opacity=".55" filter="url(#glow)"/>
+      <!-- sliced sun: gaps widen toward the horizon -->
+      <g clip-path="url(#sunC)">
+        <rect x="270" y="280" width="484" height="484" fill="url(#sun)"/>
+        <rect x="270" y="280" width="484" height="484" fill="url(#sunHi)"/>
+        <g fill="#F6E3C6">
+          <rect x="270" y="548" width="484" height="10"/>
+          <rect x="270" y="590" width="484" height="16"/>
+          <rect x="270" y="634" width="484" height="22"/>
+          <rect x="270" y="680" width="484" height="28"/>
+        </g>
+      </g>
+      <!-- the page the sun sets behind -->
+      <g filter="url(#cardShadow)"><rect x="168" y="708" width="688" height="320" rx="44" fill="url(#page)"/></g>
+      <rect x="168" y="708" width="688" height="30" rx="15" fill="url(#brick)"/>
+      <rect x="168" y="722" width="688" height="18" fill="url(#brick)"/>
+      <rect x="168" y="708" width="688" height="320" rx="44" fill="#fff" filter="url(#grain)" opacity=".18"/>
+      <g stroke="#E3DED3" stroke-width="10" stroke-linecap="round"><path d="M248 800 H 640"/><path d="M248 852 H 560"/></g>
+      <rect x="696" y="782" width="44" height="44" rx="11" fill="url(#tealG)"/>
+      <path d="M706 804 l 9 9 l 16 -18" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </symbol>
+
+  <!-- B. Night Edition -->
+  <symbol id="icB" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#nightSky)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".06"/>
+      <circle cx="512" cy="560" r="280" fill="#F08A3C" opacity=".55" filter="url(#glow)"/>
+      <g clip-path="url(#sunC)">
+        <rect x="270" y="280" width="484" height="484" fill="url(#sun)"/>
+        <rect x="270" y="280" width="484" height="484" fill="url(#sunHi)"/>
+        <g fill="#2E2A28">
+          <rect x="270" y="548" width="484" height="10"/>
+          <rect x="270" y="590" width="484" height="16"/>
+          <rect x="270" y="634" width="484" height="22"/>
+          <rect x="270" y="680" width="484" height="28"/>
+        </g>
+      </g>
+      <g filter="url(#cardShadow)"><rect x="168" y="708" width="688" height="320" rx="44" fill="url(#pageNight)"/></g>
+      <rect x="168" y="708" width="688" height="30" rx="15" fill="url(#brick)"/>
+      <rect x="168" y="722" width="688" height="18" fill="url(#brick)"/>
+      <path d="M212 708 H 812" stroke="#FFC98A" stroke-width="4" opacity=".55"/>
+      <g stroke="#D9D4C8" stroke-width="10" stroke-linecap="round"><path d="M248 800 H 640"/><path d="M248 852 H 560"/></g>
+      <rect x="696" y="782" width="44" height="44" rx="11" fill="url(#tealG)"/>
+      <path d="M706 804 l 9 9 l 16 -18" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </symbol>
+
+  <!-- C. Card Slices -->
+  <symbol id="icC" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#warmSky)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".18"/>
+      <circle cx="512" cy="500" r="240" fill="#F4A847" opacity=".5" filter="url(#glow)"/>
+      <g clip-path="url(#sunUpper)">
+        <circle cx="512" cy="560" r="232" fill="url(#sun)"/>
+        <circle cx="512" cy="560" r="232" fill="url(#sunHi)"/>
+      </g>
+    </g>
+    <!-- slices: priority card edges, narrowing toward the viewer -->
+    <g filter="url(#sliceShadow)">
+      <rect x="262" y="570" width="500" height="58" rx="29" fill="url(#brick)"/>
+    </g>
+    <path d="M292 576 H 732" stroke="#F3A28E" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <g filter="url(#sliceShadow)"><rect x="298" y="646" width="428" height="50" rx="25" fill="url(#ochre)"/></g>
+    <path d="M326 652 H 698" stroke="#F6D58E" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <g filter="url(#sliceShadow)"><rect x="340" y="714" width="344" height="42" rx="21" fill="url(#tealG)"/></g>
+    <path d="M364 720 H 660" stroke="#9FD0E4" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <g filter="url(#sliceShadow)"><rect x="390" y="774" width="244" height="34" rx="17" fill="url(#inkG)"/></g>
+    <path d="M410 779 H 614" stroke="#6E737A" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+  </symbol>
+
+  <!-- D. Reflection -->
+  <symbol id="icD" viewBox="0 0 1024 1024">
+    <g filter="url(#iconShadow)"><rect x="100" y="100" width="824" height="824" rx="186" fill="url(#warmSky)"/></g>
+    <g clip-path="url(#sq)">
+      <rect x="100" y="560" width="824" height="380" fill="url(#waterFade)"/>
+      <rect x="100" y="100" width="824" height="824" fill="#fff" filter="url(#grain)" opacity=".18"/>
+      <circle cx="512" cy="520" r="230" fill="#F4A847" opacity=".5" filter="url(#glow)"/>
+      <g clip-path="url(#sunUpper)">
+        <circle cx="512" cy="560" r="232" fill="url(#sun)"/>
+        <circle cx="512" cy="560" r="232" fill="url(#sunHi)"/>
+      </g>
+      <rect x="140" y="556" width="744" height="8" rx="4" fill="#24262A"/>
+      <!-- reflection ripples in priority colors -->
+      <g stroke-linecap="round">
+        <path d="M300 612 H 724" stroke="#C2412D" stroke-width="26"/>
+        <path d="M352 662 H 672" stroke="#C48A1C" stroke-width="22"/>
+        <path d="M404 708 H 620" stroke="#2E6F8E" stroke-width="18"/>
+        <path d="M446 750 H 578" stroke="#85878C" stroke-width="14"/>
+        <path d="M484 788 H 540" stroke="#B4B3AE" stroke-width="10"/>
+      </g>
+    </g>
+  </symbol>
+</svg>
+
+<div class="wrap">
+  <h1>Horizon Bands, refined</h1>
+  <p class="lead">The round-3 original on the left, then four ways to push it. All use only Field Day's palette: warm paper, the ochre-to-brick sun, priority brick, ochre and teal, and ink.</p>
+  <div class="hero">
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic0"/></svg><figcaption>Original</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#icA"/></svg><figcaption>A Sliced Sun on a Page</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#icB"/></svg><figcaption>B Night Edition</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#icC"/></svg><figcaption>C Card Slices</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#icD"/></svg><figcaption>D Reflection</figcaption></figure>
+  </div>
+  <div class="hero dark">
+    <figure><svg viewBox="0 0 1024 1024"><use href="#ic0"/></svg><figcaption>Original</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#icA"/></svg><figcaption>A Sliced Sun on a Page</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#icB"/></svg><figcaption>B Night Edition</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#icC"/></svg><figcaption>C Card Slices</figcaption></figure>
+    <figure><svg viewBox="0 0 1024 1024"><use href="#icD"/></svg><figcaption>D Reflection</figcaption></figure>
+  </div>
+
+  <section class="opt" data-ic="icA"><div class="big"></div><div><h2><span>A</span>Sliced Sun on a Page</h2><p>The sun is cut by gaps that widen toward the horizon, so it reads as a sun even at 16 px. It sets behind a Recto page with the app's brick P1 edge, two ruled lines and one task checked in teal.</p></div></section>
+  <section class="opt" data-ic="icB"><div class="big"></div><div><h2><span>B</span>Night Edition</h2><p>The same composition on an ink sky. The sun glows harder and the page catches warm light on its edge. Strongest presence in a crowded Dock, and a natural partner for dark mode.</p></div></section>
+  <section class="opt" data-ic="icC"><div class="big"></div><div><h2><span>C</span>Card Slices</h2><p>The upper half of the sun stays whole; below the horizon the bands become dimensional card edges in brick, ochre, teal and ink, narrowing toward you like a stack of the day's priorities.</p></div></section>
+  <section class="opt" data-ic="icD"><div class="big"></div><div><h2><span>D</span>Reflection</h2><p>The sun rises over a thin ink horizon, and its reflection breaks into ripples of the priority colors on the page below. The calmest and most "paper" of the four.</p></div></section>
+</div>
+
+<script>
+  document.querySelectorAll('.opt').forEach(function (sec) {
+    var id = sec.dataset.ic;
+    var svg = function (s) { return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 1024 1024"><use href="#' + id + '"/></svg>'; };
+    sec.querySelector('.big').innerHTML = svg(300);
+    var info = sec.querySelector('div:last-child');
+    var sizes = document.createElement('div');
+    sizes.className = 'sizes';
+    ['light', 'dark'].forEach(function (mode) {
+      sizes.innerHTML += '<div class="tile ' + mode + '">' + [128, 64, 32, 16].map(function (s) { return '<div>' + svg(s) + '<div class="lbl">' + s + '</div></div>'; }).join('') + '</div>';
+    });
+    info.appendChild(sizes);
+    var dock = document.createElement('div');
+    dock.className = 'dockbg';
+    var cells = ['#e8e8ea', '#3478f6', '#f5b52e', '#34c759', '#ff453a'].map(function (c) { return '<div class="ph" style="background:' + c + '"></div>'; });
+    cells.splice(2, 0, svg(64));
+    dock.innerHTML = '<div class="dock">' + cells.join('') + '</div>';
+    info.appendChild(dock);
+  });
+</script>
+</body>
+</html>

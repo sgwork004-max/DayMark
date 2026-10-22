@@ -15,7 +15,7 @@ export class ErrorBoundary extends React.Component<{ children: React.ReactNode }
   }
 
   override componentDidCatch(error: Error, info: React.ErrorInfo) {
-    console.error("Manager error:", error, info);
+    console.error("DayMark error:", error, info);
     invoke("report_app_error", {
       message: error.message,
       stack: error.stack ?? null,

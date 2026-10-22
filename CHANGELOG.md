@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Renamed the app to DayMark, with a new app icon. Settings, saved credentials and permissions carry over, and existing `~/Manager` vaults are still found.
+- New installations create their vault at `~/DayMark`.
+- The installer accepts both DayMark and earlier Manager disk images.
+
 ## 0.6.1 - Vault access and editor update
 
 - Preserve file watcher events for vaults opened through a symlink.

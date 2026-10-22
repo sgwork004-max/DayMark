@@ -4,7 +4,7 @@ import type { TimeBlock } from "./types.js";
 const TIME_RE = /\b(\d{1,2})(?::(\d{2}))?\s*(am|pm)?\b/i;
 
 // Full time-block line: "10am - Write report" or "10:30-11:00 Call with John"
-// Manager syntax: line starting with a time or containing "at HH:MM"
+// DayMark syntax: line starting with a time or containing "at HH:MM"
 const TIMEBLOCK_LINE_RE =
   /^(?:\s*-?\s*)?(\d{1,2})(?::(\d{2}))?\s*(am|pm)?\s*(?:-\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)?)?\s*[-–]?\s*(.+)$/i;
 

@@ -50,7 +50,7 @@ export function SettingsModal({ onClose, onImport, onOnboarding }: Props) {
     setStorageError("");
     try {
       if (!(await saveBeforeVaultChange())) {
-        setStorageError("Manager could not save the active note, so the vault was not changed.");
+        setStorageError("DayMark could not save the active note, so the vault was not changed.");
         return;
       }
       await updateSettings({ vaultPath });
@@ -262,7 +262,7 @@ export function SettingsModal({ onClose, onImport, onOnboarding }: Props) {
           <section className="settings-section">
             <h3 className="settings-section-title">About</h3>
             <p className="settings-about">
-              <strong>Manager</strong> - version 0.6.1
+              <strong>DayMark</strong> - version 0.6.1
             </p>
             <p className="settings-about">
               Vault: <code>{settings.vaultPath || "not set"}</code>

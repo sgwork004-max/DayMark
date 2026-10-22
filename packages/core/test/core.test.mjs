@@ -234,9 +234,9 @@ test("edits native task metadata without breaking readable markdown", () => {
 });
 
 test("completes and reopens native tasks with a completion date", () => {
-  const completed = setTaskCompleted("- [ ] Ship Manager", 0, true, "13/07");
-  assert.equal(completed, "- [x] Ship Manager @done(13/07)");
-  assert.equal(setTaskCompleted(completed, 0, false, "13/07"), "- [ ] Ship Manager");
+  const completed = setTaskCompleted("- [ ] Ship DayMark", 0, true, "13/07");
+  assert.equal(completed, "- [x] Ship DayMark @done(13/07)");
+  assert.equal(setTaskCompleted(completed, 0, false, "13/07"), "- [ ] Ship DayMark");
 });
 
 test("rejects impossible task dates and reminder times", () => {
