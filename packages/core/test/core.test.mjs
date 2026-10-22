@@ -76,8 +76,8 @@ test("daily notes contain the operating template", () => {
   assert.match(note, /### P2\n- \[ \]/);
   assert.match(note, /### P3\n- \[ \]/);
   assert.match(note, /### Misc\n- \[ \]/);
-  assert.match(note, /## AI Pipeline/);
-  assert.match(note, /## Notes/);
+  assert.doesNotMatch(note, /## AI Pipeline/);
+  assert.match(note, /### Misc\n- \[ \] \n\n## Notes/);
 });
 
 test("migrates focus and agenda into priority tasks without losing content", () => {

@@ -15,6 +15,10 @@
 - Graph links are visible in dark themes, and the graph header no longer sits under the window buttons.
 - Settings shows which storage location is active and no longer promises iPhone sync.
 - AI quick actions are disabled until a Gemini key is added.
+- Markdown headings no longer render underlined, and heading and list marks are dimmed.
+- Empty agenda tasks show an "Add a task" hint instead of bare brackets.
+- New daily notes no longer include an "AI Pipeline" section.
+- Replaced remaining text symbols used as icons with drawn icons, and raised hint text contrast.
 
 ## 0.6.0 - Public release
 

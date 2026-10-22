@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Sparkles, X } from "lucide-react";
+import { ArrowUp, Loader2, Sparkles, X } from "lucide-react";
 import { invoke } from "@tauri-apps/api/core";
 import { useNotesStore } from "../store/notesStore.js";
 import { showAppNotice } from "../appNotice.js";
@@ -168,7 +168,7 @@ You help the user write better notes, extract insights, create tasks, and think 
           onClick={() => send(input)}
           disabled={streaming || !input.trim() || !settings.geminiApiKey}
         >
-          {streaming ? "…" : "↑"}
+          {streaming ? <Loader2 size={15} className="spin" /> : <ArrowUp size={15} strokeWidth={2} />}
         </button>
       </div>
     </aside>
@@ -186,8 +186,8 @@ function renderMarkdown(md: string): string {
     .replace(/^### (.+)$/gm, "<h3>$1</h3>")
     .replace(/^## (.+)$/gm, "<h2>$1</h2>")
     .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-    .replace(/^- \[ \] (.+)$/gm, '<span class="ai-task">○ $1</span>')
-    .replace(/^- \[x\] (.+)$/gm, '<span class="ai-task done">✓ $1</span>')
+    .replace(/^- \[ \] (.+)$/gm, '<span class="ai-task"><span class="ai-task-box"></span>$1</span>')
+    .replace(/^- \[x\] (.+)$/gm, '<span class="ai-task done"><span class="ai-task-box"></span>$1</span>')
     .replace(/^[-*] (.+)$/gm, "<li>$1</li>")
     .replace(/(<li>.*<\/li>\n?)+/g, "<ul>$&</ul>")
     .replace(/\n/g, "<br>");

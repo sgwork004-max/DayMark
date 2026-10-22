@@ -164,8 +164,6 @@ function defaultDailyContent(date: string): string {
 ### Misc
 - [ ]
 
-## AI Pipeline
-
 ## Notes
 
 `;

@@ -1,4 +1,25 @@
 import { EditorView } from "@codemirror/view";
+import { syntaxHighlighting } from "@codemirror/language";
+import { tagHighlighter, tags } from "@lezer/highlight";
+
+/**
+ * Emits the `tok-*` classes styled below. CodeMirror's default highlight style
+ * uses generated class names and underlines headings, so it is not used.
+ */
+export const markdownHighlighting = syntaxHighlighting(tagHighlighter([
+  { tag: tags.heading1, class: "tok-heading1" },
+  { tag: tags.heading2, class: "tok-heading2" },
+  { tag: [tags.heading3, tags.heading4, tags.heading5, tags.heading6], class: "tok-heading3" },
+  { tag: tags.strong, class: "tok-strong" },
+  { tag: tags.emphasis, class: "tok-emphasis" },
+  { tag: tags.monospace, class: "tok-monospace" },
+  { tag: tags.strikethrough, class: "tok-strikethrough" },
+  { tag: tags.quote, class: "tok-quote" },
+  { tag: tags.contentSeparator, class: "tok-contentSeparator" },
+  { tag: tags.link, class: "tok-link" },
+  { tag: tags.url, class: "tok-url" },
+  { tag: tags.processingInstruction, class: "tok-meta" },
+]));
 
 export const notePlanTheme = EditorView.theme(
   {
@@ -101,6 +122,11 @@ export const notePlanTheme = EditorView.theme(
     },
     ".cm-priority-marker": { display: "none" },
     ".cm-line.cm-note-title.cm-activeLine": { background: "transparent" },
+    ".cm-line.cm-task-empty::after": {
+      content: '"Add a task"',
+      color: "var(--color-text-disabled)",
+      pointerEvents: "none",
+    },
     ".cm-task-prefix": {
       display: "inline",
       color: "var(--color-text-disabled) !important",
@@ -176,11 +202,17 @@ export const notePlanTheme = EditorView.theme(
     // Strong / em / code
     ".tok-strong":         { fontWeight: "700" },
     ".tok-emphasis":       { fontStyle: "italic" },
-    ".tok-monospace":      { fontFamily: "monospace", background: "var(--color-code-bg)", borderRadius: "3px", padding: "0 3px" },
+    ".tok-monospace":      { fontFamily: "var(--font-mono, monospace)", background: "var(--color-code-bg)", borderRadius: "3px", padding: "0 3px" },
     ".tok-strikethrough":  { textDecoration: "line-through", opacity: "0.5" },
 
     // HR
     ".tok-contentSeparator": { color: "var(--color-border)" },
+    ".tok-quote":  { color: "var(--color-text-secondary)", fontStyle: "italic" },
+    ".tok-link":   { color: "var(--color-accent)" },
+    ".tok-url":    { color: "var(--color-text-muted)" },
+    // Same specificity as the heading rules above and declared after them, so
+    // heading and list marks stay dimmed inside headings.
+    ".cm-line .tok-meta": { color: "var(--color-text-disabled)" },
   },
   { dark: true },
 );

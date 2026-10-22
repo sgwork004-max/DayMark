@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState, useCallback } from "react";
-import { CheckSquare, Square, MinusSquare, RefreshCw, SlidersHorizontal } from "lucide-react";
+import { CheckSquare, Square, MinusSquare, RefreshCw, SlidersHorizontal, X } from "lucide-react";
 import { useNotesStore, type SmartViewId } from "../store/notesStore.js";
 import {
   getOverdueTasks, getUpcomingTasks, getTodayTasks,
@@ -150,7 +150,7 @@ export function SmartView() {
           spellCheck={false}
         />
         {filterStr && (
-          <button className="smart-filter-clear" onClick={() => setFilterStr("")}>✕</button>
+          <button className="smart-filter-clear" onClick={() => setFilterStr("")} aria-label="Clear filter"><X size={13} strokeWidth={2} /></button>
         )}
       </div>
 
@@ -167,7 +167,7 @@ export function SmartView() {
           <div className="smart-view-empty">
             {filterStr
               ? `No tasks match "${filterStr}"`
-              : view === "overdue" ? "No overdue tasks. You're all caught up! ✓"
+              : view === "overdue" ? "No overdue tasks. You're all caught up."
               : view === "today"   ? "No tasks for today. Add one in your daily note."
               : "No upcoming tasks in the next 14 days."}
           </div>

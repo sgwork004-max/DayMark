@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
+import { X } from "lucide-react";
 import { useNotesStore } from "../store/notesStore.js";
 import { extractWikiLinks } from "@daymark/core";
 
@@ -149,7 +150,7 @@ export function GraphView({ onClose }: { onClose: () => void }) {
           <span className="graph-legend-item"><span style={{ background: "#888" }} />Note</span>
           <span className="graph-legend-item"><span style={{ background: "#7c6fff" }} />Active</span>
         </div>
-        <button className="graph-close" onClick={onClose}>✕</button>
+        <button className="graph-close" onClick={onClose} aria-label="Close graph"><X size={15} strokeWidth={2} /></button>
       </div>
       <svg ref={svgRef} className="graph-svg" />
       <div className="graph-hint">Drag to rearrange · Scroll to zoom · Click to open</div>

@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import {
   AlignLeft,
+  ArrowRight,
   Bell,
   CalendarDays,
   Clock3,
@@ -90,8 +91,8 @@ export function EventComposer({
           <div className="event-composer-heading">
             <span className="event-composer-mark"><CalendarDays size={17} /></span>
             <div>
-              <span className="event-composer-eyebrow">NEW EVENT</span>
-              <h2>{formatSelectedDate(start)}</h2>
+              <h2>New event</h2>
+              <span className="event-composer-date">{formatSelectedDate(start)}</span>
             </div>
           </div>
           <button className="event-composer-close" onClick={onClose} aria-label="Close">
@@ -119,7 +120,7 @@ export function EventComposer({
                   if (nextStart >= end) setEnd(addMinutes(nextStart, 60));
                 }} />
               </label>
-              <span className="event-time-arrow">→</span>
+              <span className="event-time-arrow"><ArrowRight size={13} /></span>
               <label>
                 <span>Ends</span>
                 <input type="datetime-local" value={end} onChange={(event) => setEnd(event.target.value)} />

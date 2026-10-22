@@ -88,6 +88,10 @@ export const inlineDecorations = ViewPlugin.fromClass(
         if (taskMatch?.[1] && taskMatch[2]) {
           const tokenStart = line.from + taskMatch[1].length;
           const state = taskMatch[3]?.toLowerCase();
+          if (state === " " && text.slice(taskMatch[0].length).trim() === "") {
+            // Empty task line, e.g. a fresh agenda slot: show a hint instead of bare brackets.
+            builder.add(line.from, line.from, Decoration.line({ class: "cm-task-empty" }));
+          }
           builder.add(line.from, tokenStart, Decoration.mark({ class: "cm-task-prefix" }));
           builder.add(tokenStart, tokenStart + taskMatch[2].length, Decoration.mark({
             class: `cm-task-checkbox-token ${state === "x" ? "is-checked" : state === ">" ? "is-scheduled" : state === "-" ? "is-cancelled" : "is-open"}`,

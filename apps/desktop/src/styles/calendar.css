@@ -585,15 +585,15 @@
   background: color-mix(in srgb, var(--color-accent) 12%, transparent);
 }
 
-.event-composer-eyebrow {
-  color: var(--color-accent);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1px;
+.event-composer-date {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-text-muted);
+  font-size: 12px;
 }
 
 .event-composer-header h2 {
-  margin: 3px 0 0;
+  margin: 0;
   font-size: 15px;
   font-weight: 650;
   letter-spacing: 0;
@@ -684,6 +684,8 @@
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 14%, transparent);
 }
 .event-time-arrow {
+  display: grid;
+  place-items: center;
   padding-bottom: 10px;
   color: var(--color-text-disabled);
   text-align: center;

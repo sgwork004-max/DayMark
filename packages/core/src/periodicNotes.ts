@@ -83,7 +83,7 @@ export function periodicDefaultContent(type: PeriodicType, referenceDate?: strin
   const title = periodicNoteTitle(type, referenceDate);
   switch (type) {
     case "daily":
-      return `# ${title}\n\n## Today's Agenda\n### P1\n- [ ] \n\n### P2\n- [ ] \n\n### P3\n- [ ] \n\n### Misc\n- [ ] \n\n## AI Pipeline\n\n## Notes\n\n`;
+      return `# ${title}\n\n## Today's Agenda\n### P1\n- [ ] \n\n### P2\n- [ ] \n\n### P3\n- [ ] \n\n### Misc\n- [ ] \n\n## Notes\n\n`;
     case "weekly":
       return `# ${title}\n\n## Goals This Week\n\n## Reflection\n\n## Tasks\n\n`;
     case "monthly":

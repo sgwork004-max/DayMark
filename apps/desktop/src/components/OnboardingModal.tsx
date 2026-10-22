@@ -52,7 +52,6 @@ export function OnboardingModal({ onComplete }: Props) {
         {step === 0 && (
           <div className="onboarding-page onboarding-welcome">
             <div className="onboarding-brand-mark"><span /></div>
-            <p className="onboarding-eyebrow">MANAGER</p>
             <h1>Your day, with context intact.</h1>
             <p>Plan what matters. Close the loop. Carry the useful signal forward.</p>
           </div>
@@ -60,7 +59,6 @@ export function OnboardingModal({ onComplete }: Props) {
 
         {step === 1 && (
           <div className="onboarding-page">
-            <p className="onboarding-eyebrow">STORAGE</p>
             <h1>Keep your work yours.</h1>
             <p>Your notes remain Markdown files in a folder you control.</p>
             <div className="onboarding-storage">
@@ -80,7 +78,6 @@ export function OnboardingModal({ onComplete }: Props) {
 
         {step === 2 && (
           <div className="onboarding-page">
-            <p className="onboarding-eyebrow">YOUR DAILY NOTE</p>
             <h1>One page runs the day.</h1>
             <p>Prioritize first, execute from the note, then keep context below it.</p>
             <div className="onboarding-note-preview">
@@ -96,7 +93,6 @@ export function OnboardingModal({ onComplete }: Props) {
 
         {step === 3 && (
           <div className="onboarding-page">
-            <p className="onboarding-eyebrow">FINISH SETUP</p>
             <h1>Make Manager feel native.</h1>
             <div className="onboarding-preferences">
               <div className="onboarding-preference-row">

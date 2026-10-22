@@ -4,10 +4,9 @@ import { EditorView, keymap, highlightActiveLine, drawSelection } from "@codemir
 import { defaultKeymap, historyKeymap, history, indentWithTab } from "@codemirror/commands";
 import { searchKeymap } from "@codemirror/search";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language";
 import { inlineDecorations } from "./extensions/wikilinks.js";
 import { notePlanKeymap } from "./extensions/keymap.js";
-import { notePlanTheme } from "./theme.js";
+import { markdownHighlighting, notePlanTheme } from "./theme.js";
 
 interface NoteEditorProps {
   content: string;
@@ -23,7 +22,7 @@ function buildStaticExtensions(readOnly: boolean): Extension[] {
     history(),
     drawSelection(),
     highlightActiveLine(),
-    syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+    markdownHighlighting,
     markdown({ base: markdownLanguage, addKeymap: false }),
     keymap.of([
       ...notePlanKeymap,
